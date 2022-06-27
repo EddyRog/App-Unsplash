@@ -1,0 +1,19 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'App-Unsplash' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for App-Unsplash
+  pod'SwiftLint'
+  target 'App-UnsplashTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'App-UnsplashUITests' do
+    # Pods for testing
+  end
+
+end
