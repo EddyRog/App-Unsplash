@@ -1,0 +1,17 @@
+# ${PODS_ROOT}/SwiftLint/swiftlint
+# pod 'SwiftLint'
+included:
+  - App-Unsplash
+
+excluded:
+  - Pods
+
+# rule identifiers turned on by default to exclude from running
+disabled_rules:
+  - switch_case_alignment
+  - line_length
+  - comment_spacing
+  - orphaned_doc_comment
+  - nesting
+  - vertical_whitespace
+  - trailing_newline

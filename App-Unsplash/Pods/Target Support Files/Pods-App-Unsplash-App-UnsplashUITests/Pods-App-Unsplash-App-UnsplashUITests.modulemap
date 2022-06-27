@@ -1,0 +1,6 @@
+framework module Pods_App_Unsplash_App_UnsplashUITests {
+  umbrella header "Pods-App-Unsplash-App-UnsplashUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
