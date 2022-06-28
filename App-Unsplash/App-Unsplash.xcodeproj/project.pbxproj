@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		56DCE979D8FDB628F5414EB3 /* Pods_App_UnsplashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 196904D76A0C24939932B114 /* Pods_App_UnsplashTests.framework */; };
 		6118DB6A4E81A22E4A354E2B /* Pods_App_Unsplash_App_UnsplashUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C9AF923405BD66B1493233 /* Pods_App_Unsplash_App_UnsplashUITests.framework */; };
+		C8EC0105286A026F001A56E8 /* ParserSearchPhotosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC0104286A026F001A56E8 /* ParserSearchPhotosTests.swift */; };
+		C8EC0107286A0395001A56E8 /* ParserSearchPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC0106286A0395001A56E8 /* ParserSearchPhotos.swift */; };
+		C8EC010D286A0945001A56E8 /* SimpleData.json in Resources */ = {isa = PBXBuildFile; fileRef = C8EC0109286A06C7001A56E8 /* SimpleData.json */; };
+		C8EC0110286B2500001A56E8 /* StubAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = C8EC010F286B2500001A56E8 /* StubAPI.json */; };
+		C8EC0111286B25CE001A56E8 /* StubAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = C8EC010F286B2500001A56E8 /* StubAPI.json */; };
 		C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722F9286606B60034A36C /* AppDelegate.swift */; };
 		C8F722FC286606B60034A36C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722FB286606B60034A36C /* SceneDelegate.swift */; };
 		C8F722FE286606B60034A36C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722FD286606B60034A36C /* ViewController.swift */; };
@@ -50,6 +55,10 @@
 		9D4A1A1290DF9F4FDE3E2D5F /* Pods-App-Unsplash-App-UnsplashUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Unsplash-App-UnsplashUITests.release.xcconfig"; path = "Target Support Files/Pods-App-Unsplash-App-UnsplashUITests/Pods-App-Unsplash-App-UnsplashUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9F56B3262596302B760C87D0 /* Pods-App-UnsplashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-UnsplashTests.release.xcconfig"; path = "Target Support Files/Pods-App-UnsplashTests/Pods-App-UnsplashTests.release.xcconfig"; sourceTree = "<group>"; };
 		C5C9AF923405BD66B1493233 /* Pods_App_Unsplash_App_UnsplashUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Unsplash_App_UnsplashUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8EC0104286A026F001A56E8 /* ParserSearchPhotosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserSearchPhotosTests.swift; sourceTree = "<group>"; };
+		C8EC0106286A0395001A56E8 /* ParserSearchPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserSearchPhotos.swift; sourceTree = "<group>"; };
+		C8EC0109286A06C7001A56E8 /* SimpleData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SimpleData.json; sourceTree = "<group>"; };
+		C8EC010F286B2500001A56E8 /* StubAPI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StubAPI.json; sourceTree = "<group>"; };
 		C8F722F6286606B60034A36C /* App-Unsplash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App-Unsplash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F722F9286606B60034A36C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8F722FB286606B60034A36C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +129,32 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C8EC0103286A023E001A56E8 /* SearchPhotos */ = {
+			isa = PBXGroup;
+			children = (
+				C8EC0104286A026F001A56E8 /* ParserSearchPhotosTests.swift */,
+				C8EC0108286A06AB001A56E8 /* Stub */,
+			);
+			path = SearchPhotos;
+			sourceTree = "<group>";
+		};
+		C8EC0108286A06AB001A56E8 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				C8EC010E286B24DC001A56E8 /* New Group */,
+				C8EC0109286A06C7001A56E8 /* SimpleData.json */,
+				C8EC010F286B2500001A56E8 /* StubAPI.json */,
+			);
+			path = Stub;
+			sourceTree = "<group>";
+		};
+		C8EC010E286B24DC001A56E8 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		C8F722ED286606B60034A36C = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +214,7 @@
 		C8F7232B28660B5E0034A36C /* 🧰domain-SearchPhotos */ = {
 			isa = PBXGroup;
 			children = (
+				C8EC0106286A0395001A56E8 /* ParserSearchPhotos.swift */,
 			);
 			name = "🧰domain-SearchPhotos";
 			sourceTree = "<group>";
@@ -233,6 +269,7 @@
 		C8F7233128660CF50034A36C /* 🚦domainTests */ = {
 			isa = PBXGroup;
 			children = (
+				C8EC0103286A023E001A56E8 /* SearchPhotos */,
 				C8F72310286606CB0034A36C /* App_UnsplashTests.swift */,
 				C8F72338286612160034A36C /* Extension+XCTestCase.swift */,
 			);
@@ -363,6 +400,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8EC0111286B25CE001A56E8 /* StubAPI.json in Resources */,
+				C8EC010D286A0945001A56E8 /* SimpleData.json in Resources */,
 				C8F72306286606C40034A36C /* LaunchScreen.storyboard in Resources */,
 				C8F72303286606C40034A36C /* Assets.xcassets in Resources */,
 				C8F72301286606B60034A36C /* Main.storyboard in Resources */,
@@ -373,6 +412,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8EC0110286B2500001A56E8 /* StubAPI.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +520,7 @@
 				C8F722FE286606B60034A36C /* ViewController.swift in Sources */,
 				C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */,
 				C8F722FC286606B60034A36C /* SceneDelegate.swift in Sources */,
+				C8EC0107286A0395001A56E8 /* ParserSearchPhotos.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8F72339286612160034A36C /* Extension+XCTestCase.swift in Sources */,
+				C8EC0105286A026F001A56E8 /* ParserSearchPhotosTests.swift in Sources */,
 				C8F72311286606CB0034A36C /* App_UnsplashTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
