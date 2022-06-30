@@ -8,7 +8,7 @@ import XCTest
 import CustomDump
 
 class FetcherSearchPhotosTests: XCTestCase {
-    var sut: FetcherSearchPhotos!
+    var sut: FetcherSearchPhotosImpl!
 
     /*
     override func setUp() {

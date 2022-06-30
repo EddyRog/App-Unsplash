@@ -9,7 +9,6 @@ import XCTest
 import CustomDump
 
 class PresenterSearchPhotosTests: XCTestCase {
-    let testsAreActive = true
     var sut: PresenterSearchPhotosImpl!
     var viewSpy: ViewSearchPhotosSpy!
 
@@ -90,9 +89,6 @@ class PresenterSearchPhotosTests: XCTestCase {
         // --- then.
         assertNoDifference(viewModelExpected, viewSpy.resultOfViewModels)
     }
-
-
-
 
     // ==================
     // MARK: - Tests Doubles

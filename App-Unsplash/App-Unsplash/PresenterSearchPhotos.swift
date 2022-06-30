@@ -7,8 +7,10 @@
 
 import Foundation
 
+protocol PresenterSearchPhotos { }
 class PresenterSearchPhotosImpl {
     var view: ViewSearchPhotos?
+
     func present(with responses: Response) {
         var viewModels: [ViewModel] = []
         // parse responses

@@ -6,8 +6,12 @@
 
 
 import Foundation
+protocol FetcherSearchPhotos {
+    func fetch(with request: String, completion: ([Photo]) -> Void)
+}
 
-class FetcherSearchPhotos {
+
+class FetcherSearchPhotosImpl {
     func fetch(with request: String, completion: ([Photo]) -> Void) {
         let photos = [Photo]()
         completion(photos)
