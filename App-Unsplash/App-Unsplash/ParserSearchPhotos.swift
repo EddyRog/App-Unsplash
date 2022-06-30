@@ -68,7 +68,7 @@ struct CodableUrl: Codable, Equatable {
 
 
 
-struct Photo {
+struct Photo: Equatable {
     var description: String
     var picture: String
 }

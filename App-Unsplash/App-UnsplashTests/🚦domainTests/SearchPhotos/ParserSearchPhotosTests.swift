@@ -9,9 +9,12 @@ import CustomDump
 
 class ParserSearchPhotosTests: XCTestCase {
     var sut: ParserSearchPhotos!
+
     var jsonData: Data? {
 		return makeJsonFile(name: .complexe)
     }
+    var stubbedDescription = "⇉ Lightroom CC IG: @unprophotogab"
+    var stubbedPicture = "https://images.unsplash.com/photo-1592847902295-c87f74e6a7f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fHZvaXR1cmV8ZW58MHx8fHwxNjU2NDE2ODIy&ixlib=rb-1.2.1&q=80&w=200"
 
     override func setUp() {
         super.setUp()
@@ -22,7 +25,7 @@ class ParserSearchPhotosTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_Parse_expect_arrayOfPhotoNotNil() throws {
+    func test_parse_expect_arrayOfPhotoNotNil() throws {
         // --- given.
         guard let jsonData = self.jsonData else { return }
 
@@ -32,7 +35,8 @@ class ParserSearchPhotosTests: XCTestCase {
 
         // --- then.
         XCTAssertFalse(photos.isEmpty)
-        assertNoDifference("⇉ Lightroom CC IG: @unprophotogab", photos.first?.description)
+        assertNoDifference(stubbedDescription, photos.first?.description)
+        assertNoDifference(stubbedPicture, photos.first?.picture)
         XCTAssertNotEqual(photosParsed, CodableParserSearchPhotos(photos: nil))
         XCTAssertNotEqual(photosParsed.photos, CodablePhotos(results: []))
         XCTAssertNotEqual(photosParsed.photos?.results, [CodableResult()])
