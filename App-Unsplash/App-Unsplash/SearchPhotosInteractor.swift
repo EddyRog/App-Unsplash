@@ -7,11 +7,20 @@
 
 import Foundation
 
-protocol InteractorSearchPhotos {
+protocol SearchPhotosInteractor {
+    var presenter: SearchPhotosPresenter {get set}
+
     func fetchPhotos(with request: String, completionFetcher: @escaping (Response) -> Void )
 }
-class InteractorSearchPhotosImpl: InteractorSearchPhotos {
+
+class SearchPhotosInteractorImpl: SearchPhotosInteractor {
     var fetcher: FetcherSearchPhotos?
+    var presenter: SearchPhotosPresenter
+
+    internal init(fetcher: FetcherSearchPhotos? = nil, presenter: SearchPhotosPresenter) {
+        self.fetcher = fetcher
+        self.presenter = presenter
+    }
 
     func fetchPhotos(with request: String, completionFetcher: @escaping (Response) -> Void) {
         // fetcher.fetch
@@ -30,6 +39,5 @@ class InteractorSearchPhotosImpl: InteractorSearchPhotos {
             // send back response to presenter
             completionFetcher(responseToReturn)
         })
-
     }
 }

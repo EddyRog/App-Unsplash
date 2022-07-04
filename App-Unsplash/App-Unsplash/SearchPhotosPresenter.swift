@@ -7,9 +7,12 @@
 
 import Foundation
 
-protocol PresenterSearchPhotos { }
-class PresenterSearchPhotosImpl {
-    var view: ViewSearchPhotos?
+protocol SearchPhotosPresenter {
+    var view: (SearchPhotosView)? {get set}
+}
+
+class SearchPhotosPresenterImpl: SearchPhotosPresenter {
+    var view: (SearchPhotosView)?
 
     func present(with responses: Response) {
         var viewModels: [ViewModel] = []

@@ -9,12 +9,12 @@ import XCTest
 import CustomDump
 
 class PresenterSearchPhotosTests: XCTestCase {
-    var sut: PresenterSearchPhotosImpl!
+    var sut: SearchPhotosPresenterImpl!
     var viewSpy: ViewSearchPhotosSpy!
 
     override func setUp() {
         super.setUp()
-        sut = PresenterSearchPhotosImpl()
+        sut = SearchPhotosPresenterImpl()
         viewSpy = ViewSearchPhotosSpy()
         sut.view = viewSpy
     }
@@ -93,7 +93,7 @@ class PresenterSearchPhotosTests: XCTestCase {
     // ==================
     // MARK: - Tests Doubles
     // ==================
-    class ViewSearchPhotosSpy: ViewSearchPhotos {
+    class ViewSearchPhotosSpy: SearchPhotosView {
         var resultOfViewModels: [ViewModel]?
 
         func display(with viewModels: [ViewModel]) {
@@ -101,3 +101,6 @@ class PresenterSearchPhotosTests: XCTestCase {
         }
     }
 }
+
+
+
