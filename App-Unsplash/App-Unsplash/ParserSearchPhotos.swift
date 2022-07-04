@@ -7,8 +7,15 @@
 
 import Foundation
 
-class ParserSearchPhotos {
+protocol ParserSearchPhotos {
+    var decoder: JSONDecoder? {get set}
+    func parse(with jsonData: Data) -> CodableParserSearchPhotos?
+    func extract(with alldataDecoded: CodableParserSearchPhotos) -> [Photo]
+}
+
+class ParserSearchPhotosImpl: ParserSearchPhotos {
     var decoder: JSONDecoder? = JSONDecoder()
+    var clientID: String = ""
 
     func parse(with jsonData: Data) -> CodableParserSearchPhotos? {
         guard let codableParserSearchPhotos = try? decoder?.decode(CodableParserSearchPhotos.self, from: jsonData) else {
@@ -33,8 +40,16 @@ class ParserSearchPhotos {
         }
         return photos
     }
-}
 
+    func buildUrlQuery(with request: String) -> String {
+        // init
+        let urlRequestObjc = URLRequestObjc(scheme: "https",
+                       host: "api.unsplash.com",
+                       path: "/search/")
+
+        return urlRequestObjc.build(request: request)
+    }
+}
 
 struct CodableParserSearchPhotos: Codable, Equatable {
     var photos: CodablePhotos?
@@ -67,28 +82,32 @@ struct CodableUrl: Codable, Equatable {
 }
 
 
+/** Create url request*/
+struct URLRequestObjc {
+    var scheme: String
+    var host: String
+    var path: String
+	var keyAPI: String
 
-struct Photo: Equatable {
-    var description: String
-    var picture: String
-}
-// ==================
-// MARK: - DataStructure
-// ==================
+    internal init(scheme: String, host: String, path: String, keyPath: String = "") {
+        self.scheme = scheme
+        self.host = host
+        self.path = path
+        self.keyAPI = keyPath
+    }
 
-/*
-struct Photo: Codable {
-    var id: [Int]
-    var attribute: [Attribute]
-}
-struct Attribute: Codable {
-    // var nameid0: String?    // Ancienne key qui match au JSON
-    var nameID0: String? // Nouvelle Key qu'on veux dans le code
+    func build(request: String = "") -> String {
+        var component = URLComponents()
+        component.scheme = self.scheme
+        component.host = self.host
+        component.path = self.path
+        // swiftlint:disable trailing_comma
+        component.queryItems = [
+            URLQueryItem(name: "query", value: request),
+            URLQueryItem(name: "client_id", value: keyAPI),
+        ]
+//        URLQueryItem(name: "client_id", value: "a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4"),
 
-    // Structure pour Nouvelle Key qu'on veux dans le code
-    enum CodingKeys: String, CodingKey {
-        // case Substitution = realNameInJson
-        case nameID0 = "nameid0"
+        return component.string ?? "-"
     }
 }
-*/

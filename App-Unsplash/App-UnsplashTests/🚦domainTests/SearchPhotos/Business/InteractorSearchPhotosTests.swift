@@ -10,7 +10,7 @@ import CustomDump
 
 class InteractorSearchPhotosTests: XCTestCase {
     let isTestActivate = false
-    var sut         : InteractorSearchPhotosImpl!
+    var sut         : SearchPhotosInteractorImpl!
     var fetcherStub : FetcherSearchPhotosStub!
 
     let STUP_EMPTY_DATA: [Photo] = [Photo]()
@@ -22,7 +22,8 @@ class InteractorSearchPhotosTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = InteractorSearchPhotosImpl()
+        let dummyPresenter = SearchPhotosPresenterImpl()
+        sut = SearchPhotosInteractorImpl(presenter: dummyPresenter)
     	fetcherStub = FetcherSearchPhotosStub()
         sut.fetcher = fetcherStub
     }
@@ -123,3 +124,5 @@ class InteractorSearchPhotosTests: XCTestCase {
         }
     }
 }
+
+

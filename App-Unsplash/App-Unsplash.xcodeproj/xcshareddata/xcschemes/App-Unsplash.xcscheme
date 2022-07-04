@@ -38,6 +38,11 @@
                BlueprintName = "App-UnsplashTests"
                ReferencedContainer = "container:App-Unsplash.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ParserSearchPhotosTests/test_buildRequestUrl_withString_expect_URL()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "YES">

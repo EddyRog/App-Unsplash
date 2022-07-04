@@ -7,6 +7,13 @@
 
 import Foundation
 
+
+enum SearchPhotos {
+    struct Request0 {}
+    struct Response0 {}
+    struct Viewmodel0 {}
+}
+
 struct Response: Equatable {
     var value: [Photo]
 
@@ -18,4 +25,12 @@ struct Response: Equatable {
 struct ViewModel: Equatable {
     var description: String
     var thumbsUrlImage: String
+}
+
+// ==================
+// MARK: - DataStructure
+// ==================
+struct Photo: Equatable {
+    var description: String
+    var picture: String
 }

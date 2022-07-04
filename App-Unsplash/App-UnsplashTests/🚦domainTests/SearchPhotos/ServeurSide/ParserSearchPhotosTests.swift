@@ -7,8 +7,10 @@
 import XCTest
 import CustomDump
 
+// https://api.unsplash.com/search/?query=Bird&client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4
+
 class ParserSearchPhotosTests: XCTestCase {
-    var sut: ParserSearchPhotos!
+    var sut: ParserSearchPhotosImpl!
 
     var jsonData: Data? {
 		return makeJsonFile(name: .complexe)
@@ -18,7 +20,7 @@ class ParserSearchPhotosTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = ParserSearchPhotos()
+        sut = ParserSearchPhotosImpl()
     }
     override func tearDown() {
         sut = nil
@@ -55,6 +57,29 @@ class ParserSearchPhotosTests: XCTestCase {
         assertNoDifference(nil, sut.parse(with: jsonData))
 
     }
+
+    func test_urlRequestObjc_expect_urlString() {
+        // --- given.
+        let objc = URLRequestObjc(
+            scheme: "https",
+            host: "api.unsplash.com",
+            path: "/search/")
+
+        // --- when.
+        let actualUrlString = objc.build(request: "car")
+
+        // --- then.
+        let expectedRequestUrl = "https://api.unsplash.com/search/?query=car&client_id="
+        assertNoDifference(expectedRequestUrl, actualUrlString)
+    }
+
+    // build query
+    func test_buildUrlQuery_withString_expect_goodUrl() {
+        let expected = "https://api.unsplash.com/search/?query=Bird&client_id="
+        let actualdUrlString = sut.buildUrlQuery(with: "Bird")
+        assertNoDifference(expected, actualdUrlString)
+    }
+
 }
 
 extension ParserSearchPhotosTests {
