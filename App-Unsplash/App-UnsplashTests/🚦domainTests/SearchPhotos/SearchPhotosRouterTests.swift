@@ -53,4 +53,14 @@ class SearchPhotosRouterTests: XCTestCase {
     func test_build_view_expect_notNil() {
         XCTAssertNotNil(presenter.view)
     }
+
+    // --- SB.
+    func test_build_view_expect_vc_in_storyboard_notNil() {
+        XCTAssertNoThrow(try sut.instantiateViewInStoryboard(), "View from router is nil")
+    }
+
+    func test_build_viewController_expect_throwErrorStoryboard() {
+        sut.identifierSearchPhotosImpl = "-"
+        XCTAssertThrowsError(try sut.instantiateViewInStoryboard(), "Should throws an error")
+    }
 }
