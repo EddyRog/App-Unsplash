@@ -6,12 +6,13 @@
 
 
 import Foundation
+import UIKit
 
 protocol SearchPhotosView {
     func display(with viewModels: [ViewModel])
 }
 
-class SearchPhotosViewImpl: SearchPhotosView {
+class SearchPhotosViewImpl: UIViewController, SearchPhotosView {
     var interactor: SearchPhotosInteractorImpl?
     func display(with viewModels: [ViewModel]) { }
 }

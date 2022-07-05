@@ -6,6 +6,10 @@
 
 
 import Foundation
+<<<<<<< HEAD
+
+class SearchPhotosRouterImpl {
+=======
 import UIKit
 
 class SearchPhotosRouterImpl {
@@ -16,6 +20,7 @@ class SearchPhotosRouterImpl {
         set { identifierSearchPhotosViewImpl = newValue }
     }
 
+>>>>>>> dev
     func build() -> SearchPhotosViewImpl {
 
         let viewController = SearchPhotosViewImpl()
@@ -28,6 +33,8 @@ class SearchPhotosRouterImpl {
 
         return viewController
     }
+<<<<<<< HEAD
+=======
 
     func instantiateViewInStoryboard() throws -> SearchPhotosViewImpl {
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -62,4 +69,5 @@ extension UIStoryboard {
 enum ErrorStoryboard: Error {
     case storyboardID
     case casting
+>>>>>>> dev
 }

@@ -53,6 +53,8 @@ class SearchPhotosRouterTests: XCTestCase {
     func test_build_view_expect_notNil() {
         XCTAssertNotNil(presenter.view)
     }
+<<<<<<< HEAD
+=======
 
     // --- SB.
     func test_build_view_expect_vc_in_storyboard_notNil() {
@@ -63,4 +65,5 @@ class SearchPhotosRouterTests: XCTestCase {
         sut.identifierSearchPhotosImpl = "-"
         XCTAssertThrowsError(try sut.instantiateViewInStoryboard(), "Should throws an error")
     }
+>>>>>>> dev
 }
