@@ -6,12 +6,12 @@
 
 
 import Foundation
-protocol FetcherSearchPhotos {
+protocol SearchPhotosFetcher {
     func fetch(with request: String, completion: ([Photo]) -> Void)
 }
 
 class FetcherSearchPhotosImpl {
-    var parser: ParserSearchPhotos?
+    var parser: SearchPhotosParser?
 
     func fetch(with request: String, completion: ([Photo]) -> Void) {
         // call the parser with the good request

@@ -8,7 +8,7 @@
 import XCTest
 import CustomDump
 
-class PresenterSearchPhotosTests: XCTestCase {
+class SearchPhotosPresenterTests: XCTestCase {
     var sut: SearchPhotosPresenterImpl!
     var viewSpy: ViewSearchPhotosSpy!
 

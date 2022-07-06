@@ -9,8 +9,8 @@ import CustomDump
 
 // https://api.unsplash.com/search/?query=Bird&client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4
 
-class ParserSearchPhotosTests: XCTestCase {
-    var sut: ParserSearchPhotosImpl!
+class SearchPhotosParserTests: XCTestCase {
+    var sut: SearchPhotosParserImpl!
 
     var jsonData: Data? {
 		return makeJsonFile(name: .complexe)
@@ -20,7 +20,7 @@ class ParserSearchPhotosTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = ParserSearchPhotosImpl()
+        sut = SearchPhotosParserImpl()
     }
     override func tearDown() {
         sut = nil
@@ -82,7 +82,7 @@ class ParserSearchPhotosTests: XCTestCase {
 
 }
 
-extension ParserSearchPhotosTests {
+extension SearchPhotosParserTests {
     // path url data print
     func makeJsonFile(name: JsonSelector) -> Data? {
 

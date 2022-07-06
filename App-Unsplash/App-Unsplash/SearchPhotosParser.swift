@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ParserSearchPhotos {
+protocol SearchPhotosParser {
     var decoder: JSONDecoder? {get set}
     func parse(with jsonData: Data) -> CodableParserSearchPhotos?
     func extract(with alldataDecoded: CodableParserSearchPhotos) -> [Photo]
 }
 
-class ParserSearchPhotosImpl: ParserSearchPhotos {
+class SearchPhotosParserImpl: SearchPhotosParser {
     var decoder: JSONDecoder? = JSONDecoder()
     var clientID: String = ""
 
