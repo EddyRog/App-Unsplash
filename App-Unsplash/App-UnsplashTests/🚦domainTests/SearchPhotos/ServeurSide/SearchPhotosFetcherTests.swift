@@ -7,7 +7,7 @@
 import XCTest
 import CustomDump
 
-class FetcherSearchPhotosTests: XCTestCase {
+class SearchPhotosFetcherTests: XCTestCase {
     var sut: FetcherSearchPhotosImpl!
     var parserSpy: ParserSearchPhotosSpy!
 
@@ -52,7 +52,7 @@ class FetcherSearchPhotosTests: XCTestCase {
     // ==================
     // MARK: - Tests double
     // ==================
-    class ParserSearchPhotosSpy: ParserSearchPhotos {
+    class ParserSearchPhotosSpy: SearchPhotosParser {
         var decoder: JSONDecoder?
         var resultOfURLRequest: String?
 

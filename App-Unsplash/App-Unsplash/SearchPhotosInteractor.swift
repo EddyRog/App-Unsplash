@@ -14,10 +14,10 @@ protocol SearchPhotosInteractor {
 }
 
 class SearchPhotosInteractorImpl: SearchPhotosInteractor {
-    var fetcher: FetcherSearchPhotos?
+    var fetcher: SearchPhotosFetcher?
     var presenter: SearchPhotosPresenter
 
-    internal init(fetcher: FetcherSearchPhotos? = nil, presenter: SearchPhotosPresenter) {
+    internal init(fetcher: SearchPhotosFetcher? = nil, presenter: SearchPhotosPresenter) {
         self.fetcher = fetcher
         self.presenter = presenter
     }

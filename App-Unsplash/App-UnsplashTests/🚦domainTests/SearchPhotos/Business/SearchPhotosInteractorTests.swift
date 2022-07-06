@@ -8,7 +8,7 @@
 import XCTest
 import CustomDump
 
-class InteractorSearchPhotosTests: XCTestCase {
+class SearchPhotosInteractorTests: XCTestCase {
     let isTestActivate = false
     var sut         : SearchPhotosInteractorImpl!
     var fetcherStub : FetcherSearchPhotosStub!
@@ -116,7 +116,7 @@ class InteractorSearchPhotosTests: XCTestCase {
     // ==================
     // MARK: - Test doubles
     // ==================
-    class FetcherSearchPhotosStub: FetcherSearchPhotos {
+    class FetcherSearchPhotosStub: SearchPhotosFetcher {
         var dataToReturn: [Photo] = []
 
         func fetch(with request: String, completion: ([Photo]) -> Void) {
