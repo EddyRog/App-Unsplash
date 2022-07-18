@@ -7,12 +7,9 @@ target 'App-Unsplash' do
 
   # Pods for App-Unsplash
   pod'SwiftLint'
+
   target 'App-UnsplashTests' do
     inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'App-UnsplashUITests' do
     # Pods for testing
   end
 
