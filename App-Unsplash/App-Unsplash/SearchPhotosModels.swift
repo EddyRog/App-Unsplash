@@ -7,30 +7,42 @@
 
 import Foundation
 
-
-enum SearchPhotos {
-    struct Request0 {}
-    struct Response0 {}
-    struct Viewmodel0 {}
-}
-
+// ==================
+// MARK: - Transfer object
+// ==================
 struct Response: Equatable {
-    var value: [Photo]
-
-    static func == (lhs: Response, rhs: Response) -> Bool {
-        return lhs.value == rhs.value
-    }
+    var description: String
 }
-
 struct ViewModel: Equatable {
     var description: String
-    var thumbsUrlImage: String
 }
 
 // ==================
-// MARK: - DataStructure
+// MARK: - Error
 // ==================
-struct Photo: Equatable {
+enum ServiceError: Error {
+    case urlError
+    case dataParse
+}
+
+
+// ==================
+// MARK: - Decodable
+// ==================
+struct UnsplashObjc: Codable {
+    let photos: Photos
+}
+
+struct Photos: Codable {
+    let results: [Result]
+}
+
+struct Result: Codable {
+    //    var id: String
+    //    var urls: Urls
     var description: String
-    var picture: String
+}
+
+struct Urls: Codable {
+    var small: String
 }
