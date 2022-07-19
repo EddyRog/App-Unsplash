@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-class SearchPhotosRouterImpl {
+protocol SearchPhotosRouter {
+    func showSearchPhotoDetails()
+}
+
+class SearchPhotosRouterImpl: SearchPhotosRouter {
     // represent the current navigation Controller
     weak var source: UIViewController?
 
@@ -43,20 +47,6 @@ class SearchPhotosRouterImpl {
 		return searchPhotosViewImpl
     }
 
-    /*
-     // used to init programmatically
-     func build() -> SearchPhotosViewImpl {
-
-     let searchPhotosViewImpl = SearchPhotosViewImpl()
-     let searchPhotosInteractorImpl = SearchPhotosInteractorImpl()
-     let searchPhotosPresenterImpl = SearchPhotosPresenterImpl()
-
-
-     searchPhotosViewImpl.interactor = searchPhotosInteractorImpl
-     searchPhotosInteractorImpl.presenter = searchPhotosPresenterImpl
-
-     return searchPhotosViewImpl
-     }*/
 }
 
 extension SearchPhotosRouterImpl {
@@ -67,13 +57,5 @@ extension SearchPhotosRouterImpl {
 
         // push it
         source?.navigationController?.pushViewController(detailController, animated: true)
-    }
-}
-
-class SceneFactory {
-    func makeSearchPhotosDetailsScene() -> UIViewController {
-        let detailController = UIViewController()
-        detailController.view.backgroundColor = .red
-        return detailController
     }
 }

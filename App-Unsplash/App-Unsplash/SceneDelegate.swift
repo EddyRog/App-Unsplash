@@ -19,8 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         let router = SearchPhotosRouterImpl()
-        let searchPhotosView = try? router.buildWithStoryboard()
-        window?.rootViewController = searchPhotosView
+        guard let searchPhotosView = try? router.buildWithStoryboard() else { return }
+        let navController = UINavigationController(rootViewController: searchPhotosView)
+        window?.rootViewController = navController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

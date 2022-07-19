@@ -18,7 +18,7 @@ class SearchPhotosViewImpl: UIViewController {
     @IBOutlet weak var resultTableView: UITableView!
 
     var interactor: SearchPhotosInteractor?
-    var router: SearchPhotosRouterImpl?
+    var router: SearchPhotosRouter?
 
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
@@ -31,11 +31,16 @@ class SearchPhotosViewImpl: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        router
+
     }
 
     func searchPhotos(with request: String) {
         interactor?.searchPhotos(with: request)
+    }
+
+    @IBAction func push(_ sender: Any) {
+        print("push")
+        router?.showSearchPhotoDetails()
     }
 
     @IBAction func actionSearch(_ sender: Any) {
