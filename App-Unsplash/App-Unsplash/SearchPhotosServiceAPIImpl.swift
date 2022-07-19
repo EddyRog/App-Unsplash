@@ -59,9 +59,6 @@ class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
         do {
             let responseData = try decoder.decode(UnsplashObjc.self, from: data)
 
-            debugPrint("dee L\(#line) 🏵 -------> responseData => ", responseData)
-            let result1 = responseData.photos.results
-
             responseData.photos.results.forEach { result in
 
                 let response = Response(description: result.resultDescription)

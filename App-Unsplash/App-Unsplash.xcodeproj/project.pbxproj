@@ -16,6 +16,8 @@
 		C8113CCF28733F1E00C9236B /* SearchPhotosRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8113CCE28733F1E00C9236B /* SearchPhotosRouterTests.swift */; };
 		C8113CD22873594A00C9236B /* SearchPhotosRouterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8113CD12873594A00C9236B /* SearchPhotosRouterImpl.swift */; };
 		C8343A48287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8343A47287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift */; };
+		C88908902886A36000D091D9 /* SearchPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889088E2886A36000D091D9 /* SearchPhotosCell.swift */; };
+		C88908912886A36000D091D9 /* SearchPhotosCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C889088F2886A36000D091D9 /* SearchPhotosCell.xib */; };
 		C8E0B1702881766C00F95CC5 /* SearchPhotosWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B16F2881766C00F95CC5 /* SearchPhotosWorkerTests.swift */; };
 		C8E0B17228817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B17128817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift */; };
 		C8E0B1742881880700F95CC5 /* SearchPhotosServiceAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B1732881880700F95CC5 /* SearchPhotosServiceAPITests.swift */; };
@@ -69,6 +71,8 @@
 		C8113CCE28733F1E00C9236B /* SearchPhotosRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosRouterTests.swift; sourceTree = "<group>"; };
 		C8113CD12873594A00C9236B /* SearchPhotosRouterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosRouterImpl.swift; sourceTree = "<group>"; };
 		C8343A47287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosWorkerImpl.swift; sourceTree = "<group>"; };
+		C889088E2886A36000D091D9 /* SearchPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosCell.swift; sourceTree = "<group>"; };
+		C889088F2886A36000D091D9 /* SearchPhotosCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchPhotosCell.xib; sourceTree = "<group>"; };
 		C8E0B16F2881766C00F95CC5 /* SearchPhotosWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosWorkerTests.swift; sourceTree = "<group>"; };
 		C8E0B17128817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosServiceAPIImpl.swift; sourceTree = "<group>"; };
 		C8E0B1732881880700F95CC5 /* SearchPhotosServiceAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosServiceAPITests.swift; sourceTree = "<group>"; };
@@ -127,7 +131,6 @@
 				F3F007CDBC757EBE95F0F751 /* Pods-App-UnsplashTests.debug.xcconfig */,
 				0F57AB42B8786D2869B7DE1F /* Pods-App-UnsplashTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -162,6 +165,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		C889088B2886A2BB00D091D9 /* customView */ = {
+			isa = PBXGroup;
+			children = (
+				C889088E2886A36000D091D9 /* SearchPhotosCell.swift */,
+				C889088F2886A36000D091D9 /* SearchPhotosCell.xib */,
+			);
+			name = customView;
+			sourceTree = "<group>";
+		};
 		C8CB867C287DD44700FB996E /* SearchPhotos */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +183,7 @@
 				C8343A47287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift */,
 				C8E0B17128817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift */,
 				C8EC0118286B73F7001A56E8 /* SearchPhotosPresenterImpl.swift */,
+				C889088B2886A2BB00D091D9 /* customView */,
 				C80D5F88286DBD550022C021 /* Models */,
 			);
 			name = SearchPhotos;
@@ -415,6 +428,7 @@
 			files = (
 				C8EC0111286B25CE001A56E8 /* StubAPI.json in Resources */,
 				C8EC010D286A0945001A56E8 /* SimpleData.json in Resources */,
+				C88908912886A36000D091D9 /* SearchPhotosCell.xib in Resources */,
 				C8F72306286606C40034A36C /* LaunchScreen.storyboard in Resources */,
 				C8F72303286606C40034A36C /* Assets.xcassets in Resources */,
 				C8F72301286606B60034A36C /* Main.storyboard in Resources */,
@@ -505,6 +519,7 @@
 				C8113CD22873594A00C9236B /* SearchPhotosRouterImpl.swift in Sources */,
 				C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */,
 				C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */,
+				C88908902886A36000D091D9 /* SearchPhotosCell.swift in Sources */,
 				C80D5F8F286DD1AA0022C021 /* SearchPhotosInteractorImpl.swift in Sources */,
 				C80D5F8A286DBD6A0022C021 /* SearchPhotosModels.swift in Sources */,
 				C8EC0119286B73F7001A56E8 /* SearchPhotosPresenterImpl.swift in Sources */,

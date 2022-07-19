@@ -23,14 +23,15 @@ class SearchPhotosViewImpl: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerTableViewCells()
         searchPhotos(with: "car")
     }
 
     func parseResponse(data: Data) throws -> [Response] {
         let decoder = JSONDecoder()
-        var responses = [Response]()
+        let responses = [Response]()
         do {
-            let responseData = try decoder.decode(UnsplashObjc.self, from: data)
+            _ = try decoder.decode(UnsplashObjc.self, from: data)
 //            responseData.photos.results.forEach { result in
 //                let response = Response(description: result.description)
 //                responses.append(response)
@@ -74,16 +75,18 @@ extension SearchPhotosViewImpl: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let idCell = "Cell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: idCell)
+        let idCell = "SearchPhotosCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as? SearchPhotosCell
+
 
         if let unwCell = cell {
-            var content = unwCell.defaultContentConfiguration()
-            content.text = resultSearch[indexPath.row].description
-            content.textProperties.color = .white
-            content.textProperties.font = .systemFont(ofSize: 20)
+            cell?.searchPhotoDescription.text = resultSearch[indexPath.row].description
 
-            unwCell.contentConfiguration = content
+            let dataImageString = "https://images.unsplash.com/photo-1526121846098-84e5d2e3437b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnJ8ZW58MHx8fHwxNjU2OTQxNDE4&ixlib=rb-1.2.1&q=80&w=400"
+            let urlImage = URL(string: dataImageString)
+            _ = try? Data.init(contentsOf: urlImage!)
+//            unwCell.searchPhotoImage.image = UIImage(data: dataImage!)
+            unwCell.searchPhotoImage.image = UIImage(data: dataImageString.data(using: .utf8)!)
 
             return unwCell
         } else {
@@ -95,6 +98,22 @@ extension SearchPhotosViewImpl: UITableViewDataSource {
 
             return cellDefault
         }
+    }
+
+    func registerTableViewCells() {
+		let idCell = "SearchPhotosCell"
+        let textFieldCell = UINib(nibName: idCell, bundle: nil)
+        self.resultTableView.register(textFieldCell, forCellReuseIdentifier: idCell)
+    }
+}
+
+extension SearchPhotosView {
+
+    func makePicture(with url: String) -> Data {
+        let defaultData = UIImage(named: "noPicture")?.pngData() ?? Data()
+        guard let url = URL(string: url) else { return defaultData }
+        let result =  try? Data(contentsOf: url)
+		return result ?? defaultData
     }
 
 }

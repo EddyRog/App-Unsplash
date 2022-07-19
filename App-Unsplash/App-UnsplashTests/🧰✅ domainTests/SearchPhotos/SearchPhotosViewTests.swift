@@ -34,9 +34,38 @@ class SearchPhotosViewTests: XCTestCase {
         XCTAssertTrue(interactorSpy.searchPhotosInvoked)
     }
 
-    // ==================
-    // MARK: - output
-    // ==================
+
+    // --- make URL.
+    func test_givenStringUrlOfPhoto_when_makePictureWithString_expect_emptyDataofUrl() {
+        let expectedPicture = UIImage(named: "noPicture")?.pngData()
+
+        // --- when.
+        let actualPicture = sut.makePicture(with: "")
+
+        // --- then.
+        XCTAssertEqual(expectedPicture, actualPicture)
+    }
+    func test_givenStringUrlOfPhoto_when_makePictureWithString_expect_wrongDataofUrl() {
+        let expectedPicture = UIImage(named: "noPicture")?.pngData()
+
+        // --- when.
+        let actualPicture = sut.makePicture(with: "0123")
+
+        // --- then.
+        XCTAssertEqual(expectedPicture, actualPicture)
+    }
+    func test_givenStringUrlOfPhoto_when_makePictureWithString_expect_goodDataofUrl() {
+        // --- given.
+        let urlString = "https://images.unsplash.com/photo-1526121846098-84e5d2e3437b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnJ8ZW58MHx8fHwxNjU2OTQxNDE4&ixlib=rb-1.2.1&q=80&w=400"
+        let url = URL(string: urlString)!
+        let expectedPicture = try? Data(contentsOf: url)
+
+        // --- when.
+        let actualPicture = sut.makePicture(with: urlString)
+
+        // --- then.
+        assertNoDifference(expectedPicture, actualPicture)
+    }
 
     // ================
     // MARK: - test double
