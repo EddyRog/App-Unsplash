@@ -1,5 +1,5 @@
 //
-// SearchPhotosRouterTests.swift
+// SearchPhotosConfiguratorTests.swift
 // App-UnsplashTests
 // Created in 2022
 // Swift 5.0
@@ -8,29 +8,18 @@
 import XCTest
 import CustomDump
 
-class SearchPhotosRouterTests: XCTestCase {
+class SearchPhotosConfiguratorTests: XCTestCase {
 
-    var sut: SearchPhotosRouterImpl!
+    var sut: SearchPhotosConfiguratorImpl!
     var searchPhotosView: SearchPhotosViewImpl!
-
-    var currentManagerVCSpy: CurrentManagerVCSpy!
-    var firstVCSpy: SourceVCSpy!
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosRouterImpl()
+        sut = SearchPhotosConfiguratorImpl()
         searchPhotosView = try? sut.buildWithStoryboard()
-
-        firstVCSpy = SourceVCSpy()
-        currentManagerVCSpy = CurrentManagerVCSpy(rootViewController: firstVCSpy)
-
-        sut.source = currentManagerVCSpy
     }
     override func tearDown() {
         sut = nil
-        searchPhotosView = nil
-        currentManagerVCSpy = nil
-        firstVCSpy = nil
         super.tearDown()
     }
 
@@ -53,7 +42,7 @@ class SearchPhotosRouterTests: XCTestCase {
     }
 
     func test_router_buildSearchPhotosView_expect_viewInStoryboard_throwsAnError() {
-		let wrongIdentifier = "_"
+        let wrongIdentifier = "_"
         XCTAssertThrowsError(try sut.buildWithStoryboard(withIdentifier: wrongIdentifier), "Should throws an error")
     }
 
@@ -61,26 +50,4 @@ class SearchPhotosRouterTests: XCTestCase {
     func test_router_build_expect_interactorInViewIsNotNil() {
         XCTAssertNotNil(searchPhotosView.interactor)
     }
-
-
-    // routing to
-    func test_givenRouter_whenShowSearchShowDetails_expect_presenterCalled_onSource() {
-        sut.showSearchPhotoDetails()
-
-        // mock uinavigationController
-        XCTAssertTrue(currentManagerVCSpy.pushViewControllerCalled)
-    }
-    // ==================
-    // MARK: - Test Doubles
-    // ==================
-    class CurrentManagerVCSpy: UINavigationController {
-        var pushViewControllerCalled = false
-        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-            pushViewControllerCalled = true
-        }
-    }
-    class SourceVCSpy: UIViewController {}
-
-
-
 }

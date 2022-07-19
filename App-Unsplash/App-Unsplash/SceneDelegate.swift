@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
 
-        let router = SearchPhotosRouterImpl()
-        guard let searchPhotosView = try? router.buildWithStoryboard() else { return }
+        let saearchPhotosConfigurator = SearchPhotosConfiguratorImpl()
+        guard let searchPhotosView = try? saearchPhotosConfigurator.buildWithStoryboard() else { return }
         let navController = UINavigationController(rootViewController: searchPhotosView)
         window?.rootViewController = navController
     }
