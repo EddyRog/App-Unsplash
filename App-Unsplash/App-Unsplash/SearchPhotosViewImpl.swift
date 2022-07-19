@@ -80,13 +80,10 @@ extension SearchPhotosViewImpl: UITableViewDataSource {
 
 
         if let unwCell = cell {
-            cell?.searchPhotoDescription.text = resultSearch[indexPath.row].description
 
-            let dataImageString = "https://images.unsplash.com/photo-1526121846098-84e5d2e3437b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnJ8ZW58MHx8fHwxNjU2OTQxNDE4&ixlib=rb-1.2.1&q=80&w=400"
-            let urlImage = URL(string: dataImageString)
-            _ = try? Data.init(contentsOf: urlImage!)
-//            unwCell.searchPhotoImage.image = UIImage(data: dataImage!)
-            unwCell.searchPhotoImage.image = UIImage(data: dataImageString.data(using: .utf8)!)
+            let dataImageString = resultSearch[indexPath.row].urlSmall ?? ""
+            unwCell.searchPhotoImage.image = UIImage(data: makePicture(with: dataImageString))
+            unwCell.searchPhotoDescription.text = resultSearch[indexPath.row].description
 
             return unwCell
         } else {

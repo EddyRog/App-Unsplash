@@ -61,7 +61,10 @@ class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
 
             responseData.photos.results.forEach { result in
 
-                let response = Response(description: result.resultDescription)
+                let response = Response(
+                    description: result.resultDescription,
+                    urlSmall: result.urls.small
+                )
                 responses.append(response)
             }
 

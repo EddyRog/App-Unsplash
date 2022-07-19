@@ -18,7 +18,10 @@ class SearchPhotosPresenterImpl: SearchPhotosPresenter {
 		var viewModels = [ViewModel]()
 
         responses.forEach { response in
-            let viewModel = ViewModel(description: response.description)
+            let viewModel = ViewModel(
+                description: response.description,
+                urlSmall: response.urlSmall
+            )
             viewModels.append(viewModel)
         }
 

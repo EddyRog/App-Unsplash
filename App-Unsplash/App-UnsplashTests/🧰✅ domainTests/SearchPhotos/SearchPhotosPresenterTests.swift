@@ -52,11 +52,11 @@ class PresenterSearchPhotosTests: XCTestCase {
     func test_givenPresenter_whenPresentWithResponse_expect_ManyViewModel() {
         // --- given.
         let responses = [
-            Response(description: "description0"),
+            Response(description: "description0", urlSmall: "urlSmall"),
             Response(description: "description1"),
         ]
         let expectedViewModels = [
-            ViewModel(description: "description0"),
+            ViewModel(description: "description0", urlSmall: "urlSmall" ),
             ViewModel(description: "description1")
         ]
 

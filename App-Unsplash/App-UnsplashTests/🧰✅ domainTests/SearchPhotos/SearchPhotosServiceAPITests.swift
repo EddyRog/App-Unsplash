@@ -65,13 +65,19 @@ class SearchPhotosServiceAPITests: XCTestCase {
         }
     }
     func test_parseDataResponse_withJson_expect_ResponseDecoded() {
+        // --- given.
         let stubbedData = fetchJsonDataFromLocalFile()
-        let expectedResponse = "Ford in to the wild"
+        let expectedResponseDescription = "Ford in to the wild"
+        let expectedResponseUrlsSmall = "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnxlbnwwfHx8fDE2NTgxNjA2NDA&ixlib=rb-1.2.1&q=80&w=400"
 
-        let actualResponses = try? sut.parseResponse(data: stubbedData).first?.description
+		// --- when.
+        let firstResponse = try? sut.parseResponse(data: stubbedData).first
 
+        let actualResponsesDescription = firstResponse?.description
+        let actualResponsesUrlsSmall = firstResponse?.urlSmall
 
-        assertNoDifference(expectedResponse, actualResponses)
+        assertNoDifference(expectedResponseDescription, actualResponsesDescription)
+        assertNoDifference(expectedResponseUrlsSmall, actualResponsesUrlsSmall)
     }
 
     func test_givenServiceAPI_whenSearchPhoto_expect_response() {

@@ -16,8 +16,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aCo-Ot-dBh">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aCo-Ot-dBh">
                         <rect key="frame" x="16" y="16" width="77" height="77"/>
+                        <color key="backgroundColor" red="0.34164434669999999" green="0.34158945080000003" blue="0.34602546690000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="aCo-Ot-dBh" secondAttribute="height" multiplier="1:1" id="iPK-19-dPg"/>
                             <constraint firstAttribute="width" constant="77" id="jui-pM-6RE"/>
