@@ -25,8 +25,10 @@ class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
 
             session.dataTask(with: urlRequest, completionHandler: { data, _, _ in
                 guard let unwData = data else { return completion([Response]()) }
-                guard let dataParsed = try? self.parseResponse(data: unwData) else {return completion([Response]()) }
-
+                guard let dataParsed = try? self.parseResponse(data: unwData) else {
+					print("return")
+                    return completion([Response]())
+                }
                 // send back data Decoded
                 completion(dataParsed)
             }).resume()
@@ -53,11 +55,16 @@ class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
     func parseResponse(data: Data) throws -> [Response] {
         let decoder = JSONDecoder()
         var responses = [Response]()
+
         do {
             let responseData = try decoder.decode(UnsplashObjc.self, from: data)
+
+            debugPrint("dee L\(#line) 🏵 -------> responseData => ", responseData)
+            let result1 = responseData.photos.results
+
             responseData.photos.results.forEach { result in
 
-                let response = Response(description: result.description)
+                let response = Response(description: result.resultDescription)
                 responses.append(response)
             }
 

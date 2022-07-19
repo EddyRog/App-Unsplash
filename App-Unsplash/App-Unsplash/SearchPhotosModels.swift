@@ -30,19 +30,26 @@ enum ServiceError: Error {
 // MARK: - Decodable
 // ==================
 struct UnsplashObjc: Codable {
-    let photos: Photos
+    var photos: Photos
 }
 
 struct Photos: Codable {
-    let results: [Result]
+    var results: [Result]
 }
 
+// swiftlint:disable identifier_name
 struct Result: Codable {
-    //    var id: String
-    //    var urls: Urls
-    var description: String
+    var resultDescription: String
+
+    // Re map the keys
+    enum CodingKeys: String, CodingKey {
+        case resultDescription = "description"
+    }
+
+    // DefaultValue
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        resultDescription = try container.decodeIfPresent(String.self, forKey: .resultDescription) ?? "😖 NO DESCRIPTION"
+    }
 }
 
-struct Urls: Codable {
-    var small: String
-}

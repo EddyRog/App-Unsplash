@@ -66,9 +66,12 @@ class SearchPhotosServiceAPITests: XCTestCase {
     }
     func test_parseDataResponse_withJson_expect_ResponseDecoded() {
         let stubbedData = fetchJsonDataFromLocalFile()
-        let actualResponses = try? sut.parseResponse(data: stubbedData)
-        let expectedResponse = [Response(description: "⇉ Lightroom CC IG: @unprophotogab")]
-		assertNoDifference(expectedResponse, actualResponses)
+        let expectedResponse = "Ford in to the wild"
+
+        let actualResponses = try? sut.parseResponse(data: stubbedData).first?.description
+
+
+        assertNoDifference(expectedResponse, actualResponses)
     }
 
     func test_givenServiceAPI_whenSearchPhoto_expect_response() {
@@ -96,10 +99,10 @@ class SearchPhotosServiceAPITests: XCTestCase {
 
         // --- when.
         let exp = expectation(description: "wait searchPhoto()")
-        sut.searchPhotos(with: "Car") { responsesFromAppleClasse in
+        sut.searchPhotos(with: "Car") { responsesFromeExtClasses in
 
             // --- then.
-            self.assertNoDifference([Response(description: "⇉ Lightroom CC IG: @unprophotogab")], responsesFromAppleClasse)
+            self.assertNoDifference("Ford in to the wild", responsesFromeExtClasses.first?.description)
             exp.fulfill()
         }
         wait(for: [exp], timeout: 0.1)
