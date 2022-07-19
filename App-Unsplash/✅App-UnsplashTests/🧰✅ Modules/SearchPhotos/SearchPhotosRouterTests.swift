@@ -11,7 +11,6 @@ import CustomDump
 class SearchPhotosRouterTests: XCTestCase {
 
     var sut: SearchPhotosRouterImpl!
-//    var searchPhotosView: SearchPhotosViewImpl!
 
     var currentManagerVCSpy: CurrentManagerVCSpy!
     var firstVCSpy: SourceVCSpy!
@@ -19,7 +18,6 @@ class SearchPhotosRouterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = SearchPhotosRouterImpl()
-//        searchPhotosView = try? sut.buildWithStoryboard()
 
         firstVCSpy = SourceVCSpy()
         currentManagerVCSpy = CurrentManagerVCSpy(rootViewController: firstVCSpy)
@@ -28,7 +26,6 @@ class SearchPhotosRouterTests: XCTestCase {
     }
     override func tearDown() {
         sut = nil
-//        searchPhotosView = nil
         currentManagerVCSpy = nil
         firstVCSpy = nil
         super.tearDown()

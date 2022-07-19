@@ -11,7 +11,12 @@ protocol SearchPhotosInteractor {
     func searchPhotos(with request: String)
 }
 
-class SearchPhotosInteractorImpl: SearchPhotosInteractor {
+protocol DataStore {
+    var dataID: String? { get }
+}
+
+class SearchPhotosInteractorImpl: SearchPhotosInteractor, DataStore {
+    var dataID: String?
     var worker: SearchPhotosWorker?
     var presenter: SearchPhotosPresenter?
 

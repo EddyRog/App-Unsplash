@@ -145,6 +145,21 @@ Powered by creators everywhere.</string>
             </objects>
             <point key="canvasLocation" x="-42.028985507246382" y="-92.410714285714278"/>
         </scene>
+        <!--Show Photo View Impl-->
+        <scene sceneID="7kg-8k-vfS">
+            <objects>
+                <viewController storyboardIdentifier="ShowPhotoViewImpl" id="YSy-bh-5wP" customClass="ShowPhotoViewImpl" customModule="App_Unsplash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wbm-SW-5sI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="aaQ-s0-tmz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdX-yE-0VG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-42" y="655"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Image" width="99.5" height="76"/>

@@ -19,6 +19,10 @@
 		C88908902886A36000D091D9 /* SearchPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C889088E2886A36000D091D9 /* SearchPhotosCell.swift */; };
 		C88908912886A36000D091D9 /* SearchPhotosCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C889088F2886A36000D091D9 /* SearchPhotosCell.xib */; };
 		C89C9AFA2886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9AF92886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift */; };
+		C89C9AFC2886FC4C0007E0B0 /* SearchPhotosConfiguratorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfiguratorImpl.swift */; };
+		C89C9B01288706980007E0B0 /* ShowPhotoViewTestsj.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9B00288706980007E0B0 /* ShowPhotoViewTestsj.swift */; };
+		C89C9B0628870FDB0007E0B0 /* ShowPhotoViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9B0528870FDB0007E0B0 /* ShowPhotoViewImpl.swift */; };
+		C89C9B08288710080007E0B0 /* ShowPhotoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9B07288710080007E0B0 /* ShowPhotoViewTests.swift */; };
 		C8E0B1702881766C00F95CC5 /* SearchPhotosWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B16F2881766C00F95CC5 /* SearchPhotosWorkerTests.swift */; };
 		C8E0B17228817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B17128817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift */; };
 		C8E0B1742881880700F95CC5 /* SearchPhotosServiceAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B1732881880700F95CC5 /* SearchPhotosServiceAPITests.swift */; };
@@ -74,6 +78,10 @@
 		C889088E2886A36000D091D9 /* SearchPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosCell.swift; sourceTree = "<group>"; };
 		C889088F2886A36000D091D9 /* SearchPhotosCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchPhotosCell.xib; sourceTree = "<group>"; };
 		C89C9AF92886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosConfiguratorTests.swift; sourceTree = "<group>"; };
+		C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfiguratorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosConfiguratorImpl.swift; sourceTree = "<group>"; };
+		C89C9B00288706980007E0B0 /* ShowPhotoViewTestsj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewTestsj.swift; sourceTree = "<group>"; };
+		C89C9B0528870FDB0007E0B0 /* ShowPhotoViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewImpl.swift; sourceTree = "<group>"; };
+		C89C9B07288710080007E0B0 /* ShowPhotoViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewTests.swift; sourceTree = "<group>"; };
 		C8E0B16F2881766C00F95CC5 /* SearchPhotosWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosWorkerTests.swift; sourceTree = "<group>"; };
 		C8E0B17128817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosServiceAPIImpl.swift; sourceTree = "<group>"; };
 		C8E0B1732881880700F95CC5 /* SearchPhotosServiceAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosServiceAPITests.swift; sourceTree = "<group>"; };
@@ -160,6 +168,7 @@
 		C80D5F88286DBD550022C021 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C8343A47287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift */,
 				C80D5F89286DBD6A0022C021 /* SearchPhotosModels.swift */,
 			);
 			name = Models;
@@ -177,6 +186,7 @@
 		C89C9AF42886F5B40007E0B0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C89C9B0428870FB20007E0B0 /* ShowPhoto */,
 				C8CB867C287DD44700FB996E /* SearchPhotos */,
 			);
 			name = Modules;
@@ -208,9 +218,26 @@
 				C8E9AF9E287F317C00A4C56E /* Extension+Storyboard.swift */,
 				C8EC0109286A06C7001A56E8 /* SimpleData.json */,
 				C8EC010F286B2500001A56E8 /* StubAPI.json */,
+				C89C9B00288706980007E0B0 /* ShowPhotoViewTestsj.swift */,
 			);
 			name = "⚒️SupportingFiles";
 			path = "App-Unsplash";
+			sourceTree = "<group>";
+		};
+		C89C9AFD2887063B0007E0B0 /* ShowPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				C89C9B07288710080007E0B0 /* ShowPhotoViewTests.swift */,
+			);
+			path = ShowPhoto;
+			sourceTree = "<group>";
+		};
+		C89C9B0428870FB20007E0B0 /* ShowPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				C89C9B0528870FDB0007E0B0 /* ShowPhotoViewImpl.swift */,
+			);
+			name = ShowPhoto;
 			sourceTree = "<group>";
 		};
 		C8CB867C287DD44700FB996E /* SearchPhotos */ = {
@@ -219,10 +246,10 @@
 				C80D5F86286DBC920022C021 /* SearchPhotosViewImpl.swift */,
 				C80D5F8E286DD1AA0022C021 /* SearchPhotosInteractorImpl.swift */,
 				C8EC0118286B73F7001A56E8 /* SearchPhotosPresenterImpl.swift */,
-				C8343A47287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift */,
-				C8113CD12873594A00C9236B /* SearchPhotosRouterImpl.swift */,
 				C889088B2886A2BB00D091D9 /* customView */,
 				C80D5F88286DBD550022C021 /* Models */,
+				C8113CD12873594A00C9236B /* SearchPhotosRouterImpl.swift */,
+				C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfiguratorImpl.swift */,
 			);
 			name = SearchPhotos;
 			sourceTree = "<group>";
@@ -313,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				C8EC0103286A023E001A56E8 /* SearchPhotos */,
+				C89C9AFD2887063B0007E0B0 /* ShowPhoto */,
 			);
 			path = "🧰✅ Modules";
 			sourceTree = "<group>";
@@ -514,11 +542,13 @@
 				C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */,
 				C88908902886A36000D091D9 /* SearchPhotosCell.swift in Sources */,
 				C80D5F8F286DD1AA0022C021 /* SearchPhotosInteractorImpl.swift in Sources */,
+				C89C9B0628870FDB0007E0B0 /* ShowPhotoViewImpl.swift in Sources */,
 				C80D5F8A286DBD6A0022C021 /* SearchPhotosModels.swift in Sources */,
 				C8EC0119286B73F7001A56E8 /* SearchPhotosPresenterImpl.swift in Sources */,
 				C8F722FC286606B60034A36C /* SceneDelegate.swift in Sources */,
 				C8E0B17228817E0600F95CC5 /* SearchPhotosServiceAPIImpl.swift in Sources */,
 				C8343A48287F45A000C3BA90 /* SearchPhotosWorkerImpl.swift in Sources */,
+				C89C9AFC2886FC4C0007E0B0 /* SearchPhotosConfiguratorImpl.swift in Sources */,
 				C80D5F87286DBC920022C021 /* SearchPhotosViewImpl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,10 +560,12 @@
 				C8113CCF28733F1E00C9236B /* SearchPhotosRouterTests.swift in Sources */,
 				C8F72339286612160034A36C /* Extension+XCTestCase.swift in Sources */,
 				C8EC0117286B7391001A56E8 /* SearchPhotosPresenterTests.swift in Sources */,
+				C89C9B01288706980007E0B0 /* ShowPhotoViewTestsj.swift in Sources */,
 				C8E0B1702881766C00F95CC5 /* SearchPhotosWorkerTests.swift in Sources */,
 				C80D5F8D286DD1070022C021 /* SearchPhotosInteractorTests.swift in Sources */,
 				C8E0B1742881880700F95CC5 /* SearchPhotosServiceAPITests.swift in Sources */,
 				C8E0B1762881DDA700F95CC5 /* SearchPhotosViewTests.swift in Sources */,
+				C89C9B08288710080007E0B0 /* ShowPhotoViewTests.swift in Sources */,
 				C89C9AFA2886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
