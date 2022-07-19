@@ -27,6 +27,9 @@ class SearchPhotosViewTests: XCTestCase {
     func test_givenView_init_expect_isNotNil() {
         XCTAssertNotNil(sut)
     }
+    func test_givenView_init_expect_routerIsNotNil() {
+//        sut.
+    }
 
     func test_givenView_searchPhotosWithRequest_expect_interactorInvoked() {
         sut.searchPhotos(with: "")
@@ -37,7 +40,7 @@ class SearchPhotosViewTests: XCTestCase {
 
     // --- make URL.
     func test_givenStringUrlOfPhoto_when_makePictureWithString_expect_emptyDataofUrl() {
-        let expectedPicture = UIImage(named: "noPicture")?.pngData()
+         let expectedPicture: Data? = UIImage(named: "noPicture")?.pngData()
 
         // --- when.
         let actualPicture = sut.makePicture(with: "")

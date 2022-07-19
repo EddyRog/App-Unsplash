@@ -16,10 +16,12 @@ class SearchPhotosViewImpl: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var resultTableView: UITableView!
-    var resultSearch: [ViewModel] = []
+
+    var interactor: SearchPhotosInteractor?
+    var router: SearchPhotosRouterImpl?
 
     static let identifier: String = "SearchPhotosViewImpl"
-    var interactor: SearchPhotosInteractor?
+    var resultSearch: [ViewModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,20 +29,9 @@ class SearchPhotosViewImpl: UIViewController {
         searchPhotos(with: "car")
     }
 
-    func parseResponse(data: Data) throws -> [Response] {
-        let decoder = JSONDecoder()
-        let responses = [Response]()
-        do {
-            _ = try decoder.decode(UnsplashObjc.self, from: data)
-//            responseData.photos.results.forEach { result in
-//                let response = Response(description: result.description)
-//                responses.append(response)
-//            }
-
-            return responses
-        } catch {
-            throw ServiceError.dataParse
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        router
     }
 
     func searchPhotos(with request: String) {
@@ -105,14 +96,14 @@ extension SearchPhotosViewImpl: UITableViewDataSource {
 }
 
 extension SearchPhotosView {
-
     func makePicture(with url: String) -> Data {
         let defaultData = UIImage(named: "noPicture")?.pngData() ?? Data()
-        guard let url = URL(string: url) else { return defaultData }
+        guard let url = URL(string: url) else {
+            return defaultData
+        }
         let result =  try? Data(contentsOf: url)
 		return result ?? defaultData
     }
-
 }
 
 

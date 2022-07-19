@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 class SearchPhotosRouterImpl {
+    // represent the current navigation Controller
+    weak var source: UIViewController?
+
     // used for storyboard
     func buildWithStoryboard(withIdentifier identifier: String = SearchPhotosViewImpl.identifier) throws -> SearchPhotosViewImpl {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -30,9 +33,12 @@ class SearchPhotosRouterImpl {
         let worker = SearchPhotosWorkerImpl()
 
         searchPhotosViewImpl.interactor = interactor
+        searchPhotosViewImpl.router = self
         interactor.presenter = presenter
         interactor.worker = worker
         presenter.view = searchPhotosViewImpl
+
+        self.source = searchPhotosViewImpl
 
 		return searchPhotosViewImpl
     }
@@ -51,4 +57,23 @@ class SearchPhotosRouterImpl {
 
      return searchPhotosViewImpl
      }*/
+}
+
+extension SearchPhotosRouterImpl {
+    func showSearchPhotoDetails() {
+        // build details ViewController
+        let detailController = UIViewController()
+        detailController.view.backgroundColor = .red
+
+        // push it
+        source?.navigationController?.pushViewController(detailController, animated: true)
+    }
+}
+
+class SceneFactory {
+    func makeSearchPhotosDetailsScene() -> UIViewController {
+        let detailController = UIViewController()
+        detailController.view.backgroundColor = .red
+        return detailController
+    }
 }
