@@ -8,15 +8,20 @@
 import Foundation
 import UIKit
 
-class ShowPhotoViewImpl: UIViewController {
+protocol ShowPhotoView: AnyObject {
+    func displayPhoto(with: ShowPhoto.GetPhoto.ViewModel)
+}
+
+class ShowPhotoViewImpl: UIViewController, ShowPhotoView {
+
     var interactor: ShowPhotoInteractor?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.getPhoto(width: "")
     }
-}
 
-protocol ShowPhotoInteractor {
-    func getPhoto(width id: String)
+    func displayPhoto(with: ShowPhoto.GetPhoto.ViewModel) {
+        // 
+    }
 }
