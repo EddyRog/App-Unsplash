@@ -15,7 +15,7 @@ protocol SearchPhotosView: AnyObject {
 class SearchPhotosViewImpl: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var tableview: UITableView!
 
     var interactor: SearchPhotosInteractor?
     var router: SearchPhotosRouter?
@@ -25,6 +25,9 @@ class SearchPhotosViewImpl: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableview.delegate = self
+        tableview.dataSource = self
+
         registerTableViewCells()
         searchPhotos(with: "car")
     }
@@ -57,7 +60,7 @@ extension SearchPhotosViewImpl: SearchPhotosView {
         DispatchQueue.main.async { [weak self] in
 //            self?.test.text = viewModel.last?.description
             self?.resultSearch = viewModel
-            self?.resultTableView.reloadData()
+            self?.tableview.reloadData()
         }
     }
 }
@@ -65,7 +68,7 @@ extension SearchPhotosViewImpl: SearchPhotosView {
 // ==================
 // MARK: - Tableview result
 // ==================
-extension SearchPhotosViewImpl: UITableViewDataSource {
+extension SearchPhotosViewImpl: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return resultSearch.count
     }
@@ -93,10 +96,31 @@ extension SearchPhotosViewImpl: UITableViewDataSource {
         }
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        debugPrint("dee L\(#line) 🏵 -------> index => ", indexPath)
+//        debugPrint("dee L\(#line) 🏵 -------> index => ", resultSearch[indexPath.row].description)
+		
+        // clique
+        // select id
+        // interactor.fetchPhoto(with id)
+
+        // TODO: ❎ pass id from resultSearch ❎
+        interactor?.searchPhotosIndexPath(indexPath)
+        	// worker
+        		// service
+        // save data photo in store
+        // presenter
+        // view
+        // rout to detail et pass data
+        // configurator.make
+        // 
+//        router?.showSearchPhotoDetails()
+    }
+
     func registerTableViewCells() {
 		let idCell = "SearchPhotosCell"
         let textFieldCell = UINib(nibName: idCell, bundle: nil)
-        self.resultTableView.register(textFieldCell, forCellReuseIdentifier: idCell)
+        self.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
     }
 }
 

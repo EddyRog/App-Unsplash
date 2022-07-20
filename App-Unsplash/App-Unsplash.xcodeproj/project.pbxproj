@@ -192,8 +192,8 @@
 		C89C9AF42886F5B40007E0B0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				C89C9B0428870FB20007E0B0 /* ShowPhoto */,
 				C8CB867C287DD44700FB996E /* SearchPhotos */,
+				C89C9B0428870FB20007E0B0 /* ShowPhoto */,
 			);
 			name = Modules;
 			sourceTree = "<group>";

@@ -9,6 +9,7 @@ import Foundation
 
 protocol SearchPhotosPresenter {
     func presentSearchPhotos(with responses: [Response])
+    func interactor(didFindIdPhoto: String)
 }
 
 class SearchPhotosPresenterImpl: SearchPhotosPresenter {
@@ -27,5 +28,9 @@ class SearchPhotosPresenterImpl: SearchPhotosPresenter {
 
 		// send back viewModel
         view?.display(with: viewModels)
+    }
+
+    func interactor(didFindIdPhoto: String) {
+        
     }
 }

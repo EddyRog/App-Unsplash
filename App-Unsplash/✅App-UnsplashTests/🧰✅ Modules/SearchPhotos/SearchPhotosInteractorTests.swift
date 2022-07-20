@@ -29,11 +29,13 @@ class SearchPhotosInteractorTests: XCTestCase {
         super.tearDown()
     }
 
+
     func test_givenInteractor_whenSearchPhotos_then_workerIsCalled() {
         sut.searchPhotos(with: "-")
         XCTAssertTrue(workerSpy.invokedSearchPhotos)
     }
 
+    // --- searchPhotos.
     func test_givenInteractor_whenSearchPhotosAndWorkerReturnResponse_expect_PresenterInvoked() {
         workerSpy.stubResponse = []
 
@@ -87,6 +89,55 @@ class SearchPhotosInteractorTests: XCTestCase {
         XCTAssertEqual(expectedResponse, actualResponse)
     }
 
+    // --- DataStore.
+    func test_givenInteractor_whenSearchPhotos__andWorkerReturnEmptyResponse_expect_dataStoreIsEmpty() {
+        // --- given.
+        workerSpy.stubResponse = [Response]()
+        // --- when.
+        sut.searchPhotos(with: "request")
+
+        // --- then.
+        assertNoDifference([], sut.dataStorePhotos)
+    }
+    func test_givenInteractor_whenSearchPhotos__andWorkerReturnManyResponse_expect_dataStoreResponses() {
+        // --- given.
+        let expectedResponses: [Response] = [
+            Response(description: "description0"),
+            Response(description: "description1"),
+        ]
+        workerSpy.stubResponse = expectedResponses
+        // --- when.
+        sut.searchPhotos(with: "request")
+
+        // --- then.
+        assertNoDifference(expectedResponses, sut.dataStorePhotos)
+    }
+
+	// --- searchPhotosIndexPath.
+    func test_givenDataStoreEmpty_whensearchPhotosIndexPath_expect_presenterInteractorDidFindInvoked() {
+        // --- given.
+        sut.dataStorePhotos = []
+        let expecterResponse = ""
+
+        // --- when.
+        sut.searchPhotosIndexPath(IndexPath(item: 0, section: 0))
+
+        // --- .
+        XCTAssertTrue(presenterSpy.interactorDidFindInvoked, "presenter should be called")
+        assertNoDifference(expecterResponse, presenterSpy.resultResponseID)
+    }
+    func test_givenDataStoreEmpty_whensearchPhotosIndexPath_expect_presenterInteractorDidFindInvokedWithId() {
+        // --- given.
+        sut.dataStorePhotos = [Response(description: "description", urlSmall: "urlSmall", id: "id")]
+        let expecterResponse = "id"
+
+        // --- when.
+        sut.searchPhotosIndexPath(IndexPath(item: 0, section: 0))
+
+        // --- .
+        assertNoDifference(expecterResponse, presenterSpy.resultResponseID)
+    }
+
 
     // ==================
     // MARK: - tests double
@@ -108,10 +159,16 @@ class SearchPhotosInteractorTests: XCTestCase {
     class PresenterSpy: SearchPhotosPresenter {
         var invokedPresentSearchPhoto = false
         var resultResponse: [Response]?
+        var interactorDidFindInvoked = false
+        var resultResponseID: String?
 
         func presentSearchPhotos(with responses: [Response]) {
             invokedPresentSearchPhoto = true
             resultResponse = responses
+        }
+        func interactor(didFindIdPhoto id: String) {
+            interactorDidFindInvoked = true
+            resultResponseID = id
         }
     }
 }

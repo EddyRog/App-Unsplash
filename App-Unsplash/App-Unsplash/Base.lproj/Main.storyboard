@@ -137,8 +137,8 @@ Powered by creators everywhere.</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="resultTableView" destination="Z65-CH-F1b" id="7Pv-mG-jnr"/>
                         <outlet property="searchTextField" destination="5kv-n4-Ryz" id="drj-PI-hZM"/>
+                        <outlet property="tableview" destination="Z65-CH-F1b" id="7kd-q7-ZOC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3yD-Ku-Aa9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -63,7 +63,8 @@ class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
 
                 let response = Response(
                     description: result.resultDescription,
-                    urlSmall: result.urls.small
+                    urlSmall: result.urls.small,
+                    id: result.id
                 )
                 responses.append(response)
             }

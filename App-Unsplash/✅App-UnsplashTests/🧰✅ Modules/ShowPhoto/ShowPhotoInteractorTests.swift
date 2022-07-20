@@ -32,13 +32,15 @@ class ShowPhotoInteractorTests: XCTestCase {
         XCTAssertTrue(presenterSpy.getPhotoInvoked)
     }
 
+
+
     // ==================
     // MARK: - Test Doubles
     // ==================
     class PresenterSpy: ShowPhotoPresenter {
 
         var getPhotoInvoked = false
-        
+
         func presentPhoto(with response: ShowPhoto.GetPhoto.Response) {
             getPhotoInvoked = true
         }

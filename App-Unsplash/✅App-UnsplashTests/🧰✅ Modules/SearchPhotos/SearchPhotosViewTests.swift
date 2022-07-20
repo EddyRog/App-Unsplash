@@ -70,14 +70,35 @@ class SearchPhotosViewTests: XCTestCase {
         assertNoDifference(expectedPicture, actualPicture)
     }
 
+    // --- Details View.
+    func test_givenTableView_tapOnRow_expect_showPhotoIndexPath() {
+		// --- given.
+        let tableviewLocal: UITableView = UITableView() // tableView programmat...
+        sut.tableview = tableviewLocal // set it
+
+        sut.tableview.delegate = sut // set the owner of tableViewResponse
+
+        // pass dummy IndexPath
+        let dummyIndexPath: IndexPath = IndexPath(item: 1, section: 0)
+        sut.tableview.delegate?.tableView?(sut.tableview, didSelectRowAt: dummyIndexPath) // trigger a didSelect at ...
+
+        XCTAssertTrue(interactorSpy.searchPhotosIndexPathInvoked, "interactor should be invoked")
+    }
+
     // ================
     // MARK: - test double
     // ==================
     class InteractorSpy: SearchPhotosInteractor {
+
         var searchPhotosInvoked = false
+        var searchPhotosIndexPathInvoked = false
 
         func searchPhotos(with request: String) {
-			searchPhotosInvoked = true
+            searchPhotosInvoked = true
+        }
+
+        func searchPhotosIndexPath(_ indexpath: IndexPath) {
+            searchPhotosIndexPathInvoked = true
         }
     }
 }

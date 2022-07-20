@@ -9,14 +9,15 @@ import Foundation
 
 protocol SearchPhotosInteractor {
     func searchPhotos(with request: String)
+    func searchPhotosIndexPath(_ indexpath: IndexPath)
 }
 
-protocol DataStore {
-    var dataID: String? { get }
+protocol DataStorePhotos {
+    var dataStorePhotos: [Response] {get set}
 }
 
-class SearchPhotosInteractorImpl: SearchPhotosInteractor, DataStore {
-    var dataID: String?
+class SearchPhotosInteractorImpl: SearchPhotosInteractor, DataStorePhotos {
+    var dataStorePhotos: [Response] = []
     var worker: SearchPhotosWorker?
     var presenter: SearchPhotosPresenter?
 
@@ -25,8 +26,23 @@ class SearchPhotosInteractorImpl: SearchPhotosInteractor, DataStore {
         worker?.searchPhotos(with: request, completion: {[weak self] rep in
             guard let this = self else {return}
             // get the response from worker
+
+            // save the rep in data store
+            this.dataStorePhotos = rep
+
             // send back the response the presenter
             this.presenter?.presentSearchPhotos(with: rep)
         })
+	}
+
+    func searchPhotosIndexPath(_ indexpath: IndexPath) {
+//        let response = dataStorePhotos[indexpath.row]
+        var photoID = ""
+        if !dataStorePhotos.isEmpty {
+            if let id = dataStorePhotos[indexpath.row].id {
+                photoID = id
+            }
+        }
+        presenter?.interactor(didFindIdPhoto: photoID)
     }
 }

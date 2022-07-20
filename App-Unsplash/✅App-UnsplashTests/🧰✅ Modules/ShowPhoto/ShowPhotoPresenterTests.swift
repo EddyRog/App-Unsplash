@@ -21,7 +21,6 @@ class ShowPhotoPresenterTests: XCTestCase {
         super.tearDown()
     }
 
-
     func test_init_expect_notnil() {
         XCTAssertNotNil(sut)
     }
@@ -41,7 +40,6 @@ class ShowPhotoPresenterTests: XCTestCase {
 
         XCTAssertTrue(viewSpy.displayPhotoInvoked, "should ask to viewController to display it ")
     }
-
 
     // ==================
     // MARK: - test doubles

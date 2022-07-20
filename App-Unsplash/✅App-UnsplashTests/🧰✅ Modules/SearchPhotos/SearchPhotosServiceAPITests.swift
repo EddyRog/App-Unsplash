@@ -69,17 +69,21 @@ class SearchPhotosServiceAPITests: XCTestCase {
         let stubbedData = fetchJsonDataFromLocalFile()
         let expectedResponseDescription = "Ford in to the wild"
         let expectedResponseUrlsSmall = "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnxlbnwwfHx8fDE2NTgxNjA2NDA&ixlib=rb-1.2.1&q=80&w=400"
+        let expectedResponseID = "a4S6KUuLeoM"
 
 		// --- when.
         let firstResponse = try? sut.parseResponse(data: stubbedData).first
 
         let actualResponsesDescription = firstResponse?.description
         let actualResponsesUrlsSmall = firstResponse?.urlSmall
+        let actualResponsesID = firstResponse?.id
 
         assertNoDifference(expectedResponseDescription, actualResponsesDescription)
         assertNoDifference(expectedResponseUrlsSmall, actualResponsesUrlsSmall)
+        assertNoDifference(expectedResponseID, actualResponsesID)
     }
 
+    // Make URL, MakeURLRequest, ParseResponse
     func test_givenServiceAPI_whenSearchPhoto_expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtcol to customize the response of fake server

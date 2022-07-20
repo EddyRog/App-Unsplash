@@ -13,6 +13,7 @@ import Foundation
 struct Response: Equatable {
     var description: String
     var urlSmall: String?
+    var id: String?
 }
 struct ViewModel: Equatable {
     var description: String
@@ -43,11 +44,13 @@ struct Photos: Codable {
 struct Result: Codable {
     var resultDescription: String
     var urls: PictureUrls
+    var id: String
 
     // Re map the keys
     enum CodingKeys: String, CodingKey {
         case resultDescription = "description"
         case urls
+        case id
     }
 
     // DefaultValue
@@ -56,6 +59,7 @@ struct Result: Codable {
 
         resultDescription = try container.decodeIfPresent(String.self, forKey: .resultDescription) ?? "😖 NO DESCRIPTION"
         urls = try container.decodeIfPresent(PictureUrls.self, forKey: .urls) ?? PictureUrls(small: "")
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? "😖 NO ID"
     }
 }
 
