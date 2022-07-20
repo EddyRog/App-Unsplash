@@ -35,7 +35,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uD6-8S-v4f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-932" y="-92"/>
+            <point key="canvasLocation" x="-1693" y="-92"/>
         </scene>
         <!--Search Photos View Impl-->
         <scene sceneID="0e1-xf-HVi">
@@ -50,13 +50,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsplash" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFe-2Y-yVe" userLabel="Unsplash_title">
-                                <rect key="frame" x="20" y="44" width="374" height="48"/>
+                                <rect key="frame" x="20" y="88" width="374" height="48"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-Zh-X3J" userLabel="Unsplash_subtitle">
-                                <rect key="frame" x="20" y="112" width="374" height="29"/>
+                                <rect key="frame" x="20" y="156" width="374" height="29"/>
                                 <string key="text">The internet’s source of freely-usable images.
 Powered by creators everywhere.</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
@@ -64,7 +64,7 @@ Powered by creators everywhere.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search free high-resolution photos" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5kv-n4-Ryz">
-                                <rect key="frame" x="20" y="161" width="374" height="50"/>
+                                <rect key="frame" x="20" y="205" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3Qv-E3-cqo"/>
                                 </constraints>
@@ -72,7 +72,7 @@ Powered by creators everywhere.</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Z65-CH-F1b">
-                                <rect key="frame" x="20" y="249" width="374" height="613"/>
+                                <rect key="frame" x="20" y="293" width="374" height="569"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="9cd-Oe-OIJ">
@@ -102,7 +102,7 @@ Powered by creators everywhere.</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TG1-AZ-RKd">
-                                <rect key="frame" x="20" y="89" width="114" height="85"/>
+                                <rect key="frame" x="20" y="133" width="114" height="85"/>
                                 <color key="backgroundColor" red="0.4086379604" green="0.64371514320000001" blue="0.42862014990000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="114" id="atM-mN-PPP"/>
@@ -136,6 +136,7 @@ Powered by creators everywhere.</string>
                             <constraint firstItem="Z65-CH-F1b" firstAttribute="top" secondItem="5kv-n4-Ryz" secondAttribute="bottom" constant="38" id="rpg-YP-HIP"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Whn-bt-rW3"/>
                     <connections>
                         <outlet property="searchTextField" destination="5kv-n4-Ryz" id="drj-PI-hZM"/>
                         <outlet property="tableview" destination="Z65-CH-F1b" id="7kd-q7-ZOC"/>
@@ -143,7 +144,7 @@ Powered by creators everywhere.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3yD-Ku-Aa9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-42.028985507246382" y="-92.410714285714278"/>
+            <point key="canvasLocation" x="868.11594202898561" y="-92.410714285714278"/>
         </scene>
         <!--Show Photo View Impl-->
         <scene sceneID="7kg-8k-vfS">
@@ -159,6 +160,24 @@ Powered by creators everywhere.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pdX-yE-0VG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-42" y="655"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Whw-rH-POx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hIz-1X-ylG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fdD-lr-zw5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eB3-Vo-Aqu" kind="relationship" relationship="rootViewController" id="f33-Qo-IZz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uPo-Yx-mr7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-42.028985507246382" y="-92.410714285714278"/>
         </scene>
     </scenes>
     <resources>

@@ -11,6 +11,8 @@ protocol ShowPhotoInteractor {
 }
 class ShowPhotoInteractorImpl: ShowPhotoInteractor {
     var presenter: ShowPhotoPresenter?
+    var photoID: String?
+
     func getPhoto(width id: String) {
         presenter?.presentPhoto(with: .init(photo: Photo()))
     }

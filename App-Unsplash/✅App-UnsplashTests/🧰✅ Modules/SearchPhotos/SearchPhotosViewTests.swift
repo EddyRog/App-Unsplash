@@ -11,16 +11,22 @@ import CustomDump
 class SearchPhotosViewTests: XCTestCase {
     var sut: SearchPhotosViewImpl!
     var interactorSpy: InteractorSpy!
+    var routerSpy: RouterSpy!
 
     override func setUp() {
         super.setUp()
         sut = SearchPhotosViewImpl()
+
         interactorSpy = InteractorSpy()
+        routerSpy = RouterSpy()
 
         sut.interactor = interactorSpy
+        sut.router = routerSpy
     }
     override func tearDown() {
         sut = nil
+        interactorSpy = nil
+        routerSpy = nil
         super.tearDown()
     }
 
@@ -85,6 +91,14 @@ class SearchPhotosViewTests: XCTestCase {
         XCTAssertTrue(interactorSpy.searchPhotosIndexPathInvoked, "interactor should be invoked")
     }
 
+    // --- Router Present details view.
+    func test_given_View_whenPresenterDidObtainPhotoId_expect_routerInvoked() {
+        sut.presenter(didObtainPhotoID: "ID")
+
+        XCTAssertTrue(routerSpy.showSearchPhotoDetailInvoked, "Should call the router")
+        assertNoDifference("ID", routerSpy.showSearchPhotoDetailResult)
+    }
+
     // ================
     // MARK: - test double
     // ==================
@@ -99,6 +113,18 @@ class SearchPhotosViewTests: XCTestCase {
 
         func searchPhotosIndexPath(_ indexpath: IndexPath) {
             searchPhotosIndexPathInvoked = true
+        }
+    }
+
+    class RouterSpy: SearchPhotosRouter {
+        var navigationController: UINavigationController?
+        
+        var showSearchPhotoDetailInvoked = false
+        var showSearchPhotoDetailResult: String?
+        
+        func showSearchPhotoDetails(with id: String) {
+            showSearchPhotoDetailInvoked = true
+            showSearchPhotoDetailResult = id
         }
     }
 }

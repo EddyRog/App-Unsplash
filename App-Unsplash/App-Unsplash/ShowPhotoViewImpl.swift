@@ -15,6 +15,7 @@ protocol ShowPhotoView: AnyObject {
 class ShowPhotoViewImpl: UIViewController, ShowPhotoView {
 
     var interactor: ShowPhotoInteractor?
+    var router: ShowPhotoRouter?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -25,3 +26,4 @@ class ShowPhotoViewImpl: UIViewController, ShowPhotoView {
         // 
     }
 }
+

@@ -31,16 +31,30 @@ class SearchPhotosRouterTests: XCTestCase {
         super.tearDown()
     }
 
-
-
-
     // routing to
     func test_givenRouter_whenShowSearchShowDetails_expect_presenterCalled_onSource() {
-        sut.showSearchPhotoDetails()
+        sut.showSearchPhotoDetails(with: "")
 
         // mock uinavigationController
         XCTAssertTrue(currentManagerVCSpy.pushViewControllerCalled)
     }
+
+    func test_destination_when_showSearchPhotoDetails_expect_destinationIsInvoked() {
+        let configurator = ShowPhotoConfiguratorImpl()
+        let viewController = try? configurator.buildWithStoryboard(withIdentifier: "ShowPhotoViewImpl")
+
+        configurator.configureModule(photoID: "ID", viewController: viewController!)
+//        sut.destionation =
+
+        sut.showSearchPhotoDetails(with: "")
+
+        XCTAssertNotNil(sut.destionation)
+
+        XCTAssertNotNil(viewController!.router)
+        XCTAssertNotNil(viewController?.router?.navigationController)
+        XCTAssertNotNil(viewController?.interactor)
+    }
+
     // ==================
     // MARK: - Test Doubles
     // ==================

@@ -30,7 +30,7 @@ class SearchPhotosPresenterImpl: SearchPhotosPresenter {
         view?.display(with: viewModels)
     }
 
-    func interactor(didFindIdPhoto: String) {
-        
+    func interactor(didFindIdPhoto id: String) {
+        view?.presenter(didObtainPhotoID: id)
     }
 }

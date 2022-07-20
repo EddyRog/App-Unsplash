@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 class SearchPhotosConfiguratorImpl {
-    // used for storyboard
+
     func buildWithStoryboard(withIdentifier identifier: String = SearchPhotosViewImpl.identifier) throws -> SearchPhotosViewImpl {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // --- check ID.
@@ -23,24 +23,34 @@ class SearchPhotosConfiguratorImpl {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
         }
 
+        //        configureModule(searchPhotosViewImpl)
+
+        return searchPhotosViewImpl
+    }
+
+    // used for storyboard
+    func configureModule(_ searchPhotosViewImpl: SearchPhotosViewImpl) {
         // --- set connection between layers
         let interactor = SearchPhotosInteractorImpl()
         let presenter = SearchPhotosPresenterImpl()
         let worker = SearchPhotosWorkerImpl()
         let router = SearchPhotosRouterImpl()
 
-        searchPhotosViewImpl.interactor = interactor
-
-        searchPhotosViewImpl.router = router
+        // router -> ( source, navigationController )
         router.source = searchPhotosViewImpl
+        router.navigationController = searchPhotosViewImpl.navigationController
 
+        
+
+        // interactor -> ( presenter, worker)
         interactor.presenter = presenter
-
         interactor.worker = worker
 
+        // view -> ( interactor, router )
+        searchPhotosViewImpl.interactor = interactor
+        searchPhotosViewImpl.router = router
+
+        // presenter -> ( View )
         presenter.view = searchPhotosViewImpl
-
-
-        return searchPhotosViewImpl
     }
 }

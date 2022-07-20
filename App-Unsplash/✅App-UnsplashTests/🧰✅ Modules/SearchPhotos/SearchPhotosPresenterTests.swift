@@ -67,16 +67,30 @@ class PresenterSearchPhotosTests: XCTestCase {
         XCTAssertEqual(expectedViewModels ,viewSpy.resultOfViewModels)
     }
 
+    // --- presenter(DidObtainID).
+    func test_givenPresenter_whenPresenterDidObtainPhotoId_expect_ViewInvoked() {
+        sut.interactor(didFindIdPhoto: "ID")
+
+        XCTAssertTrue(viewSpy.didObtainIdInvoked, "should call the view")
+        assertNoDifference(viewSpy.resultDidObtainId, "ID")
+    }
+
     // ==================
     // MARK: - test doubles
     // ==================
     class ViewSpy: SearchPhotosView {
         var displayInvoked = false
         var resultOfViewModels: [ViewModel]?
+        var didObtainIdInvoked = false
+        var resultDidObtainId: String?
 
         func display(with viewModel: [ViewModel]) {
             displayInvoked = true
             resultOfViewModels = viewModel
+        }
+        func presenter(didObtainPhotoID id: String) {
+            didObtainIdInvoked = true
+            resultDidObtainId = id
         }
     }
 }

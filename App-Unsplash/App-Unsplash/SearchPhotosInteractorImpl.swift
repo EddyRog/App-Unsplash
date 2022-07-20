@@ -36,7 +36,6 @@ class SearchPhotosInteractorImpl: SearchPhotosInteractor, DataStorePhotos {
 	}
 
     func searchPhotosIndexPath(_ indexpath: IndexPath) {
-//        let response = dataStorePhotos[indexpath.row]
         var photoID = ""
         if !dataStorePhotos.isEmpty {
             if let id = dataStorePhotos[indexpath.row].id {

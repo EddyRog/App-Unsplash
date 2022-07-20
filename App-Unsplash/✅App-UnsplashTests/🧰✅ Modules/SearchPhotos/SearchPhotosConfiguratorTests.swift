@@ -17,6 +17,7 @@ class SearchPhotosConfiguratorTests: XCTestCase {
         super.setUp()
         sut = SearchPhotosConfiguratorImpl()
         searchPhotosView = try? sut.buildWithStoryboard()
+        sut.configureModule(searchPhotosView)
     }
     override func tearDown() {
         sut = nil

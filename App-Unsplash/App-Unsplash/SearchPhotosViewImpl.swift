@@ -10,6 +10,7 @@ import UIKit
 
 protocol SearchPhotosView: AnyObject {
     func display(with viewModel: [ViewModel])
+    func presenter(didObtainPhotoID id: String)
 }
 
 class SearchPhotosViewImpl: UIViewController {
@@ -43,7 +44,7 @@ class SearchPhotosViewImpl: UIViewController {
 
     @IBAction func push(_ sender: Any) {
         print("push")
-        router?.showSearchPhotoDetails()
+//        router?.showSearchPhotoDetails()
     }
 
     @IBAction func actionSearch(_ sender: Any) {
@@ -62,6 +63,11 @@ extension SearchPhotosViewImpl: SearchPhotosView {
             self?.resultSearch = viewModel
             self?.tableview.reloadData()
         }
+    }
+
+    func presenter(didObtainPhotoID id: String) {
+        // set the destination
+        router?.showSearchPhotoDetails(with: id)
     }
 }
 

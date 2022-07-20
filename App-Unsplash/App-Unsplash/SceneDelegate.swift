@@ -15,13 +15,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        window?.makeKeyAndVisible()
 
-        let saearchPhotosConfigurator = SearchPhotosConfiguratorImpl()
-        guard let searchPhotosView = try? saearchPhotosConfigurator.buildWithStoryboard() else { return }
-        let navController = UINavigationController(rootViewController: searchPhotosView)
-        window?.rootViewController = navController
+        // configurator
+        let searchPhotosConfigurator = SearchPhotosConfiguratorImpl()
+
+        // viewcontroller
+        guard let searchPhotosViewController = try? searchPhotosConfigurator.buildWithStoryboard() else { return }
+
+
+        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
+
+        searchPhotosConfigurator.configureModule(searchPhotosViewController)
+
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = navigationSearchPhotos
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
