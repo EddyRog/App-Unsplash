@@ -7,37 +7,52 @@
 
 import Foundation
 
-protocol SearchPhotosInteractor {
-    var presenter: SearchPhotosPresenter {get set}
-
-    func fetchPhotos(with request: String, completionFetcher: @escaping (Response) -> Void )
+protocol SearchPhotosBusinessLogic {
+    func fetchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
+//    func searchPhotosIndexPath(_ indexpath: IndexPath)
+}
+protocol SearchPhotosDataStoreProtocol {
+    var dataStorePhotos: [Response] {get set}
 }
 
-class SearchPhotosInteractorImpl: SearchPhotosInteractor {
-    var fetcher: SearchPhotosFetcher?
-    var presenter: SearchPhotosPresenter
+class SearchPhotosInteractor: SearchPhotosBusinessLogic, SearchPhotosDataStoreProtocol {
+    var worker: SearchPhotosWorker?
+    var presenter: SearchPhotosPresentationLogic?
+    var dataStorePhotos: [Response] = []
 
-    internal init(fetcher: SearchPhotosFetcher? = nil, presenter: SearchPhotosPresenter) {
-        self.fetcher = fetcher
-        self.presenter = presenter
-    }
+    func fetchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
 
-    func fetchPhotos(with request: String, completionFetcher: @escaping (Response) -> Void) {
-        // fetcher.fetch
-        fetcher?.fetch(with: request, completion: { (photos: [Photo]) in
-			var responseToReturn = Response(value: [])
-            // parse array fo photos
-            photos.forEach { photo in
-                let picture = photo.picture
-                let description = photo.description
-                // hydrate data with response
-                let photoHydrated = Photo(description: description, picture: picture)
-                // Add it to response objc
-                responseToReturn.value.append(photoHydrated)
-            }
+        worker?.fetchPhotos(withRequest: "", completionHandler: { [weak self] photos in
+            guard let this = self else {return}
 
-            // send back response to presenter
-            completionFetcher(responseToReturn)
+            // --- handle the response.
+            var response = SearchPhotos.FetchPhotos.Response.init(photos: .init())
+            response.photos = photos
+
+            this.presenter?.presentFetchedPhotos(with: response)
         })
+    }
+//    func searchPhotos(with request: String) {
+//        worker?.searchPhotos(with: request, completion: {[weak self] rep in
+//            guard let this = self else {return}
+//            // get the response from worker
+//
+//            // save the rep in data store
+//            this.dataStorePhotos = rep
+//
+//            // send back the response the presenter
+//            this.presenter?.presentSearchPhotos(with: rep)
+//            this.presenter?.presentSearchPhotos(with: <#T##[Response]#>)
+//        })
+//	}
+
+    func searchPhotosIndexPath(_ indexpath: IndexPath) {
+        var photoID = ""
+        if !dataStorePhotos.isEmpty {
+            if let id = dataStorePhotos[indexpath.row].id {
+                photoID = id
+            }
+        }
+//        presenter?.interactor(didFindIdPhoto: photoID)
     }
 }

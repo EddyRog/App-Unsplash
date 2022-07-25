@@ -8,18 +8,19 @@
 import Foundation
 import UIKit
 
-protocol SearchPhotosView: AnyObject {
-    func display(with viewModel: [ViewModel])
-    func presenter(didObtainPhotoID id: String)
+
+protocol SearchPhotosDisplayLogic: AnyObject {
+    func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
+    func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel)
 }
 
-class SearchPhotosViewImpl: UIViewController {
+class SearchPhotosViewController: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
 
-    var interactor: SearchPhotosInteractor?
-    var router: SearchPhotosRouter?
+    var interactor: SearchPhotosBusinessLogic?
+    var router: SearchPhotosRoutingLogic?
 
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
@@ -30,17 +31,8 @@ class SearchPhotosViewImpl: UIViewController {
         tableview.dataSource = self
 
         registerTableViewCells()
-        searchPhotos(with: "car")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-
-    func searchPhotos(with request: String) {
-        interactor?.searchPhotos(with: request)
-    }
 
     @IBAction func push(_ sender: Any) {
         print("push")
@@ -48,33 +40,44 @@ class SearchPhotosViewImpl: UIViewController {
     }
 
     @IBAction func actionSearch(_ sender: Any) {
-        let request = searchTextField.text
-        debugPrint("dee L\(#line) 🏵 -------> request txtfield => ", request)
-        guard let unwRequest = request else { return }
-        interactor?.searchPhotos(with: unwRequest)
+//        let request = searchTextField.text
+//        debugPrint("dee L\(#line) 🏵 -------> request txtfield => ", request)
+//        guard let unwRequest = request else { return }
+//        interactor?.searchPhotos(with: unwRequest)
     }
 }
 
-extension SearchPhotosViewImpl: SearchPhotosView {
-    func display(with viewModel: [ViewModel]) {
-        // MARK: - set outlet
-        DispatchQueue.main.async { [weak self] in
-//            self?.test.text = viewModel.last?.description
-            self?.resultSearch = viewModel
-            self?.tableview.reloadData()
-        }
+extension SearchPhotosViewController: SearchPhotosDisplayLogic {
+    func searchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
+        interactor?.fetchPhotos(withRequest: request)
     }
 
-    func presenter(didObtainPhotoID id: String) {
-        // set the destination
-        router?.showSearchPhotoDetails(with: id)
+    func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
+        // TODO: ❎ impl ❎
     }
 }
+
+//extension SearchPhotosViewController: SearchPhotosDisplayLogic {
+
+//    func display(with viewModel: [ViewModel]) {
+//        // MARK: - set outlet
+//        DispatchQueue.main.async { [weak self] in
+////            self?.test.text = viewModel.last?.description
+//            self?.resultSearch = viewModel
+//            self?.tableview.reloadData()
+//        }
+//    }
+
+//    func presenter(didObtainPhotoID id: String) {
+//        router?.rootToSearchPhotosDetails(withID: id)
+//    }
+//}
+
 
 // ==================
 // MARK: - Tableview result
 // ==================
-extension SearchPhotosViewImpl: UITableViewDataSource, UITableViewDelegate {
+extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return resultSearch.count
     }
@@ -111,7 +114,7 @@ extension SearchPhotosViewImpl: UITableViewDataSource, UITableViewDelegate {
         // interactor.fetchPhoto(with id)
 
         // TODO: ❎ pass id from resultSearch ❎
-        interactor?.searchPhotosIndexPath(indexPath)
+//        interactor?.searchPhotosIndexPath(indexPath)
         	// worker
         		// service
         // save data photo in store
@@ -130,7 +133,7 @@ extension SearchPhotosViewImpl: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension SearchPhotosView {
+extension SearchPhotosDisplayLogic {
     func makePicture(with url: String) -> Data {
         let defaultData = UIImage(named: "noPicture")?.pngData() ?? Data()
         guard let url = URL(string: url) else {

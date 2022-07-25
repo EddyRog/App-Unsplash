@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol SearchPhotosServiceAPI {
+protocol SearchPhotosServiceAPIProtocol {
     func searchPhotos(with request: String, completion: @escaping ([Response]) -> Void)
 }
 
-class SearchPhotosServiceAPIImpl: SearchPhotosServiceAPI {
+class SearchPhotosServiceAPI: SearchPhotosServiceAPIProtocol {
     var session: URLSession = URLSession.shared
 
     func searchPhotos(with request: String, completion: @escaping ([Response]) -> Void) {

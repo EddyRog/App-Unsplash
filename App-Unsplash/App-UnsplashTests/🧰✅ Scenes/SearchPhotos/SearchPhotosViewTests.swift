@@ -9,42 +9,80 @@ import XCTest
 import CustomDump
 
 class SearchPhotosViewTests: XCTestCase {
-    var sut: SearchPhotosViewImpl!
-    var interactorSpy: InteractorSpy!
+    var sutViewController: SearchPhotosViewController!
     var routerSpy: RouterSpy!
+    var interactorSpy: SearchPhotosBusinessLogicSpy!
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosViewImpl()
-
-        interactorSpy = InteractorSpy()
+        sutViewController = SearchPhotosViewController()
         routerSpy = RouterSpy()
+        interactorSpy = SearchPhotosBusinessLogicSpy()
 
-        sut.interactor = interactorSpy
-        sut.router = routerSpy
+        // setup
+        sutViewController.router = routerSpy
+        sutViewController.interactor = interactorSpy
     }
+
     override func tearDown() {
-        sut = nil
-        interactorSpy = nil
-        routerSpy = nil
+        sutViewController = nil
         super.tearDown()
     }
 
-    func test_givenView_init_expect_isNotNil() {
-        XCTAssertNotNil(sut)
-    }
-    func test_givenView_init_expect_routerIsNotNil() {
-//        sut.
+    func test_initViewController_expect_notNil() {
+        XCTAssertNotNil(sutViewController)
     }
 
-    func test_givenView_searchPhotosWithRequest_expect_interactorInvoked() {
-        sut.searchPhotos(with: "")
+    func test_initViewController_expect_routerNotNil() {
+        XCTAssertNotNil(sutViewController.router)
+    }
 
-        XCTAssertTrue(interactorSpy.searchPhotosInvoked)
+    func test_initViewController_expect_interactorNotNil() {
+        XCTAssertNotNil(sutViewController.interactor)
+    }
+
+    // --- search.
+    func test_searchPhotos_withRequest__expect_interactorInvoked() {
+        let request = SearchPhotos.FetchPhotos.Request.init(query: "car")
+
+        sutViewController.searchPhotos(withRequest: request)
+
+        XCTAssertTrue(interactorSpy.invokedSearchPhotos)
+    }
+
+    // --- routing.
+    // TODO: ❎ impl tap on tableView ❎
+    // TODO: ❎ impl tap on make ❎
+
+
+    // ==================
+    // MARK: - Test doubles
+    // ==================
+    class RouterSpy: SearchPhotosRoutingLogic {
+        var invokedRootToSearchPhotosDetails = false
+
+        func rootToSearchPhotosDetails(withID: String) {
+			invokedRootToSearchPhotosDetails = true
+        }
+    }
+
+    // interactor
+    class SearchPhotosBusinessLogicSpy: SearchPhotosBusinessLogic {
+        var invokedSearchPhotos = false
+
+        func fetchPhotos(withRequest: SearchPhotos.FetchPhotos.Request) {
+            invokedSearchPhotos = true
+        }
     }
 
 
-    // --- make URL.
+
+
+
+
+
+    /*
+    // --- make PictureURL.
     func test_givenStringUrlOfPhoto_when_makePictureWithString_expect_emptyDataofUrl() {
          let expectedPicture: Data? = UIImage(named: "noPicture")?.pngData()
 
@@ -76,6 +114,7 @@ class SearchPhotosViewTests: XCTestCase {
         assertNoDifference(expectedPicture, actualPicture)
     }
 
+    // FIXME: ⚠️ need to check ⚠️
     // --- Details View.
     func test_givenTableView_tapOnRow_expect_showPhotoIndexPath() {
 		// --- given.
@@ -88,24 +127,27 @@ class SearchPhotosViewTests: XCTestCase {
         let dummyIndexPath: IndexPath = IndexPath(item: 1, section: 0)
         sut.tableview.delegate?.tableView?(sut.tableview, didSelectRowAt: dummyIndexPath) // trigger a didSelect at ...
 
-        XCTAssertTrue(interactorSpy.searchPhotosIndexPathInvoked, "interactor should be invoked")
+//        XCTAssertTrue(interactorSpy.searchPhotosIndexPathInvoked, "interactor should be invoked")
     }
 
+    // FIXME: ⚠️ need to check ⚠️
     // --- Router Present details view.
     func test_given_View_whenPresenterDidObtainPhotoId_expect_routerInvoked() {
         sut.presenter(didObtainPhotoID: "ID")
 
-        XCTAssertTrue(routerSpy.showSearchPhotoDetailInvoked, "Should call the router")
-        assertNoDifference("ID", routerSpy.showSearchPhotoDetailResult)
+//        XCTAssertTrue(routerSpy.showSearchPhotoDetailInvoked, "Should call the router")
+//        assertNoDifference("ID", routerSpy.showSearchPhotoDetailResult)
     }
-
+*/
     // ================
     // MARK: - test double
     // ==================
-    class InteractorSpy: SearchPhotosInteractor {
+    /*
+    class InteractorSpy: SearchPhotosBusinessLogic {
 
         var searchPhotosInvoked = false
         var searchPhotosIndexPathInvoked = false
+
 
         func searchPhotos(with request: String) {
             searchPhotosInvoked = true
@@ -116,15 +158,17 @@ class SearchPhotosViewTests: XCTestCase {
         }
     }
 
-    class RouterSpy: SearchPhotosRouter {
+    class RouterSpy: SearchPhotosRouterProtocol {
+
         var navigationController: UINavigationController?
-        
         var showSearchPhotoDetailInvoked = false
         var showSearchPhotoDetailResult: String?
-        
+
+
         func showSearchPhotoDetails(with id: String) {
             showSearchPhotoDetailInvoked = true
             showSearchPhotoDetailResult = id
         }
     }
+     */
 }

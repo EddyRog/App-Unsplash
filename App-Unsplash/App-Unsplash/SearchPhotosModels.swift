@@ -7,6 +7,28 @@
 
 import Foundation
 
+
+
+enum SearchPhotos {
+//    enum Create { }
+//    enum UpdatePhotos { }
+//    enum DeletePhotos  { }
+    enum FetchPhotos {
+        struct Request {
+            var query: String
+        }
+        struct Response {
+            var photos: [Photo]
+        }
+        struct ViewModel {
+            struct DisplayedPhoto {
+                var description: String
+            }
+            var displayedPhotos: [DisplayedPhoto]
+        }
+    }
+}
+
 // ==================
 // MARK: - Transfer object
 // ==================

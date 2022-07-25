@@ -9,11 +9,11 @@ import XCTest
 import CustomDump
 
 class SearchPhotosServiceAPITests: XCTestCase {
-    var sut: SearchPhotosServiceAPIImpl!
+    var sut: SearchPhotosServiceAPI!
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosServiceAPIImpl()
+        sut = SearchPhotosServiceAPI()
     }
     override func tearDown() {
         sut = nil
@@ -119,7 +119,7 @@ class SearchPhotosServiceAPITests: XCTestCase {
     }
 
     // ==================
-    // MARK: - Test Double
+    // MARK: - Test doubles
     // ==================
     class MockUrlProtocol: URLProtocol {
         static var requestHandlerStubbed: ( (URLRequest) -> (HTTPURLResponse, Data) )?
@@ -176,27 +176,3 @@ class SearchPhotosServiceAPITests: XCTestCase {
         return dataJson
     }
 }
-
-
-
-
-
-
-/*
- test : closure
-
- input request
- map = ???
- output = response
-
-
- map {
- 	session
- 	url
- 	request url
- 	datatask
- 		data
- 		decoder / error
- 	resume
- }
- */

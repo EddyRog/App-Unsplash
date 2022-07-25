@@ -7,9 +7,9 @@
 import Foundation
 import UIKit
 
-class SearchPhotosConfiguratorImpl {
+class SearchPhotosConfigurator {
 
-    func buildWithStoryboard(withIdentifier identifier: String = SearchPhotosViewImpl.identifier) throws -> SearchPhotosViewImpl {
+    func buildWithStoryboard(withIdentifier identifier: String = SearchPhotosViewController.identifier) throws -> SearchPhotosViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // --- check ID.
         if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
@@ -19,7 +19,7 @@ class SearchPhotosConfiguratorImpl {
         // --- Init from ID.
         let view = storyboard.instantiateViewController(withIdentifier: identifier)
 
-        guard let searchPhotosViewImpl = view as? SearchPhotosViewImpl else {
+        guard let searchPhotosViewImpl = view as? SearchPhotosViewController else {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
         }
 
@@ -29,18 +29,17 @@ class SearchPhotosConfiguratorImpl {
     }
 
     // used for storyboard
-    func configureModule(_ searchPhotosViewImpl: SearchPhotosViewImpl) {
+    func configureModule(_ searchPhotosViewImpl: SearchPhotosViewController) {
         // --- set connection between layers
-        let interactor = SearchPhotosInteractorImpl()
-        let presenter = SearchPhotosPresenterImpl()
-        let worker = SearchPhotosWorkerImpl()
-        let router = SearchPhotosRouterImpl()
+        let interactor = SearchPhotosInteractor()
+        let presenter = SearchPhotosPresenter()
+        let worker = SearchPhotosWorker()
+        let router = SearchPhotosRouter()
 
         // router -> ( source, navigationController )
-        router.source = searchPhotosViewImpl
-        router.navigationController = searchPhotosViewImpl.navigationController
+//        router.source = searchPhotosViewImpl
+//        router.navigationController = searchPhotosViewImpl.navigationController
 
-        
 
         // interactor -> ( presenter, worker)
         interactor.presenter = presenter
