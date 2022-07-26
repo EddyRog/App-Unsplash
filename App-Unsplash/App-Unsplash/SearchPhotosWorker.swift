@@ -11,12 +11,22 @@ protocol SearchPhotosStoreProtocol {
 }
 
 class SearchPhotosWorker {
-
     var service: SearchPhotosStoreProtocol?
+
+    internal init(service myService: SearchPhotoService) {
+        switch myService {
+        	case .api:
+            	self.service = SearchPhotosServiceAPI()
+        	case .noService:
+            	self.service = nil
+        }
+//        self.service = service
+    }
 
     func fetchPhotos(withRequest request: String, completionHandler: @escaping ([Photo]) -> Void) {
 		// call with a specific service
         service?.fetchPhotos(withRequest: request, completionHandler: { responseFetched in
+            print(responseFetched)
             DispatchQueue.main.async {
                 // Handle the response if needed
                 // Send back the response
@@ -24,13 +34,9 @@ class SearchPhotosWorker {
             }
         })
     }
-
-//    func searchPhotos(with request: String, completion: @escaping ([Response]) -> Void) {
-
-//        serviceAPI?.searchPhotos(with: request) { responseDecoded in
-//
-//            completion(responseDecoded)
-//        }
-//    }
 }
 
+enum SearchPhotoService {
+    case api
+    case noService
+}

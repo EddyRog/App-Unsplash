@@ -21,11 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // viewcontroller
         guard let searchPhotosViewController = try? searchPhotosConfigurator.buildWithStoryboard() else { return }
-
-
         let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
-
-//        searchPhotosConfigurator.configureModule(searchPhotosViewController)
+        searchPhotosConfigurator.configureModule(searchPhotosViewController)
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationSearchPhotos

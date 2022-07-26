@@ -39,10 +39,3 @@ enum ShowPhoto {
     }
 }
 
-struct Photo: Equatable {
-    var description: String?
-
-    static func == (lhs: Photo, rhs: Photo) -> Bool {
-        return lhs.description == rhs.description
-    }
-}

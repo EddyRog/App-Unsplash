@@ -59,8 +59,7 @@ class SearchPhotosServiceAPITests: XCTestCase {
     // ParseResponse
     func test_parseDataResponse_withJson_expect_throwsError() {
 		let stubbedData = "{ \"JsonKeyWrong\": 42 }".data(using: .utf8)!
-        XCTAssertThrowsError(try sut.parseResponse(data: stubbedData),
-                             "should throwns error") { error in
+        XCTAssertThrowsError(try sut.parseResponse(data: stubbedData), "should throwns error") { error in
             assertNoDifference(ServiceError.dataParse, error as! ServiceError)
         }
     }
@@ -68,22 +67,24 @@ class SearchPhotosServiceAPITests: XCTestCase {
         // --- given.
         let stubbedData = fetchJsonDataFromLocalFile()
         let expectedResponseDescription = "Ford in to the wild"
-        let expectedResponseUrlsSmall = "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnxlbnwwfHx8fDE2NTgxNjA2NDA&ixlib=rb-1.2.1&q=80&w=400"
-        let expectedResponseID = "a4S6KUuLeoM"
+//        let expectedResponseUrlsSmall = "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw1NDcwN3wwfDF8c2VhcmNofDF8fGNhcnxlbnwwfHx8fDE2NTgxNjA2NDA&ixlib=rb-1.2.1&q=80&w=400"
+//        let expectedResponseID = "a4S6KUuLeoM"
 
 		// --- when.
-        let firstResponse = try? sut.parseResponse(data: stubbedData).first
+        let firstResponse = try? sut.parseResponse(data: stubbedData).photos.first
+
 
         let actualResponsesDescription = firstResponse?.description
-        let actualResponsesUrlsSmall = firstResponse?.urlSmall
-        let actualResponsesID = firstResponse?.id
+//        let actualResponsesUrlsSmall = firstResponse?.urlSmall
+//        let actualResponsesID = firstResponse?.id
 
         assertNoDifference(expectedResponseDescription, actualResponsesDescription)
-        assertNoDifference(expectedResponseUrlsSmall, actualResponsesUrlsSmall)
-        assertNoDifference(expectedResponseID, actualResponsesID)
+//        assertNoDifference(expectedResponseUrlsSmall, actualResponsesUrlsSmall)
+//        assertNoDifference(expectedResponseID, actualResponsesID)
     }
 
     // Make URL, MakeURLRequest, ParseResponse
+    /*
     func test_givenServiceAPI_whenSearchPhoto_expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtcol to customize the response of fake server
@@ -117,7 +118,39 @@ class SearchPhotosServiceAPITests: XCTestCase {
         }
         wait(for: [exp], timeout: 0.1)
     }
+	*/
 
+    func test_givenServiceAPI_whenSearchPhoto_expect_response() {
+        // --- given.
+        // MARK: - Config the session with a mock URLProtcol to customize the response of fake server
+        let configuration = URLSessionConfiguration.ephemeral // no persistence for (credential, cache, cookie)
+        configuration.protocolClasses = [MockUrlProtocol.self]
+
+        // MARK: - set the session with our configuration for purpose of test
+        sut.session = URLSession(configuration: configuration)
+
+        // MARK: - Setup a stubbed response in our MockUrlProtocol
+        MockUrlProtocol.requestHandlerStubbed = { urlRequestPassed in
+
+            // MARK: - Check the request when it s passed
+            XCTAssertEqual(urlRequestPassed.url?.query?.contains("Car"), true)
+            XCTAssertEqual(urlRequestPassed.url?.host?.contains("api.unsplash.com"), true)
+            XCTAssertEqual(urlRequestPassed.url?.scheme?.contains("https"), true)
+
+            // send back to the receiver
+            let response = HTTPURLResponse()
+            let data = self.fetchJsonDataFromLocalFile()
+            return (response, data)
+        }
+
+        // --- when.
+        let exp = expectation(description: "wait searchPhoto()")
+        sut.fetchPhotos(withRequest: "Car") { responseFromEXTWithPhotos in
+            self.assertNoDifference("Ford in to the wild", responseFromEXTWithPhotos.first?.description)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 0.1)
+    }
     // ==================
     // MARK: - Test doubles
     // ==================

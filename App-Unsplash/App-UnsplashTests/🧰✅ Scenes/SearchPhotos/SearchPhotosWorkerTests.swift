@@ -14,7 +14,7 @@ class SearchPhotosWorkerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sutWorker = SearchPhotosWorker()
+        sutWorker = SearchPhotosWorker(service: .api)
     }
     override func tearDown() {
         sutWorker = nil
