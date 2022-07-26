@@ -16,7 +16,7 @@ class PresenterSearchPhotosTests: XCTestCase {
         super.setUp()
         sutPresenter = SearchPhotosPresenter()
         viewSpy = ViewSpy()
-        sutPresenter.view = viewSpy
+        sutPresenter.viewController = viewSpy
     }
     override func tearDown() {
         sutPresenter = nil
@@ -45,7 +45,6 @@ class PresenterSearchPhotosTests: XCTestCase {
 
         sutPresenter.presentFetchedPhotos(with: response)
 
-        let expected = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [.init(description: "Paris")])
         assertNoDifference("Paris", viewSpy.viewModel.displayedPhotos.first?.description)
     }
 

@@ -33,7 +33,7 @@ class SearchPhotosConfigurator {
         // --- set connection between layers
         let interactor = SearchPhotosInteractor()
         let presenter = SearchPhotosPresenter()
-        let worker = SearchPhotosWorker()
+        let worker = SearchPhotosWorker(service: .api)
         let router = SearchPhotosRouter()
 
         // router -> ( source, navigationController )
@@ -50,6 +50,6 @@ class SearchPhotosConfigurator {
         searchPhotosViewImpl.router = router
 
         // presenter -> ( View )
-        presenter.view = searchPhotosViewImpl
+        presenter.viewController = searchPhotosViewImpl
     }
 }

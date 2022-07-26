@@ -16,7 +16,7 @@ protocol SearchPhotosPresentationLogic {
 }
 
 class SearchPhotosPresenter: SearchPhotosPresentationLogic {
-    weak var view: SearchPhotosDisplayLogic?
+    weak var viewController: SearchPhotosDisplayLogic?
 
     func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response) {
         var viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [])
@@ -27,7 +27,7 @@ class SearchPhotosPresenter: SearchPhotosPresentationLogic {
                 viewModel.displayedPhotos.append(.init(description: photoDescription))
             }
         }
-        view?.displayedFetchedPhotos(viewModel: viewModel)
+        viewController?.displayedFetchedPhotos(viewModel: viewModel)
     }
 
 //    func interactor(didFindIdPhoto id: String) {

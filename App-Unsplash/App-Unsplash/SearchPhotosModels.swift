@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct Photo: Equatable {
+    var description: String?
+
+    static func == (lhs: Photo, rhs: Photo) -> Bool {
+        return lhs.description == rhs.description
+    }
+}
 
 
 enum SearchPhotos {
@@ -62,7 +69,6 @@ struct Photos: Codable {
     var results: [Result]
 }
 
-// swiftlint:disable identifier_name
 struct Result: Codable {
     var resultDescription: String
     var urls: PictureUrls

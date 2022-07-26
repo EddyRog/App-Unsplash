@@ -9,7 +9,6 @@ import Foundation
 
 protocol SearchPhotosBusinessLogic {
     func fetchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
-//    func searchPhotosIndexPath(_ indexpath: IndexPath)
 }
 protocol SearchPhotosDataStoreProtocol {
     var dataStorePhotos: [Response] {get set}
@@ -22,7 +21,7 @@ class SearchPhotosInteractor: SearchPhotosBusinessLogic, SearchPhotosDataStorePr
 
     func fetchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
 
-        worker?.fetchPhotos(withRequest: "", completionHandler: { [weak self] photos in
+        worker?.fetchPhotos(withRequest: request.query, completionHandler: { [weak self] photos in
             guard let this = self else {return}
 
             // --- handle the response.
@@ -47,12 +46,12 @@ class SearchPhotosInteractor: SearchPhotosBusinessLogic, SearchPhotosDataStorePr
 //	}
 
     func searchPhotosIndexPath(_ indexpath: IndexPath) {
-        var photoID = ""
-        if !dataStorePhotos.isEmpty {
-            if let id = dataStorePhotos[indexpath.row].id {
-                photoID = id
-            }
-        }
+//        var photoID = ""
+//        if !dataStorePhotos.isEmpty {
+//            if let id = dataStorePhotos[indexpath.row].id {
+//                photoID = id
+//            }
+//        }
 //        presenter?.interactor(didFindIdPhoto: photoID)
     }
 }

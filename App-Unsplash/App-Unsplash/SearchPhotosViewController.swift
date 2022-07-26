@@ -24,15 +24,23 @@ class SearchPhotosViewController: UIViewController {
 
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
+    var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [
+        .init(description: "--"),
+    ])
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("📘")
         tableview.delegate = self
         tableview.dataSource = self
 
         registerTableViewCells()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request(query: "car"))
+    }
 
     @IBAction func push(_ sender: Any) {
         print("push")
@@ -48,12 +56,14 @@ class SearchPhotosViewController: UIViewController {
 }
 
 extension SearchPhotosViewController: SearchPhotosDisplayLogic {
+
     func searchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
         interactor?.fetchPhotos(withRequest: request)
     }
 
     func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
-        // TODO: ❎ impl ❎
+        // ODO: ❎ impl ❎
+        tableview.reloadData()
     }
 }
 
@@ -75,29 +85,30 @@ extension SearchPhotosViewController: SearchPhotosDisplayLogic {
 
 
 // ==================
-// MARK: - Tableview result
+// MARK: - Tableview
 // ==================
 extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultSearch.count
+        return resultSearchPhotos.displayedPhotos.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let idCell = "SearchPhotosCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as? SearchPhotosCell
 
-
         if let unwCell = cell {
+            let description = resultSearchPhotos.displayedPhotos[indexPath.row].description
+            let images = resultSearchPhotos.displayedPhotos[indexPath.row].description
 
-            let dataImageString = resultSearch[indexPath.row].urlSmall ?? ""
-            unwCell.searchPhotoImage.image = UIImage(data: makePicture(with: dataImageString))
-            unwCell.searchPhotoDescription.text = resultSearch[indexPath.row].description
+            unwCell.searchPhotoImage.image = UIImage(data: makePicture(with: images))
+            unwCell.searchPhotoDescription.text = description
 
             return unwCell
         } else {
             let cellDefault: UITableViewCell = UITableViewCell(style: .default, reuseIdentifier: idCell)
             var content = cellDefault.defaultContentConfiguration()
-            content.text = "nil"
+            content.text = "no description"
 
             cellDefault.contentConfiguration = content
 
@@ -108,26 +119,25 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         debugPrint("dee L\(#line) 🏵 -------> index => ", indexPath)
 //        debugPrint("dee L\(#line) 🏵 -------> index => ", resultSearch[indexPath.row].description)
-		
         // clique
         // select id
         // interactor.fetchPhoto(with id)
 
-        // TODO: ❎ pass id from resultSearch ❎
+        // ODO: ❎ pass id from resultSearch ❎
 //        interactor?.searchPhotosIndexPath(indexPath)
-        	// worker
-        		// service
+        // worker
+        // service
         // save data photo in store
         // presenter
         // view
         // rout to detail et pass data
         // configurator.make
-        // 
+        //
 //        router?.showSearchPhotoDetails()
     }
 
     func registerTableViewCells() {
-		let idCell = "SearchPhotosCell"
+        let idCell = "SearchPhotosCell"
         let textFieldCell = UINib(nibName: idCell, bundle: nil)
         self.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
     }
@@ -139,8 +149,8 @@ extension SearchPhotosDisplayLogic {
         guard let url = URL(string: url) else {
             return defaultData
         }
-        let result =  try? Data(contentsOf: url)
-		return result ?? defaultData
+        let result = try? Data(contentsOf: url)
+        return result ?? defaultData
     }
 }
 

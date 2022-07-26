@@ -20,7 +20,7 @@ class SearchPhotosInteractorTests: XCTestCase {
         super.setUp()
 
         sutInteractor = SearchPhotosInteractor()
-        workerSpy = WorkerSpy()
+        workerSpy = WorkerSpy(service: .noService)
         fakeService = SearchPhotoServiceStoreFake()
         presenterSpy = PresenterSpy()
 
@@ -66,7 +66,7 @@ class SearchPhotosInteractorTests: XCTestCase {
 
     func test_fetchPhotos_withRequest__expect_PresentResponse() {
         // --- given.
-        let workerSpy = WorkerSpy()
+        let workerSpy = WorkerSpy(service: .noService)
         let serviceFake = SearchPhotoServiceStoreFake()
         let presenterSpy = PresenterSpy()
 
