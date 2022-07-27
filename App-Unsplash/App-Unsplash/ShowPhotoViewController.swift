@@ -13,35 +13,20 @@ protocol ShowPhotoDisplayLogic {
 }
 
 class ShowPhotoViewController: UIViewController {
-	static let identifier = "ShowPhotoViewController"
-    var router: ShowPhotoRoutingLogic?
-    var interactor: (ShowPhotoBusinessLogic & ShowDataStore)?
-}
 
-extension ShowPhotoViewController: ShowPhotoDisplayLogic {
-    func displayPhoto(with: ShowPhoto.FetchBook.ViewModel) {
-        // TODO: ❎ impl ❎
+	static let identifier = "ShowPhotoViewController"
+    internal var photoDescription = ""
+    var router: ShowPhotoRoutingLogic?
+    var interactor: (ShowPhotoBusinessLogic & ShowPhotoDataStore)?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        interactor?.fetchPhotoWithID()
     }
 }
 
-
-
-//
-//protocol ShowPhotoView: AnyObject {
-//    func displayPhoto(with: ShowPhoto.GetPhoto.ViewModel)
-//}
-//
-//class ShowPhotoViewImpl: UIViewController, ShowPhotoView {
-//    var interactor: ShowPhotoInteractor?
-//    var router: ShowPhotoRouter?
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        interactor?.getPhoto(width: "")
-//    }
-//
-//    func displayPhoto(with: ShowPhoto.GetPhoto.ViewModel) {
-//        //
-//    }
-//}
-//
+extension ShowPhotoViewController: ShowPhotoDisplayLogic {
+    func displayPhoto(with photoViewModel: ShowPhoto.FetchBook.ViewModel) {
+        photoDescription = photoViewModel.displayedPhotos.description
+    }
+}

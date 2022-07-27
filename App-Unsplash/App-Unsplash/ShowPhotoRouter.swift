@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 protocol ShowDataPassing {
-    var dataPhotoID: ShowDataStore? { get } // access to dataStore
+    var dataPhotoID: ShowPhotoDataStore? { get } // access to dataStore
 }
 protocol ShowPhotoRoutingLogic {
     var navigationController: UINavigationController? { get } // used to push
 }
 
 class ShowPhotoRouter: ShowPhotoRoutingLogic, ShowDataPassing {
-    var dataPhotoID: ShowDataStore?
+    var dataPhotoID: ShowPhotoDataStore?
     var navigationController: UINavigationController?
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController

@@ -7,11 +7,7 @@
 
 import Foundation
 
-//protocol SearchPhotosServiceAPIProtocol {
-////    func searchPhotos(with request: String, completion: @escaping ([Response]) -> Void)
-//}
-
-class SearchPhotosServiceAPI {
+class PhotosServiceAPI {
 
     var session: URLSession = URLSession.shared
 
@@ -59,7 +55,7 @@ class SearchPhotosServiceAPI {
     }
 }
 //PhotosStoreProtocol
-extension SearchPhotosServiceAPI: PhotosServiceProtocol {
+extension PhotosServiceAPI: PhotosServiceProtocol {
 
     func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void) {
         // FIXME: ⚠️ FakeDataPass ⚠️

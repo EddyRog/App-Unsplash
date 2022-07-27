@@ -17,7 +17,7 @@ class PhotosWorker {
     internal init(service myService: SearchPhotoService) {
         switch myService {
         	case .api:
-            	self.service = SearchPhotosServiceAPI()
+            	self.service = PhotosServiceAPI()
         	case .noService:
             	self.service = nil
         }

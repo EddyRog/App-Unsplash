@@ -8,12 +8,12 @@
 import XCTest
 import CustomDump
 
-class SearchPhotosServiceAPITests: XCTestCase {
-    var sut: SearchPhotosServiceAPI!
+class PhotosServiceAPITests: XCTestCase {
+    var sut: PhotosServiceAPI!
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosServiceAPI()
+        sut = PhotosServiceAPI()
     }
     override func tearDown() {
         sut = nil

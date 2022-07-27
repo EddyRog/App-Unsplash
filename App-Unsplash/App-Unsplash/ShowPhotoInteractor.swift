@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ShowDataStore {
+protocol ShowPhotoDataStore {
     var dataPhotoID: String? { get set }
 }
 
@@ -15,7 +15,7 @@ protocol ShowPhotoBusinessLogic {
     func fetchPhotoWithID()
 }
 
-class ShowPhotoInteractor: ShowPhotoBusinessLogic, ShowDataStore {
+class ShowPhotoInteractor: ShowPhotoBusinessLogic, ShowPhotoDataStore {
     var dataPhotoID: String?
     var worker: PhotosWorker?
     weak var presenter: ShowPhotoPresentationLogic?
