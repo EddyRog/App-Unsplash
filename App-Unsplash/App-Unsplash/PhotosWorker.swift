@@ -6,12 +6,13 @@
 
 import Foundation
 
-protocol SearchPhotosStoreProtocol {
+protocol PhotosServiceProtocol {
     func fetchPhotos(withRequest: String, completionHandler: @escaping ([Photo]) -> Void)
+    func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void)
 }
 
-class SearchPhotosWorker {
-    var service: SearchPhotosStoreProtocol?
+class PhotosWorker {
+    var service: PhotosServiceProtocol?
 
     internal init(service myService: SearchPhotoService) {
         switch myService {
@@ -32,6 +33,13 @@ class SearchPhotosWorker {
                 // Send back the response
 				completionHandler(responseFetched)
             }
+        })
+    }
+    func fetchPhoto(withID id: String, completionHandler fetchCompletion: @escaping (Photo) -> Void) {
+        // call with a specific service
+        service?.fetchPhoto(withID: id, completionHandler: { photo in
+			// map
+            fetchCompletion(photo)
         })
     }
 }

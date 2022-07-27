@@ -34,5 +34,3 @@ class SearchPhotosPresenter: SearchPhotosPresentationLogic {
 ////        view?.presenter(didObtainPhotoID: id)
 //    }
 }
-
-

@@ -98,7 +98,7 @@ class SearchPhotosInteractorTests: XCTestCase {
     // ==================
     // MARK: - test doubles
     // ==================
-    class WorkerSpy: SearchPhotosWorker {
+    class WorkerSpy: PhotosWorker {
         var fetchPhotosInvoked = false
 
         override func fetchPhotos(withRequest request: String, completionHandler: @escaping ([Photo]) -> Void) {
@@ -114,14 +114,16 @@ class SearchPhotosInteractorTests: XCTestCase {
             })
         }
     }
-    class SearchPhotoServiceStoreFake: SearchPhotosStoreProtocol {
-
+    class SearchPhotoServiceStoreFake: PhotosServiceProtocol {
         var completionStubbed: [Photo] = []
 
         func fetchPhotos(withRequest: String, completionHandler: @escaping ([Photo]) -> Void) {
             // get data  from external ...
             completionHandler(completionStubbed)
             // send back the result
+        }
+        func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void) {
+            // TODO: ❎ to impl ❎
         }
     }
     class PresenterSpy: SearchPhotosPresentationLogic {

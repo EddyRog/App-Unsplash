@@ -11,39 +11,29 @@ protocol SearchPhotosBusinessLogic {
     func fetchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
 }
 protocol SearchPhotosDataStoreProtocol {
-    var dataStorePhotos: [Response] {get set}
+    var dataStorePhotos: [Photo] {get}
 }
 
 class SearchPhotosInteractor: SearchPhotosBusinessLogic, SearchPhotosDataStoreProtocol {
-    var worker: SearchPhotosWorker?
+    var worker: PhotosWorker?
     var presenter: SearchPhotosPresentationLogic?
-    var dataStorePhotos: [Response] = []
+    var dataStorePhotos: [Photo] = []
 
     func fetchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
 
         worker?.fetchPhotos(withRequest: request.query, completionHandler: { [weak self] photos in
-            guard let this = self else {return}
+            guard let this = self else { return }
 
             // --- handle the response.
             var response = SearchPhotos.FetchPhotos.Response.init(photos: .init())
             response.photos = photos
 
+            // set data store
+            this.dataStorePhotos = photos
+
             this.presenter?.presentFetchedPhotos(with: response)
         })
     }
-//    func searchPhotos(with request: String) {
-//        worker?.searchPhotos(with: request, completion: {[weak self] rep in
-//            guard let this = self else {return}
-//            // get the response from worker
-//
-//            // save the rep in data store
-//            this.dataStorePhotos = rep
-//
-//            // send back the response the presenter
-//            this.presenter?.presentSearchPhotos(with: rep)
-//            this.presenter?.presentSearchPhotos(with: <#T##[Response]#>)
-//        })
-//	}
 
     func searchPhotosIndexPath(_ indexpath: IndexPath) {
 //        var photoID = ""

@@ -50,13 +50,16 @@ class SearchPhotosRouterTests: XCTestCase {
         // --- then.
         XCTAssertTrue(currentUINavigationControllerSpy.viewControllerPushedCalled)
     }
-/*
-    func test_destination_when_showSearchPhotoDetails_expect_destinationIsInvoked() {
-        let configurator = ShowPhotoConfiguratorImpl()
-        let viewController = try? configurator.buildWithStoryboard(withIdentifier: "ShowPhotoViewImpl")
 
-        configurator.configureModule(photoID: "ID", viewController: viewController!)
-//        sut.destionation =
+    /*
+    func test_destination_when_showSearchPhotoDetails_expect_destinationIsInvoked() {
+        let configurator = ShowPhotoConfigurator()
+        guard let viewController = try? configurator.buildWithStoryboard(withIdentifier: "ShowPhotoViewImpl") else {
+			XCTFail("should be unwrapped")
+            return
+        }
+
+        configurator.configureModule(photoID: "", viewController)
 
         sut.showSearchPhotoDetails(with: "")
 

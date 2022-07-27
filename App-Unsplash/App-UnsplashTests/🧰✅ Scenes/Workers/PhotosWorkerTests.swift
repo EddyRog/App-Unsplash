@@ -9,12 +9,12 @@
 import XCTest
 import CustomDump
 
-class SearchPhotosWorkerTests: XCTestCase {
-    var sutWorker: SearchPhotosWorker!
+class PhotosWorkerTests: XCTestCase {
+    var sutWorker: PhotosWorker!
 
     override func setUp() {
         super.setUp()
-        sutWorker = SearchPhotosWorker(service: .api)
+        sutWorker = PhotosWorker(service: .api)
     }
     override func tearDown() {
         sutWorker = nil
@@ -64,13 +64,17 @@ class SearchPhotosWorkerTests: XCTestCase {
     // ==================
     // MARK: - Tests double
     // ==================
-    class ServiceMemorySpy: SearchPhotosStoreProtocol {
+    class ServiceMemorySpy: PhotosServiceProtocol {
         var fetchPhotosInvoked = false
         var stubResponse: [Photo]!
 
         func fetchPhotos(withRequest: String, completionHandler: @escaping ([Photo]) -> Void) {
             fetchPhotosInvoked = true
             completionHandler(stubResponse)
+        }
+
+        func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void) {
+            // TODO: ❎ to impl ❎
         }
     }
 }

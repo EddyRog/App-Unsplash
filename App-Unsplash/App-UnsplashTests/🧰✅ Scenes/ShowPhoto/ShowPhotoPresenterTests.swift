@@ -6,51 +6,50 @@
 
 @testable import App_Unsplash
 import XCTest
+import CustomDump
 
 class ShowPhotoPresenterTests: XCTestCase {
-    var sut: ShowPhotoPresenterImpl!
-    var viewSpy: ViewSpy!
+    var sut: ShowPhotoPresenter!
+    var viewControllerSpy: ViewControllerSpy!
+
     override func setUp() {
         super.setUp()
-        sut = ShowPhotoPresenterImpl()
-        viewSpy = ViewSpy()
-        sut.view = viewSpy
+        sut = ShowPhotoPresenter()
+        viewControllerSpy = ViewControllerSpy()
+
+        // --- setup.
+        sut.viewController = viewControllerSpy
     }
     override func tearDown() {
         sut = nil
+        viewControllerSpy = nil
         super.tearDown()
     }
 
-    func test_init_expect_notnil() {
+    func test_init_presenter__expect_isNotNil() {
         XCTAssertNotNil(sut)
     }
-    func test_present_shouldFormattoViewModel() {
-        let responseStubbed = ShowPhoto.GetPhoto.Response(photo: Photo(description: "description"))
+    func test_present_withResponse__expect_FormatResponse() {
+        XCTAssertNotNil(sut.viewController)
+        let responseStubbed: ShowPhoto.FetchBook.Response = ShowPhoto.FetchBook.Response(photo: Seed.Photos.paris)
 
-        // --- when.
-        sut.presentPhoto(with: responseStubbed)
+        sut.presentPhoto(response: responseStubbed)
 
-        let viewmodelExpected = viewSpy.resultViewModel.displayedPhoto
-        // --- then.
-        XCTAssertEqual("description", viewmodelExpected.description)
+        XCTAssertTrue(viewControllerSpy.displayPhotoInvoked)
+        assertNoDifference(viewControllerSpy.resultPhoto.displayedPhotos.description, responseStubbed.photo.description )
     }
-    func test_presentPhoto_shouldAskToViewControllerToDisplayPhoto() {
 
-        sut.presentPhoto(with: .init(photo: Photo()))
-
-        XCTAssertTrue(viewSpy.displayPhotoInvoked, "should ask to viewController to display it ")
-    }
 
     // ==================
     // MARK: - test doubles
     // ==================
-    class ViewSpy: ShowPhotoView {
-        var resultViewModel: ShowPhoto.GetPhoto.ViewModel!
+    class ViewControllerSpy: ShowPhotoDisplayLogic {
         var displayPhotoInvoked = false
+        var resultPhoto: ShowPhoto.FetchBook.ViewModel!
 
-        func displayPhoto(with viewmodel: ShowPhoto.GetPhoto.ViewModel) {
-            resultViewModel = viewmodel
+        func displayPhoto(with viewModel: ShowPhoto.FetchBook.ViewModel) {
             displayPhotoInvoked = true
+            resultPhoto = viewModel
         }
     }
 }

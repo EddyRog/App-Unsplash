@@ -25,7 +25,7 @@ class SearchPhotosViewController: UIViewController {
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
     var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [
-        .init(description: "--"),
+        .init(description: "--")
     ])
 
     override func viewDidLoad() {
@@ -62,7 +62,7 @@ extension SearchPhotosViewController: SearchPhotosDisplayLogic {
     }
 
     func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
-        // ODO: ❎ impl ❎
+        resultSearchPhotos = viewModel
         tableview.reloadData()
     }
 }
@@ -93,7 +93,7 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let idCell = "SearchPhotosCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as? SearchPhotosCell
 
@@ -134,6 +134,8 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
         // configurator.make
         //
 //        router?.showSearchPhotoDetails()
+
+        router?.rootToSearchPhotosDetails(withID: "\(indexPath.row)")
     }
 
     func registerTableViewCells() {
@@ -153,6 +155,3 @@ extension SearchPhotosDisplayLogic {
         return result ?? defaultData
     }
 }
-
-
-

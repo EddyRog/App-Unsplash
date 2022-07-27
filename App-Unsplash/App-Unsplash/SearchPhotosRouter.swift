@@ -8,39 +8,22 @@
 import Foundation
 import UIKit
 
-protocol SearchPhotosRouterProtocol {
-    var navigationController: UINavigationController? { get } // used to push
-    func showSearchPhotoDetails(with id: String)
-}
-
 protocol SearchPhotosRoutingLogic {
+    var navigationController: UINavigationController? { get } // used to push
     func rootToSearchPhotosDetails(withID: String)
 }
+
 class SearchPhotosRouter: SearchPhotosRoutingLogic {
 
-    var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
 
     func rootToSearchPhotosDetails(withID: String) {
-        navigationController?.pushViewController(UIViewController(), animated: true)
+        // target to go to
+
+        let showPhotoConfigurator = ShowPhotoConfigurator()
+        if let showPhotoViewController = try? showPhotoConfigurator.buildWithStoryboard() {
+            showPhotoConfigurator.configureModule(photoID: withID, showPhotoViewController)
+            navigationController?.pushViewController(showPhotoViewController, animated: true)
+        }
     }
-
-    //    var data: String?
-//    weak var source: UIViewController? // represent the current navigation Controller
-//    weak var destionation: UIViewController?
-//
-//    func showSearchPhotoDetails(with id: String) {
-//        let configurator = ShowPhotoConfiguratorImpl()
-//        guard let viewController = try? configurator.buildWithStoryboard() else { return }
-//        configurator.configureModule(photoID: id, viewController: viewController)
-//
-//        destionation = viewController
-//        // push it
-//        if let destionation = destionation {
-//            navigationController?.pushViewController(destionation, animated: true)
-//        }
-//    }
 }
-
-
-// ⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬⌬
-

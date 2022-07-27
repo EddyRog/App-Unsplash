@@ -23,8 +23,6 @@ class SearchPhotosConfigurator {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
         }
 
-        //        configureModule(searchPhotosViewImpl)
-
         return searchPhotosViewImpl
     }
 
@@ -33,13 +31,11 @@ class SearchPhotosConfigurator {
         // --- set connection between layers
         let interactor = SearchPhotosInteractor()
         let presenter = SearchPhotosPresenter()
-        let worker = SearchPhotosWorker(service: .api)
+        let worker = PhotosWorker(service: .api)
         let router = SearchPhotosRouter()
 
-        // router -> ( source, navigationController )
-//        router.source = searchPhotosViewImpl
-//        router.navigationController = searchPhotosViewImpl.navigationController
-
+        // router -> ViewController.NavigatoinController
+        router.navigationController = searchPhotosViewImpl.navigationController
 
         // interactor -> ( presenter, worker)
         interactor.presenter = presenter

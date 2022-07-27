@@ -11,7 +11,7 @@ import Foundation
 ////    func searchPhotos(with request: String, completion: @escaping ([Response]) -> Void)
 //}
 
-class SearchPhotosServiceAPI: SearchPhotosStoreProtocol {
+class SearchPhotosServiceAPI {
 
     var session: URLSession = URLSession.shared
 
@@ -57,6 +57,15 @@ class SearchPhotosServiceAPI: SearchPhotosStoreProtocol {
             throw ServiceError.dataParse
         }
     }
+}
+//PhotosStoreProtocol
+extension SearchPhotosServiceAPI: PhotosServiceProtocol {
+
+    func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void) {
+        // FIXME: ⚠️ FakeDataPass ⚠️
+//        completionHandler
+        // send back
+    }
 
     func fetchPhotos(withRequest request: String, completionHandler: @escaping ([Photo]) -> Void) {
         do {
@@ -67,11 +76,10 @@ class SearchPhotosServiceAPI: SearchPhotosStoreProtocol {
                 guard let unwData = data else { completionHandler([Photo]()); return  }
                 guard let dataParsed = try? self.parseResponse(data: unwData) else { completionHandler([Photo]()); return }
                 // send back data Decoded
-				completionHandler(dataParsed.photos)
+                completionHandler(dataParsed.photos)
             }.resume()
         } catch {
             completionHandler([Photo]())
         }
     }
 }
-
