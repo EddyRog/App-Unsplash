@@ -10,6 +10,7 @@ import CustomDump
 
 class PhotosServiceAPITests: XCTestCase {
     var sut: PhotosServiceAPI!
+    static var photoID = "Xlo7N1ctmZc"
 
     override func setUp() {
         super.setUp()
@@ -24,46 +25,39 @@ class PhotosServiceAPITests: XCTestCase {
         XCTAssertNotNil(sut)
     }
 
-    // Make URL
-    func test_makeURL_withRequest_expect_goodUrlWithStringGiven() {
-        let stringURL = "https://api.unsplash.com/search/?query=car&client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4"
+    // URLRequest - request
+    func test_givenURLString_whenMakeURLRequest_withRequest__expect_URLRequestWithRequest() {
+        // --- given.
+        let expectedUrlString = "https://api.unsplash.com/search?client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4&query=car"
+        let expectedURLRequest = URLRequest(url: URL(string: expectedUrlString)!)
 
-        let actualURL = try? sut.makeURL(with: "car")
-        let expectedURL = URL(string: stringURL)
+        // --- when.
+        let actualURLRequest = try? sut.makeURLRequest(with: .urlRequest("car"))
 
-        assertNoDifference(expectedURL, actualURL)
+        // --- then.
+        assertNoDifference(expectedURLRequest, actualURLRequest)
     }
-    func test_makeURL_withRequest_expect_WrongUrlWithString() {
-        let stringUrl = "https://api.unsplash.com/search/?query=car&client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4"
-        let expectedRequest = URL(string: stringUrl)
-        let actualRequest = try? sut.makeURL(with: "Cat")
-        XCTAssertNotEqual(expectedRequest,actualRequest)
-    }
+    // URLRequest - IDPhoto
+    func test_givenURLString_whenMakeURLRequest_withID__expect_URLRequestWithID() {
+        // --- given.
+        let expectedUrlString = "https://api.unsplash.com/photos/Xlo7N1ctmZc?client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4"
+        let expectedURLRequest = URLRequest(url: URL(string: expectedUrlString)!)
 
-    // MakeURLRequest
-    func test_makeURLRequest_withURL_expect_WrongURLRequest() {
-        let unsplashURL = URL(string: "_")!
-        let unsplashURL2 = URL(string: "__")!
-        let actualURLRequest = try? sut.makeURLRequest(url: unsplashURL)
-        let expectedURLRequest = URLRequest(url: unsplashURL2)
-        XCTAssertNotEqual(expectedURLRequest, actualURLRequest)
-    }
-    func test_makeURLRequest_withURL_expect_URLURLRequest() {
-        let urlProvided = URL(string: "https://www.google.com/?position=1")!
-        let urlRequest = try? sut.makeURLRequest(url: urlProvided)
-        assertNoDifference("https", urlRequest?.url?.scheme)
-        assertNoDifference("www.google.com", urlRequest?.url?.host)
-        assertNoDifference("position=1", urlRequest?.url?.query)
-    }
+        // --- when.
+        let actualURLRequest = try? sut.makeURLRequest(with: .urlID("Xlo7N1ctmZc"))
 
-    // ParseResponse
+        // --- then.
+        assertNoDifference(expectedURLRequest, actualURLRequest)
+    }
+    // ParseResponse - Error
     func test_parseDataResponse_withJson_expect_throwsError() {
 		let stubbedData = "{ \"JsonKeyWrong\": 42 }".data(using: .utf8)!
         XCTAssertThrowsError(try sut.parseResponse(data: stubbedData), "should throwns error") { error in
             assertNoDifference(ServiceError.dataParse, error as! ServiceError)
         }
     }
-    func test_parseDataResponse_withJson_expect_ResponseDecoded() {
+    // ParseResponse - Decoded Request
+    func test_parseDataResponse_withJsonRequest_expect_ResponseDecoded() {
         // --- given.
         let stubbedData = fetchJsonDataFromLocalFile()
         let expectedResponseDescription = "Ford in to the wild"
@@ -82,45 +76,19 @@ class PhotosServiceAPITests: XCTestCase {
 //        assertNoDifference(expectedResponseUrlsSmall, actualResponsesUrlsSmall)
 //        assertNoDifference(expectedResponseID, actualResponsesID)
     }
-
-    // Make URL, MakeURLRequest, ParseResponse
-    /*
-    func test_givenServiceAPI_whenSearchPhoto_expect_response() {
+    // ParseResponse - Decoded PhotoID
+    func test_parseDataResponse_withJsonPhotoID_expect_ResponseDecoded() {
         // --- given.
-        // MARK: - Config the session with a mock URLProtcol to customize the response of fake server
-        let configuration = URLSessionConfiguration.ephemeral // no persistence for (credential, cache, cookie)
-        configuration.protocolClasses = [MockUrlProtocol.self]
-
-        // MARK: - set the session with our configuration for purpose of test
-        sut.session = URLSession(configuration: configuration)
-
-        // MARK: - Setup a stubbed response in our MockUrlProtocol
-        MockUrlProtocol.requestHandlerStubbed = { urlRequestPassed in
-
-            // MARK: - Check the request when it s passed
-            XCTAssertEqual(urlRequestPassed.url?.query?.contains("Car"), true)
-            XCTAssertEqual(urlRequestPassed.url?.host?.contains("api.unsplash.com"), true)
-            XCTAssertEqual(urlRequestPassed.url?.scheme?.contains("https"), true)
-
-            // send back to the receiver
-            let response = HTTPURLResponse()
-            let data = self.fetchJsonDataFromLocalFile()
-            return (response, data)
-        }
-
+        let jsonDataPhotoID = fetchJsonDataFromLocalFile(.photoID)
+        let expectedPhotoResponse = ShowPhoto.FetchBook.Response(photo: Photo(description: "No description"))
         // --- when.
-        let exp = expectation(description: "wait searchPhoto()")
-        sut.searchPhotos(with: "Car") { responsesFromeExtClasses in
+        let actualPhotoResponse = try? sut.parseResponseForPhotoID(data: jsonDataPhotoID)
+        // --- then.
+        assertNoDifference(expectedPhotoResponse, actualPhotoResponse)
 
-            // --- then.
-            self.assertNoDifference("Ford in to the wild", responsesFromeExtClasses.first?.description)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 0.1)
     }
-	*/
-
-    func test_givenServiceAPI_whenSearchPhoto_expect_response() {
+    // Request - MakeURLRequest + ParseResponse
+    func test_givenServiceAPI_whenFetchPhoto_withRequest_expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtcol to customize the response of fake server
         let configuration = URLSessionConfiguration.ephemeral // no persistence for (credential, cache, cookie)
@@ -129,7 +97,7 @@ class PhotosServiceAPITests: XCTestCase {
         // MARK: - set the session with our configuration for purpose of test
         sut.session = URLSession(configuration: configuration)
 
-        // MARK: - Setup a stubbed response in our MockUrlProtocol
+        // MARK: - Setup a stubbed response in our MockUrlProtocol =
         MockUrlProtocol.requestHandlerStubbed = { urlRequestPassed in
 
             // MARK: - Check the request when it s passed
@@ -151,6 +119,35 @@ class PhotosServiceAPITests: XCTestCase {
         }
         wait(for: [exp], timeout: 0.1)
     }
+    // PhotoID - MakeURLRequest + ParseResponse
+    func test_givenServiceAPI_whenFetchPhoto_withID_expect_response() {
+        // --- given.
+        // config the session with a fake classes to customize the response of fake server
+        let configuration = URLSessionConfiguration.ephemeral // no persistence for (credential, cache, cookie)
+        configuration.protocolClasses = [MockUrlProtocol.self] // defines a fake class that inherits from URLProtocol
+
+        // defines the session with the setting above
+        sut.session = URLSession(configuration: configuration)
+
+        // setup a stubbed response in our MockUrlProtocol
+        MockUrlProtocol.requestHandlerStubbed = { urlRequestPassed in
+            // Check URL
+            XCTAssertEqual(urlRequestPassed.url?.path, "/photos/\(PhotosServiceAPITests.photoID)")
+            // Send back to the receiver
+            let response = HTTPURLResponse()
+            let data = self.fetchJsonDataFromLocalFile(.photoID)
+            return (response, data)
+        }
+
+        // --- when.
+        let exp = expectation(description: "expected : wait fetchPhoto(withID) ")
+        sut.fetchPhoto(withID: PhotosServiceAPITests.photoID) { photo in
+            XCTAssertEqual("No description", photo.description)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 0.05)
+    }
+
     // ==================
     // MARK: - Test doubles
     // ==================
@@ -188,10 +185,18 @@ class PhotosServiceAPITests: XCTestCase {
         override func stopLoading() { }
     }
 
-    private func fetchJsonDataFromLocalFile() -> Data {
-        // MARK: - Get file Path
-        let nameOfFile = "StubAPI"
+    private func fetchJsonDataFromLocalFile(_ jsonFile: JsonFile = .request) -> Data {
+        var nameOfFile = ""
+
         let extensionOfFile = "json"
+        switch jsonFile {
+            case .request:
+                nameOfFile = "StubAPI"
+            case .photoID:
+                nameOfFile = "StubPhotoID"
+        }
+
+        // MARK: - Get file Path
         guard let pathJson = Bundle.main.path(forResource: nameOfFile, ofType: extensionOfFile) else {
             fatalError("Failed to find \(nameOfFile).\(extensionOfFile)")
         }
@@ -207,5 +212,10 @@ class PhotosServiceAPITests: XCTestCase {
         }
 
         return dataJson
+    }
+
+    enum JsonFile {
+        case request
+        case photoID
     }
 }

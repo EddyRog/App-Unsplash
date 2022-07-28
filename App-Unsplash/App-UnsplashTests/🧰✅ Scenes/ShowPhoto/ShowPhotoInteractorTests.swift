@@ -45,13 +45,13 @@ class ShowPhotoInteractorTests: XCTestCase {
     }
 
     func test_fetchPhotoWithID__expect_workerInvokedWithID() {
-
+		// FIXME: ⚠️ Fix statement ⚠️
         sut.fetchPhotoWithID()
 //        XCTAssertTrue(showPhotosWorkerSpy.resultPhotoID)
     }
     func test_fetchPhoto_withID__expect_PresentResponse() {
         // --- given.
-        sut.dataPhotoID = "a4S6KUuLeoM"
+        sut.dataPhotoID = Seed.Json.idPhoto
         let resultPhotoStubbed = Photo(description: "Ford in to the wild")
         showServiceMemorySpy.completionStubbed = resultPhotoStubbed
 
