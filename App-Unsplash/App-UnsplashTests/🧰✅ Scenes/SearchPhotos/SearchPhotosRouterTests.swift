@@ -29,6 +29,7 @@ class SearchPhotosRouterTests: XCTestCase {
     func test_rootToShowPhoto_withID__expect_invokedUINavigationController() {
         // --- given.
         let uiNavigationControllerSPY = UINavigationControllerSPY()
+        sut.navigationController = uiNavigationControllerSPY
         sut.rootToShowPhoto(withID: "0")
         XCTAssertTrue(uiNavigationControllerSPY.viewControllerPushed)
     }

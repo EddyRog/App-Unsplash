@@ -28,6 +28,11 @@ class SearchPhotosRouter: SearchPhotosRoutingLogic {
     }
 
     func rootToShowPhoto(withID: String) {
+        let uiviewController: UIViewController = UIViewController()
+        uiviewController.viewDidLoad()
+        uiviewController.view.backgroundColor = .red
+
+        navigationController.pushViewController(uiviewController, animated: true)
         // create module
         // navigation push
 		print("id")
