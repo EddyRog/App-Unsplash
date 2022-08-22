@@ -24,8 +24,12 @@ enum SearchPhotos {
         struct Request {
             var query: String
         }
-        struct Response {
+        struct Response: Equatable {
             var photos: [Photo]
+
+            static func == (lhs: SearchPhotos.FetchPhotos.Response, rhs: SearchPhotos.FetchPhotos.Response) -> Bool {
+                return lhs.photos == rhs.photos
+            }
         }
         struct ViewModel: Equatable {
             struct DisplayedPhoto: Equatable {

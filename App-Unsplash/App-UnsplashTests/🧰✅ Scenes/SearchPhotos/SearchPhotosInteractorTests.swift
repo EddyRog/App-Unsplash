@@ -9,129 +9,106 @@ import XCTest
 import CustomDump
 
 class SearchPhotosInteractorTests: XCTestCase {
-    var sutInteractor: SearchPhotosInteractor!
-    var workerSpy: WorkerSpy!
-    var presenterSpy: PresenterSpy!
-    var fakeService: SearchPhotoServiceStoreFake!
 
-    private let request0 = SearchPhotos.FetchPhotos.Request(query: "")
+    var sut: SearchPhotosInteractor!
+    var searchPhotosPresenterSPY: SearchPhotosPresenterSPY!
+    var workerPhotosSPY: PhotosWorkerSpy!
+
+    static let dummyRequest = SearchPhotos.FetchPhotos.Request.init(query: "_")
 
     override func setUp() {
         super.setUp()
-
-        sutInteractor = SearchPhotosInteractor()
-        workerSpy = WorkerSpy(service: .noService)
-        fakeService = SearchPhotoServiceStoreFake()
-        presenterSpy = PresenterSpy()
-
-        workerSpy.service = fakeService
-        // --- stup.
-        sutInteractor.worker = workerSpy
-        sutInteractor.presenter = presenterSpy
+		sut = SearchPhotosInteractor()
+        searchPhotosPresenterSPY = SearchPhotosPresenterSPY()
+        workerPhotosSPY = PhotosWorkerSpy()
+        sut.presenter = searchPhotosPresenterSPY
+        sut.worker = workerPhotosSPY
     }
-
-    override func tearDown() {
-        sutInteractor = nil
-        workerSpy = nil
-        presenterSpy = nil
-        fakeService = nil
+    override func tearDown()  {
+		sut = nil
+        searchPhotosPresenterSPY = nil
+        workerPhotosSPY = nil
         super.tearDown()
     }
 
-    func test_init_interactor__expect_notNil() {
-        XCTAssertNotNil(sutInteractor)
-    }
-    func test_init_interactor__expect_workerNotNil() {
-        XCTAssertNotNil(sutInteractor.worker)
-    }
-    func test_init_interactor__expect_presenterNotNil() {
-        XCTAssertNotNil(sutInteractor.presenter)
+    func test_init_SearchPhotosInteractor__expect_notNil() {
+        XCTAssertNotNil(sut)
     }
 
-    func test_fetchPhotos_withRequest__expect_workerInvoked() {
-        sutInteractor.fetchPhotos(withRequest: request0)
+    func test_retrievePhotos__expect_invokedPresenterAndInvokedWorker() {
+        // --- then.
+        sut.retrivePhotos(withRequest: SearchPhotosInteractorTests.dummyRequest)
 
-        XCTAssertTrue(workerSpy.fetchPhotosInvoked)
-    }
-    func test_fetchPhotos_withRequest__expect_presenterInvoked() {
-        sutInteractor.fetchPhotos(withRequest: request0)
-
-        let exp = expectation(description: "expected : wait worker.searchPhoto(...) to return")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            exp.fulfill()
-        }
-        waitForExpectations(timeout: 0.1)
-        XCTAssertTrue(presenterSpy.presentFetchedPhotosInvoked)
+		// --- then.
+        XCTAssertTrue(searchPhotosPresenterSPY.invokedPresenter)
+        XCTAssertTrue(workerPhotosSPY.invokedWorker)
     }
 
-    func test_fetchPhotos_withRequest__expect_PresentResponse() {
+    func test_retrievePhotos__expect_empPhotos() {
         // --- given.
-        let workerSpy = WorkerSpy(service: .noService)
-        let serviceFake = SearchPhotoServiceStoreFake()
-        let presenterSpy = PresenterSpy()
-
-        serviceFake.completionStubbed = [
-            Photo(description: "Canada"),
-            Photo(description: "Paris"),
-        ]
-        workerSpy.service = serviceFake
-        sutInteractor.worker = workerSpy
-        sutInteractor.presenter = presenterSpy
-
-        // --- when.
-        self.sutInteractor.fetchPhotos(withRequest: self.request0)
+        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [Photo]())
 
         // --- then.
-        // used to trigger the response cause async is used inside of the worker
-        let exp = expectation(description: "expected : wait worker.searchPhoto(...) to return")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-        	self.assertNoDifference("Canada", presenterSpy.resultResponse.photos.first?.description)
-        	self.assertNoDifference("Paris", presenterSpy.resultResponse.photos.last?.description)
+        sut.retrivePhotos(withRequest: 	SearchPhotosInteractorTests.dummyRequest)
 
-        	XCTAssertTrue(workerSpy.fetchPhotosInvoked)
-        	XCTAssertTrue(presenterSpy.presentFetchedPhotosInvoked)
-        exp.fulfill()
-        }
-        waitForExpectations(timeout: 0.1)
+        // --- then.
+        assertNoDifference(expectedResponse, searchPhotosPresenterSPY.resultResponse)
+    }
+
+    func test_retrievePhotos__expect_onePhoto() {
+        // --- given.
+        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
+            Photo(description: "Photo0")
+        ])
+        workerPhotosSPY.makeData = [.init(description: "Photo0")]
+
+        // --- then.
+        sut.retrivePhotos(withRequest: SearchPhotosInteractorTests.dummyRequest)
+
+        // --- then.
+        assertNoDifference(expectedResponse, searchPhotosPresenterSPY.resultResponse)
+    }
+
+    func test_retrievePhotos__expect_manPhoto() {
+        // --- given.
+        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
+            Photo(description: "Photo0"),
+            Photo(description: "Photo1")
+        ])
+        workerPhotosSPY.makeData = [
+            .init(description: "Photo0"),
+            .init(description: "Photo1")
+        ]
+
+        // --- then.
+        sut.retrivePhotos(withRequest: SearchPhotosInteractorTests.dummyRequest)
+
+        // --- then.
+        assertNoDifference(expectedResponse, searchPhotosPresenterSPY.resultResponse)
     }
 
     // ==================
-    // MARK: - test doubles
+    // MARK: - Test doubles
     // ==================
-    class WorkerSpy: PhotosWorker {
-        var fetchPhotosInvoked = false
+    class SearchPhotosPresenterSPY: SearchPhotosPresentationLogic {
 
-        override func fetchPhotos(withRequest request: String, completionHandler: @escaping ([Photo]) -> Void) {
-            fetchPhotosInvoked = true
-
-            service?.fetchPhotos(withRequest: "", completionHandler: { photos in
-				// Handle the result..
-                // Update UI (worker side) Here and let the services to be testable easily
-                DispatchQueue.main.async {
-					// send back to the worker
-                    completionHandler(photos)
-                }
-            })
-        }
-    }
-    class SearchPhotoServiceStoreFake: PhotosServiceProtocol {
-        var completionStubbed: [Photo] = []
-
-        func fetchPhotos(withRequest: String, completionHandler: @escaping ([Photo]) -> Void) {
-            // get data  from external ...
-            completionHandler(completionStubbed)
-            // send back the result
-        }
-        func fetchPhoto(withID: String, completionHandler: @escaping (Photo) -> Void) {
-            // TODO: ❎ to impl ❎
-        }
-    }
-    class PresenterSpy: SearchPhotosPresentationLogic {
-        var presentFetchedPhotosInvoked = false
+        var invokedPresenter: Bool!
         var resultResponse: SearchPhotos.FetchPhotos.Response!
+
         func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response) {
-            presentFetchedPhotosInvoked = true
+            invokedPresenter = true
             resultResponse = response
+        }
+    }
+
+    class PhotosWorkerSpy: PhotosWorkerLogic {
+
+        var invokedWorker: Bool!
+        var makeData: [Photo]! = []
+
+        func retrievePhotos(withRequest request: String, complectionRetrieve completionHandler: @escaping ([Photo]) -> Void) {
+            invokedWorker = true
+            completionHandler(makeData)
         }
     }
 }

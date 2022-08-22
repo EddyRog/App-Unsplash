@@ -47,12 +47,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "SearchPhotosInteractorTests">
-               </Test>
-               <Test
-                  Identifier = "SearchPhotosRouterTests">
-               </Test>
-               <Test
                   Identifier = "SearchPhotosTests">
                </Test>
                <Test

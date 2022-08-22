@@ -4,10 +4,8 @@
 // Created in 2022
 // Swift 5.0
 
-
 import Foundation
 import UIKit
-
 
 protocol SearchPhotosDisplayLogic: AnyObject {
     func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
@@ -18,10 +16,8 @@ class SearchPhotosViewController: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
-
     var interactor: SearchPhotosBusinessLogic?
     var router: SearchPhotosRoutingLogic?
-
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
     var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [
@@ -30,11 +26,10 @@ class SearchPhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("📘")
         tableview.delegate = self
         tableview.dataSource = self
-
         registerTableViewCells()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,14 +51,20 @@ class SearchPhotosViewController: UIViewController {
 }
 
 extension SearchPhotosViewController: SearchPhotosDisplayLogic {
-
     func searchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
-        interactor?.fetchPhotos(withRequest: request)
+        interactor?.retrivePhotos(withRequest: request)
     }
+
+//    func searchPhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
+//        interactor?.fetchPhotos(withRequest: request)
+//    }
 
     func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
         resultSearchPhotos = viewModel
-        tableview.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let this = self else {return}
+            this.tableview.reloadData()
+        }
     }
 }
 
@@ -118,6 +119,7 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         debugPrint("dee L\(#line) 🏵 -------> index => ", indexPath)
+        router?.rootToShowPhoto(withID: "1")
 //        debugPrint("dee L\(#line) 🏵 -------> index => ", resultSearch[indexPath.row].description)
         // clique
         // select id
@@ -135,7 +137,7 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
         //
 //        router?.showSearchPhotoDetails()
 
-        router?.rootToSearchPhotosDetails(withID: "\(indexPath.row)")
+//        router?.rootToSearchPhotosDetails(withID: "\(indexPath.row)")
     }
 
     func registerTableViewCells() {

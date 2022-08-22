@@ -15,7 +15,8 @@ class SearchPhotosConfiguratorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosConfigurator()
+        let dummyUINavigationController: UINavigationController = UINavigationController()
+        sut = SearchPhotosConfigurator(navController: dummyUINavigationController)
     }
     override func tearDown() {
         sut = nil
@@ -25,11 +26,13 @@ class SearchPhotosConfiguratorTests: XCTestCase {
     func test_init_SearchPhotosConfigurator__expect_notNil() {
         XCTAssertNotNil(sut)
     }
+
     func test_createModule__expect_SearchPhotosViewController() {
         if let searchPhotosViewController = try? sut.createModule() {
             XCTAssertTrue(searchPhotosViewController.isKind(of: SearchPhotosViewController.self))
         }
     }
+
     func test_createModule_withWrongIdentifier__expect_throwError() {
         sut.identifier = "_"
         XCTAssertThrowsError(try sut.createModule(), "should throws an error") { error in
@@ -40,14 +43,16 @@ class SearchPhotosConfiguratorTests: XCTestCase {
             }
         }
     }
+
     func test_createModule_withAllDependances__expect_layersAreConnected() {
         XCTAssertNoThrow(try sut.createModule())
         if let searchPhotosViewController = try? sut.createModule() {
             XCTAssertNotNil(searchPhotosViewController.interactor)
             XCTAssertNotNil(searchPhotosViewController.router)
+//            XCTAssertNotNil((searchPhotosViewController.router as? SearchPhotosRouter)?.)
             XCTAssertNotNil( (searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter )
+            XCTAssertNotNil( (searchPhotosViewController.interactor as? SearchPhotosInteractor)?.worker )
             XCTAssertNotNil( ((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter as? SearchPhotosPresenter)?.viewController )
-            // FIXME: ⚠️ Connection worker ⚠️
         }
     }
 }

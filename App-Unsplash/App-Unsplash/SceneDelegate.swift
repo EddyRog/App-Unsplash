@@ -7,27 +7,68 @@
 
 import UIKit
 
+protocol Coordinator {
+    var navController: UINavigationController { get set }
+    func start()
+}
+
+final class AppCoordinator: Coordinator {
+    // MARK: - Properties
+    internal var navController: UINavigationController
+    private let window: UIWindow
+
+    // MARK: - Initializer
+    internal init(navController: UINavigationController, window: UIWindow) {
+        self.navController = navController
+        self.window = window
+    }
+
+    func start() {
+        window.rootViewController = navController
+        window.makeKeyAndVisible()
+        showMain()
+    }
+
+    // MARK: - Navigation
+    private func showMain() {
+        guard let searchPhotoViewController = try? SearchPhotosConfigurator(navController: navController).createModule() else { return }
+        navController.pushViewController(searchPhotoViewController, animated: true)
+        searchPhotoViewController.router?.navigationController = navController
+    }
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var app: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
 
-        // configurator
+        let navCon = UINavigationController()
+        guard let window = window else { return }
+
+        let appCoodinator = AppCoordinator(navController: navCon, window: window)
+        app = appCoodinator
+        appCoodinator.start()
+
 //        let searchPhotosConfigurator = SearchPhotosConfigurator()
-        let searchPhotosConfigurator = SearchPhotosConfigurator()
 
         // viewcontroller
-        guard let searchPhotosViewController = try? searchPhotosConfigurator.createModule() else { return }
-        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
-//        searchPhotosConfigurator.configureModule(searchPhotosViewController)
+//        guard let searchPhotosViewController = try? searchPhotosConfigurator.createModule() else { return }
+//        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
+////        searchPhotosConfigurator.configureModule(searchPhotosViewController)
+//
+//        window.rootViewController = navCon
+//        window.makeKeyAndVisible()
 
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationSearchPhotos
-        window?.makeKeyAndVisible()
+
+//        // viewcontroller
+//        guard let searchPhotosViewController = try? searchPhotosConfigurator.createModule() else { return }
+//        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
+////        searchPhotosConfigurator.configureModule(searchPhotosViewController)
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -30,7 +30,8 @@ class PresenterSearchPhotosTests: XCTestCase {
     func test_init_SearchPhotosPresenter__expect_notNil() {
         XCTAssertNotNil(sut)
     }
-    func test_present_response__expect_SearchPhotosPresenter_isInvoked() {
+
+    func test_present_response__expect_SearchPhotosViewController_isInvoked() {
         // --- given.
         let response = SearchPhotos.FetchPhotos.Response(photos: [Photo]())
 
@@ -40,6 +41,7 @@ class PresenterSearchPhotosTests: XCTestCase {
         // --- then.
         XCTAssertTrue(searchPhotosViewControllerSPY.invokedViewController)
     }
+
     func test_present_response__expect_empViewModel() {
         // --- given.
         let response: SearchPhotos.FetchPhotos.Response = .init(photos: [])
@@ -52,6 +54,7 @@ class PresenterSearchPhotosTests: XCTestCase {
             SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: []),
             searchPhotosViewControllerSPY.resultViewModel)
     }
+
     func test_present_response__expect_oneViewModel() {
         // --- given.
         let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(description: "Picture0")])
@@ -64,6 +67,7 @@ class PresenterSearchPhotosTests: XCTestCase {
             SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [.init(description: "Picture0")]),
             searchPhotosViewControllerSPY.resultViewModel)
     }
+    
     func test_present_response__expect_manViewModel() {
         // --- given.
         let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
