@@ -348,12 +348,12 @@
 		C8EC0103286A023E001A56E8 /* SearchPhotos */ = {
 			isa = PBXGroup;
 			children = (
-				C89C9AF92886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift */,
 				C8113CCE28733F1E00C9236B /* SearchPhotosRouterTests.swift */,
-				C892487D288E9F8C0039BA78 /* SearchPhotosPresenterTests.swift */,
 				C8E0B1752881DDA700F95CC5 /* SearchPhotosViewTests.swift */,
 				C80D5F8C286DD1070022C021 /* SearchPhotosInteractorTests.swift */,
 				C873C087288FDAD80012E9EF /* SearchPhotosTests.swift */,
+				C892487D288E9F8C0039BA78 /* SearchPhotosPresenterTests.swift */,
+				C89C9AF92886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift */,
 			);
 			path = SearchPhotos;
 			sourceTree = "<group>";

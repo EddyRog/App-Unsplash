@@ -9,71 +9,95 @@ import XCTest
 import CustomDump
 
 class PresenterSearchPhotosTests: XCTestCase {
-    var sutPresenter: SearchPhotosPresenter!
-    var viewSpy: ViewSpy!
+
+    var sut: SearchPhotosPresenter!
+    var searchPhotosViewControllerSPY:  SearchPhotosViewControllerSPY!
 
     override func setUp() {
         super.setUp()
-        sutPresenter = SearchPhotosPresenter()
-        viewSpy = ViewSpy()
-        sutPresenter.viewController = viewSpy
+        sut = SearchPhotosPresenter()
+        searchPhotosViewControllerSPY =  SearchPhotosViewControllerSPY()
+        sut.viewController = searchPhotosViewControllerSPY
+
     }
     override func tearDown() {
-        sutPresenter = nil
-        viewSpy = nil
+        sut = nil
+        searchPhotosViewControllerSPY = nil
         super.tearDown()
     }
 
-    func test_init__expect_presenterNotNil() {
-        XCTAssertNotNil(sutPresenter)
+    // SearchPhotosPresenter
+    func test_init_SearchPhotosPresenter__expect_notNil() {
+        XCTAssertNotNil(sut)
     }
-
-    // invoked // Presenter -> ViewController
-    func test_presentFetchedPhotos_withResponse__expect_viewInvoked() {
+    func test_present_response__expect_SearchPhotosPresenter_isInvoked() {
         // --- given.
         let response = SearchPhotos.FetchPhotos.Response(photos: [Photo]())
 
         // --- when.
-        sutPresenter.presentFetchedPhotos(with: response)
+        sut.presentFetchedPhotos(with: response)
 
         // --- then.
-        XCTAssertTrue(viewSpy.displayedFetchedPhotos)
-	}
-
-    func test_presentFetchedPhotos__expect_displayOneResponse() {
-        let response = SearchPhotos.FetchPhotos.Response(photos: [Seed.Photos.paris])
-
-        sutPresenter.presentFetchedPhotos(with: response)
-
-        assertNoDifference("Paris", viewSpy.viewModel.displayedPhotos.first?.description)
+        XCTAssertTrue(searchPhotosViewControllerSPY.invokedViewController)
     }
+    func test_present_response__expect_empViewModel() {
+        // --- given.
+        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [])
 
-    // --- presenter(DidObtainID).
-//    func test_givenPresenter_whenPresenterDidObtainPhotoId_expect_ViewInvoked() {
-//        // --- when.
-//        sut.interactor(didFindIdPhoto: "ID")
-//
-//        XCTAssertTrue(searchPhotoViewControllerSpy.didObtainIdInvoked, "should call the view")
-//        assertNoDifference(searchPhotoViewControllerSpy.resultDidObtainId, "ID")
-//    }
+        // --- when.
+        sut.presentFetchedPhotos(with: response)
+
+        // --- then.
+        assertNoDifference(
+            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: []),
+            searchPhotosViewControllerSPY.resultViewModel)
+    }
+    func test_present_response__expect_oneViewModel() {
+        // --- given.
+        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(description: "Picture0")])
+
+        // --- when.
+        sut.presentFetchedPhotos(with: response)
+
+        // --- then.
+        assertNoDifference(
+            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [.init(description: "Picture0")]),
+            searchPhotosViewControllerSPY.resultViewModel)
+    }
+    func test_present_response__expect_manViewModel() {
+        // --- given.
+        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
+            .init(description: "Picture0"),
+            .init(description: "Picture1")
+        ])
+
+        // --- when.
+        sut.presentFetchedPhotos(with: response)
+
+        // --- then.
+        assertNoDifference(
+            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
+                .init(description: "Picture0"),
+                .init(description: "Picture1"),
+            ]),
+            searchPhotosViewControllerSPY.resultViewModel)
+    }
+    // TODO: ❎ Get id to fecht ❎
 
     // ==================
-    // MARK: - test doubles
+    // MARK: - Test doubles
     // ==================
-    class ViewSpy: SearchPhotosDisplayLogic {
-        var displayedFetchedPhotos = false
-        var viewModel: SearchPhotos.FetchPhotos.ViewModel!
+    class SearchPhotosViewControllerSPY: SearchPhotosDisplayLogic {
 
-        func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request) { }
-        func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
+        var invokedViewController: Bool!
+        var resultViewModel: SearchPhotos.FetchPhotos.ViewModel?
 
-			displayedFetchedPhotos = true
-            self.viewModel = viewModel
+        func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request) {
+            //
         }
-
-        //        func presenter(didObtainPhotoID id: String) {
-        //            didObtainIdInvoked = true
-        //            resultDidObtainId = id
-        //        }
+        func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
+            invokedViewController = true
+            resultViewModel = viewModel
+        }
     }
 }

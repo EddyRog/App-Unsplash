@@ -27,11 +27,19 @@ enum SearchPhotos {
         struct Response {
             var photos: [Photo]
         }
-        struct ViewModel {
-            struct DisplayedPhoto {
+        struct ViewModel: Equatable {
+            struct DisplayedPhoto: Equatable {
                 var description: String
+
+                static func == (lhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto, rhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto) -> Bool {
+                    return lhs.description == rhs.description
+                }
             }
             var displayedPhotos: [DisplayedPhoto]
+
+            static func == (lhs: SearchPhotos.FetchPhotos.ViewModel, rhs: SearchPhotos.FetchPhotos.ViewModel) -> Bool {
+                return lhs.displayedPhotos == rhs.displayedPhotos
+            }
         }
     }
 }
