@@ -3,49 +3,42 @@
 // App-Unsplash
 // Created in 2022
 // Swift 5.0
+// ✔︎
 
 import Foundation
 import UIKit
 
 class SearchPhotosConfigurator {
+    var identifier = "SearchPhotosViewController"
 
-    func buildWithStoryboard(withIdentifier identifier: String = SearchPhotosViewController.identifier) throws -> SearchPhotosViewController {
+    func createModule() throws -> SearchPhotosViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        // --- check ID.
+        // --- check if the id exist.
         if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
             throw ErrorStoryboard.identifierNil
         }
+        // --- init viewController from storyboard.
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: identifier)
 
-        // --- Init from ID.
-        let view = storyboard.instantiateViewController(withIdentifier: identifier)
-
-        guard let searchPhotosViewImpl = view as? SearchPhotosViewController else {
+        guard let searchPhotosViewController = viewcontroller as? SearchPhotosViewController else {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
         }
 
-        return searchPhotosViewImpl
-    }
+        // --- configure the connection of layers.
+        let searchPhotosInteractor = SearchPhotosInteractor()
+        let searchPhotosRouter = SearchPhotosRouter()
+        let searchPhotosPresenter = SearchPhotosPresenter()
 
-    // used for storyboard
-    func configureModule(_ searchPhotosViewImpl: SearchPhotosViewController) {
-        // --- set connection between layers
-        let interactor = SearchPhotosInteractor()
-        let presenter = SearchPhotosPresenter()
-        let worker = PhotosWorker(service: .api)
-        let router = SearchPhotosRouter()
+		// --- ViewController -> interactor & router.
+        searchPhotosViewController.interactor = searchPhotosInteractor
+        searchPhotosViewController.router = searchPhotosRouter
 
-        // router -> ViewController.NavigatoinController
-        router.navigationController = searchPhotosViewImpl.navigationController
+        // --- Interactor -> presenter.
+        searchPhotosInteractor.presenter = searchPhotosPresenter
 
-        // interactor -> ( presenter, worker)
-        interactor.presenter = presenter
-        interactor.worker = worker
+        // --- Presenter -> viewcontroller.
+        searchPhotosPresenter.viewController = searchPhotosViewController
 
-        // view -> ( interactor, router )
-        searchPhotosViewImpl.interactor = interactor
-        searchPhotosViewImpl.router = router
-
-        // presenter -> ( View )
-        presenter.viewController = searchPhotosViewImpl
+        return searchPhotosViewController
     }
 }

@@ -45,6 +45,23 @@
                BlueprintName = "App-UnsplashTests"
                ReferencedContainer = "container:App-Unsplash.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "PresenterSearchPhotosTests">
+               </Test>
+               <Test
+                  Identifier = "SearchPhotosInteractorTests">
+               </Test>
+               <Test
+                  Identifier = "SearchPhotosRouterTests">
+               </Test>
+               <Test
+                  Identifier = "SearchPhotosTests">
+               </Test>
+               <Test
+                  Identifier = "SearchPhotosViewTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

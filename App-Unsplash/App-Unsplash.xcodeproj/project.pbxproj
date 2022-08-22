@@ -46,7 +46,6 @@
 		C8EC0119286B73F7001A56E8 /* SearchPhotosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC0118286B73F7001A56E8 /* SearchPhotosPresenter.swift */; };
 		C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722F9286606B60034A36C /* AppDelegate.swift */; };
 		C8F722FC286606B60034A36C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722FB286606B60034A36C /* SceneDelegate.swift */; };
-		C8F722FE286606B60034A36C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F722FD286606B60034A36C /* ViewController.swift */; };
 		C8F72301286606B60034A36C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8F722FF286606B60034A36C /* Main.storyboard */; };
 		C8F72303286606C40034A36C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8F72302286606C40034A36C /* Assets.xcassets */; };
 		C8F72306286606C40034A36C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8F72304286606C40034A36C /* LaunchScreen.storyboard */; };
@@ -117,7 +116,6 @@
 		C8F722F6286606B60034A36C /* App-Unsplash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App-Unsplash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F722F9286606B60034A36C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8F722FB286606B60034A36C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C8F722FD286606B60034A36C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8F72300286606B60034A36C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C8F72302286606C40034A36C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C8F72305286606C40034A36C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -195,6 +193,46 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		C824422528B3A3D800A994B3 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				C8F722F9286606B60034A36C /* AppDelegate.swift */,
+				C8F722FB286606B60034A36C /* SceneDelegate.swift */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		C824422628B3A3F200A994B3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		C824422728B3A42A00A994B3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C8E9AF9E287F317C00A4C56E /* Extension+Storyboard.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		C824422828B3A44200A994B3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C8F722FF286606B60034A36C /* Main.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		C824422928B3A4BC00A994B3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C8F7233128660CF50034A36C /* 🧰✅ Scenes */,
+			);
+			name = Domain;
+			sourceTree = "<group>";
+		};
 		C889088B2886A2BB00D091D9 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,7 +298,6 @@
 				C8F72302286606C40034A36C /* Assets.xcassets */,
 				C8F72304286606C40034A36C /* LaunchScreen.storyboard */,
 				C8F72338286612160034A36C /* Extension+XCTestCase.swift */,
-				C8E9AF9E287F317C00A4C56E /* Extension+Storyboard.swift */,
 				C8EC0109286A06C7001A56E8 /* SimpleData.json */,
 				C8EC010F286B2500001A56E8 /* StubAPI.json */,
 				C89B66EC2892887200086529 /* StubPhotoID.json */,
@@ -354,7 +391,7 @@
 		C8F7230F286606CB0034A36C /* App-UnsplashTests */ = {
 			isa = PBXGroup;
 			children = (
-				C8F7233128660CF50034A36C /* 🧰✅ Scenes */,
+				C824422928B3A4BC00A994B3 /* Domain */,
 			);
 			path = "App-UnsplashTests";
 			sourceTree = "<group>";
@@ -365,6 +402,7 @@
 				C892487A288E91510039BA78 /* Scenes */,
 				C8924879288E91470039BA78 /* Workers */,
 				C8924878288E91410039BA78 /* Services */,
+				C824422728B3A42A00A994B3 /* Extensions */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -372,10 +410,9 @@
 		C8F7232F28660BDC0034A36C /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				C8F722F9286606B60034A36C /* AppDelegate.swift */,
-				C8F722FB286606B60034A36C /* SceneDelegate.swift */,
-				C8F722FF286606B60034A36C /* Main.storyboard */,
-				C8F722FD286606B60034A36C /* ViewController.swift */,
+				C824422828B3A44200A994B3 /* UI */,
+				C824422628B3A3F200A994B3 /* Settings */,
+				C824422528B3A3D800A994B3 /* Delegates */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -585,7 +622,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -598,7 +635,6 @@
 				C89C9B0C288717560007E0B0 /* ShowPhotoInteractor.swift in Sources */,
 				C89C9B1428886E830007E0B0 /* ShowPhotoRouter.swift in Sources */,
 				C89B66E628911C8100086529 /* ShowPhotoModels.swift in Sources */,
-				C8F722FE286606B60034A36C /* ViewController.swift in Sources */,
 				C8113CD22873594A00C9236B /* SearchPhotosRouter.swift in Sources */,
 				C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */,
 				C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */,

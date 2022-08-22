@@ -3,49 +3,53 @@
 // App-UnsplashTests
 // Created in 2022
 // Swift 5.0
-
+// ✔︎ 
 @testable import App_Unsplash
 import XCTest
 import CustomDump
+import AudioToolbox
 
 class SearchPhotosConfiguratorTests: XCTestCase {
 
-    var sutPhotosConfigurator: SearchPhotosConfigurator!
-    var searchPhotosViewController: SearchPhotosViewController!
+    var sut: SearchPhotosConfigurator!
 
     override func setUp() {
         super.setUp()
-        sutPhotosConfigurator = SearchPhotosConfigurator()
-
-        searchPhotosViewController = try? sutPhotosConfigurator.buildWithStoryboard()
+        sut = SearchPhotosConfigurator()
     }
     override func tearDown() {
-        sutPhotosConfigurator = nil
+        sut = nil
         super.tearDown()
     }
 
-    func test_init_expect_isNotNil() {
-        XCTAssertNotNil(sutPhotosConfigurator)
+    func test_init_SearchPhotosConfigurator__expect_notNil() {
+        XCTAssertNotNil(sut)
     }
-
-    // View
-    func test_buildWithStoryboard_expect_viewControllerIsNotNil() {
-        XCTAssertNotNil(searchPhotosViewController)
+    func test_createModule__expect_SearchPhotosViewController() {
+        if let searchPhotosViewController = try? sut.createModule() {
+            XCTAssertTrue(searchPhotosViewController.isKind(of: SearchPhotosViewController.self))
+        }
     }
-
-    func test_buildWithStoryboard_expect_viewKnowTheRouter() {
-        sutPhotosConfigurator.configureModule(searchPhotosViewController)
-
-        XCTAssertNotNil(searchPhotosViewController.router)
+    func test_createModule_withWrongIdentifier__expect_throwError() {
+        sut.identifier = "_"
+        XCTAssertThrowsError(try sut.createModule(), "should throws an error") { error in
+            if let errorStoryboard =  error as? ErrorStoryboard {
+                XCTAssertEqual(errorStoryboard, .identifierNil)
+            } else {
+                XCTFail("must cast the error into ErrorStoryboard")
+            }
+        }
     }
-
-    // check if scene delegate init SearchPhotosView
-    func test_router_build_expect_viewInStoryboard_isNotNil() {
-        XCTAssertNoThrow(searchPhotosViewController, "Custom class name in storyboard is wrong /or check in scene delegate")
-    }
-
-    func test_buildSearchPhotosView_expect_viewInStoryboard_throwsAnError() {
-        let wrongIdentifier = "_"
-        XCTAssertThrowsError(try sutPhotosConfigurator.buildWithStoryboard(withIdentifier: wrongIdentifier), "Should throws an error")
+    func test_createModule_withAllDependances__expect_layersAreConnected() {
+        XCTAssertNoThrow(try sut.createModule())
+        if let searchPhotosViewController = try? sut.createModule() {
+            XCTAssertNotNil(searchPhotosViewController.interactor)
+            XCTAssertNotNil(searchPhotosViewController.router)
+            XCTAssertNotNil( (searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter )
+            XCTAssertNotNil( ((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter as? SearchPhotosPresenter)?.viewController )
+            // FIXME: ⚠️ Connection worker ⚠️
+        }
     }
 }
+
+

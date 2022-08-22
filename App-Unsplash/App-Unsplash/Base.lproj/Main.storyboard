@@ -11,7 +11,7 @@
         <!--Search Photos View Controller-->
         <scene sceneID="0e1-xf-HVi">
             <objects>
-                <viewController storyboardIdentifier="SearchPhotosViewImpl" id="eB3-Vo-Aqu" customClass="SearchPhotosViewController" customModule="App_Unsplash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchPhotosViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eB3-Vo-Aqu" customClass="SearchPhotosViewController" customModule="App_Unsplash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rmf-HE-hQB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
