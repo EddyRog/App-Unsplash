@@ -58,6 +58,7 @@ class PhotosWorkerTests: XCTestCase {
         assertNoDifference(expectedURLRequest, actualURLRequest)
     }
 
+    // --- Parse: retrievePhotos.
     func test_parseDataResponse_withJsonRequest_expect_ResponseDecoded() {
         // --- given.
         let stubbedData = fetchJsonDataFromLocalFile()
@@ -79,8 +80,21 @@ class PhotosWorkerTests: XCTestCase {
         }
     }
 
-    // --- URLRequest + Parse.
-    func test_retrievePhotos_withRequest__expect_response() {
+    // --- Parse: retrievePhoto(withID.
+    func test_parseDataResponse_withJsonRequestToShowPicture__expect_ResponseDecoded() {
+		// --- given.
+        let stubbedData = fetchJsonDataFromLocalFile(.photoID)
+        let expectedResponseDescription = "description01"
+
+        // --- when.
+        let response = try? sut.parseResponse(dataPhotoID: stubbedData)
+
+        assertNoDifference(expectedResponseDescription, response?.photo?.description)
+    }
+
+    // --- URLRequest + Parse / retrieve with string
+
+    func test_retrievePhotos_withStringRequest__expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtocol to customize the response of fake server
         let urlSessionConfiguration = URLSessionConfiguration.ephemeral // no persitence for (credential, cache, cookie)
@@ -110,6 +124,40 @@ class PhotosWorkerTests: XCTestCase {
         wait(for: [exp], timeout: 0.1)
 
     }
+
+
+    // --- URLRequest + Parse / retrieve with ID
+
+    func test_retrievePhotos_withIDRequest__expect_response() {
+        // --- given.
+        // MARK: - Config the session with a mock URLProtocol to customize the response of fake server
+        let urlSessionConfiguration = URLSessionConfiguration.ephemeral // no persitence for (credential, cache, cookie)
+        urlSessionConfiguration.protocolClasses = [MockURLProtocol.self]
+
+        // MARK: - Configure the session with `urlSessionConfiguration` for purpose of tests
+        sut.session = URLSession(configuration: urlSessionConfiguration)
+
+        // MARK: - Configure a stubbed response in the class `MockURLProtocol`
+        MockURLProtocol.requestHandlerStubbed = { urlRequestPassed in
+            // MARK: - Check the request when it s passed
+//            XCTAssertEqual(urlRequestPassed.url?.query?.contains("Car"), true)
+//            XCTAssertEqual(urlRequestPassed.url?.host?.contains("api.unsplash.com"), true)
+//            XCTAssertEqual(urlRequestPassed.url?.scheme?.contains("https"), true)
+
+            let response = HTTPURLResponse()
+            let data = self.fetchJsonDataFromLocalFile(.photoID)
+            return (response, data)
+        }
+
+        // --- when.
+        let exp = expectation(description: "wait for retrievePhotoByID")
+        sut.retrievePhoto(withID: "1234") { unsafePhoto in
+            self.assertNoDifference("description01", unsafePhoto?.description)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 0.5)
+    }
+
 
     // ==================
     // MARK: - Test doubles
@@ -192,3 +240,24 @@ class PhotosWorkerTests: XCTestCase {
         case photoID
     }
 }
+
+
+/*
+ continue = continue, c
+ step over = thread step-over, next, n.
+ step into = thread step-in, step, and s
+ step out = c, n , s
+ frame info = **currentline, source file,
+
+ thread backtrace
+
+
+
+ help thread
+ help frame
+ help process
+
+
+
+ 
+ */

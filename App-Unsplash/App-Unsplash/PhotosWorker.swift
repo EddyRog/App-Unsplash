@@ -11,7 +11,7 @@ protocol PhotosWorkerLogic {
     func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void )
 }
 
-class PhotosWorker: PhotosWorkerLogic {
+class PhotosWorker {
 
     var session: URLSession = URLSession.shared
 
@@ -20,7 +20,7 @@ class PhotosWorker: PhotosWorkerLogic {
         urlComponents.scheme = "https"
         urlComponents.host = "api.unsplash.com"
         urlComponents.queryItems = [
-			URLQueryItem(name: "client_id", value: "a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4")
+            URLQueryItem(name: "client_id", value: "a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4")
         ]
 
         switch unsplashURL {
@@ -57,6 +57,26 @@ class PhotosWorker: PhotosWorkerLogic {
         }
     }
 
+    func parseResponse(dataPhotoID: Data) throws -> ShowPhoto.FetchPhoto.Response {
+        let decoder: JSONDecoder = JSONDecoder()
+        var response: ShowPhoto.FetchPhoto.Response = ShowPhoto.FetchPhoto.Response.init(photo: nil)
+
+        do {
+            let responseData = try decoder.decode(Result.self, from: dataPhotoID)
+            // TODO: ❎ Add other fields ❎
+//            responseData.id
+//            responseData.urls
+            response.photo = Photo(description: responseData.resultDescription)
+            return response
+
+        } catch {
+            throw ServiceError.dataParse
+        }
+    }
+}
+
+extension PhotosWorker: PhotosWorkerLogic {
+
     func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void ) {
         let emptyPhotos: [Photo] = [Photo]()
         // retrieve data with apple classe
@@ -69,14 +89,24 @@ class PhotosWorker: PhotosWorkerLogic {
 
                 complectionRetrieve(dataParsed.photos) // send back data Decoded
             }.resume()
+
         } catch {
             complectionRetrieve(emptyPhotos) // send it back
         }
     }
 
-    func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void) {
-        // TODO: ❎ impl ❎
-        completionRetrieve(nil)
+    func retrievePhoto(withID photoID: String, completionRetrieve: @escaping (Photo?) -> Void) {
+        do {
+            let urlrequest = try makeURLRequest(withRequest: .urlID(photoID))
+            session.dataTask(with: urlrequest) { data, _, _ in
+                guard let unwData       = data else { completionRetrieve(nil); return }
+                guard let unwDataParsed = try? self.parseResponse(dataPhotoID : unwData) else { completionRetrieve(nil); return }
+                completionRetrieve(unwDataParsed.photo)
+            }.resume()
+
+        } catch {
+			completionRetrieve(nil)
+        }
     }
 }
 
