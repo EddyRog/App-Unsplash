@@ -5,8 +5,10 @@
 // Swift 5.0
 
 import Foundation
+
 protocol PhotosWorkerLogic {
     func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void )
+    func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void )
 }
 
 class PhotosWorker: PhotosWorkerLogic {
@@ -70,6 +72,11 @@ class PhotosWorker: PhotosWorkerLogic {
         } catch {
             complectionRetrieve(emptyPhotos) // send it back
         }
+    }
+
+    func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void) {
+        // TODO: ❎ impl ❎
+        completionRetrieve(nil)
     }
 }
 

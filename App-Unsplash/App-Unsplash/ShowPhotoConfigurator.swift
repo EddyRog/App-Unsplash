@@ -8,32 +8,53 @@
 import Foundation
 import UIKit
 
-//class ShowPhotoConfigurator {
-//    func buildWithStoryboard(withIdentifier identifier: String = ShowPhotoViewController.identifier) throws -> ShowPhotoViewController {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//
-//        // --- check ID.
-//        if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
-//            throw ErrorStoryboard.identifierNil
-//        }
-//
-//        // Init from ID
-//        let viewController: UIViewController = storyboard.instantiateViewController(withIdentifier: identifier)
-//
-//        guard let showPhotoViewController = viewController as? ShowPhotoViewController else {
-//            throw ErrorStoryboard.castingToSearchPhotosViewImpl
-//        }
-//
-//        return showPhotoViewController
-//    }
-//
-//    func configureModule(photoID: String, _ showPhotoViewController: ShowPhotoViewController) {
-//        let showPhotoRouter = ShowPhotoRouter(navigationController: UINavigationController(rootViewController: showPhotoViewController))
-//        let showPhotoInteractor = ShowPhotoInteractor()
-//
-//        // viewController -> router
-//        showPhotoViewController.router                  = showPhotoRouter
-//        showPhotoViewController.interactor              = showPhotoInteractor
-//        showPhotoViewController.interactor?.dataPhotoID = photoID
-//    }
-//}
+class ShowPhotoConfigurator: Coordinator {
+
+    var navController: UINavigationController
+    var idPhoto: String
+    var identifier = "ShowPhotoViewController"
+
+    internal init(navController: UINavigationController, withIDPhoto idPhoto: String, identifier: String = "ShowPhotoViewController") {
+        self.navController = navController
+        self.idPhoto = idPhoto
+        self.identifier = identifier
+    }
+
+
+    func createModule() throws -> ShowPhotoViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        // --- check if the id exist.
+        if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
+            throw ErrorStoryboard.identifierNil
+        }
+
+        // --- init viewController from storyboard.
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: identifier)
+
+        guard let showPhotoViewController = viewcontroller as? ShowPhotoViewController else {
+            throw ErrorStoryboard.castingToSearchPhotosViewImpl
+        }
+
+        let interactor = ShowPhotoInteractor()
+        let router = ShowPhotoRouter(navigationController: navController, idPhoto: idPhoto)
+        let presenter = ShowPhotoPresenter()
+
+        // --- ViewController -> Interactor.
+        showPhotoViewController.interactor = interactor
+        router.idPhoto = idPhoto
+        showPhotoViewController.router = router
+
+        // --- Interactor -> Presenter.
+        interactor.presenter = presenter
+        interactor.worker = PhotosWorker()
+
+        // --- Presenter -> ViewController.
+        presenter.viewController = showPhotoViewController
+
+        // ==================
+        // MARK: - Connection Layer VIP
+        // ==================
+
+        return showPhotoViewController
+    }
+}

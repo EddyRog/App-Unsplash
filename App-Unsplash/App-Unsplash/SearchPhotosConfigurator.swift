@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class SearchPhotosConfigurator: Coordinator {
+
     var navController: UINavigationController
     var identifier = "SearchPhotosViewController"
 
@@ -17,7 +18,6 @@ class SearchPhotosConfigurator: Coordinator {
         self.identifier = identifier
     }
 
-    func start() {}
 
     func createModule() throws -> SearchPhotosViewController {
 
@@ -26,6 +26,7 @@ class SearchPhotosConfigurator: Coordinator {
         if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
             throw ErrorStoryboard.identifierNil
         }
+
         // --- init viewController from storyboard.
         let viewcontroller = storyboard.instantiateViewController(withIdentifier: identifier)
 
@@ -45,7 +46,6 @@ class SearchPhotosConfigurator: Coordinator {
 
 		// --- ViewController -> interactor & router.
         searchPhotosViewController.interactor = searchPhotosInteractor
-//        searchPhotosRouter.
         searchPhotosViewController.router = searchPhotosRouter
 
         // --- Interactor -> presenter & worker.

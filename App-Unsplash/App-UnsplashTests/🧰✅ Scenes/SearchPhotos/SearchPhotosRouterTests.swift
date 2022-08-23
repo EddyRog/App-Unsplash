@@ -26,6 +26,7 @@ class SearchPhotosRouterTests: XCTestCase {
     func test_init_SearchPhotosRouter__expect_notNil() {
         XCTAssertNotNil(sut)
     }
+    
     func test_rootToShowPhoto_withID__expect_invokedUINavigationController() {
         // --- given.
         let uiNavigationControllerSPY = UINavigationControllerSPY()

@@ -20,22 +20,20 @@ class SearchPhotosViewController: UIViewController {
     var router: SearchPhotosRoutingLogic?
     static let identifier: String = "SearchPhotosViewImpl"
     var resultSearch: [ViewModel] = []
-    var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [
-        .init(description: "--")
-    ])
+    var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [.init(description: "--")])
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableview.delegate = self
         tableview.dataSource = self
         registerTableViewCells()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request(query: "car"))
     }
+
 
     @IBAction func push(_ sender: Any) {
         print("push")

@@ -18,6 +18,7 @@ class SearchPhotosInteractor: SearchPhotosBusinessLogic {
     var presenter: SearchPhotosPresentationLogic?
 
     func retrivePhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
+        
         worker?.retrievePhotos(withRequest: request.query) { photos in
             // map...
             let reponse: SearchPhotos.FetchPhotos.Response = .init(photos: photos)

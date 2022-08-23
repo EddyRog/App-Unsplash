@@ -1,5 +1,5 @@
 //
-// ShowPhotoInteractorImpl.swift
+// ShowPhotoInteractor.swift
 // App-Unsplash
 // Created in 2022
 // Swift 5.0
@@ -7,30 +7,29 @@
 
 import Foundation
 
-protocol ShowPhotoDataStore {
-    var dataPhotoID: String? { get set }
+protocol ShowPhotosBusinessLogic {
+//    func retrivePhotos(withRequest: ShowPhoto.FetchPhoto.Request)
+    func retrievePhoto(withID: ShowPhoto.FetchPhoto.Request)
 }
+class ShowPhotoInteractor: ShowPhotosBusinessLogic {
 
-protocol ShowPhotoBusinessLogic {
-    func fetchPhotoWithID()
+    var worker: PhotosWorkerLogic?
+    var presenter: ShowPhotoPresentationLogic?
+
+    func retrievePhoto(withID photoID: ShowPhoto.FetchPhoto.Request) {
+
+        // worker
+        worker?.retrievePhoto(withID: photoID.query, completionRetrieve: { [weak self] photo in
+            guard let this = self else {return}
+
+            // get the response
+            if let photo = photo {
+                let response = ShowPhoto.FetchPhoto.Response(photo: photo)
+                // send back to
+                this.presenter?.presentRetrievePhoto(with: response)
+            } else {
+                this.presenter?.presentRetrievePhoto(with: ShowPhoto.FetchPhoto.Response.init(photo: nil))
+            }
+        })
+    }
 }
-
-//class ShowPhotoInteractor: ShowPhotoBusinessLogic, ShowPhotoDataStore {
-//    var dataPhotoID: String?
-//    var worker: PhotosWorkerLogic?
-//    weak var presenter: ShowPhotoPresentationLogic?
-//
-////    func fetchPhotoWithID() {
-////        // get photo ID
-////        // pass the id to worker
-////		let internalID = "IDxxxx"
-////        var response = ShowPhoto.FetchBook.Response(photo: Photo(description: "Ford in to the"))
-////
-////        worker?.fetchPhoto(withID: internalID, completionHandler: { photo in
-////            // map to response
-////            // send back interactor -> presenter
-////            response.photo = photo
-////            self.presenter?.presentPhoto(response: response)
-////        })
-////    }
-//}

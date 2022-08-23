@@ -8,25 +8,13 @@
 import Foundation
 import UIKit
 
-protocol ShowPhotoDisplayLogic {
-    func displayPhoto(with: ShowPhoto.FetchBook.ViewModel)
-}
-
 class ShowPhotoViewController: UIViewController {
 
-	static let identifier = "ShowPhotoViewController"
-    internal var photoDescription = ""
-    var router: ShowPhotoRoutingLogic?
-    var interactor: (ShowPhotoBusinessLogic & ShowPhotoDataStore)?
+    var interactor: ShowPhotosBusinessLogic?
+    var router: ShowPhotoRouter?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        interactor?.fetchPhotoWithID()
-    }
-}
-
-extension ShowPhotoViewController: ShowPhotoDisplayLogic {
-    func displayPhoto(with photoViewModel: ShowPhoto.FetchBook.ViewModel) {
-        photoDescription = photoViewModel.displayedPhotos.description
+    func showPhoto(withID request: ShowPhoto.FetchPhoto.Request) {
+//        interactor?.retrivePhotos(withRequest: request)
+        interactor?.retrievePhoto(withID: request)
     }
 }

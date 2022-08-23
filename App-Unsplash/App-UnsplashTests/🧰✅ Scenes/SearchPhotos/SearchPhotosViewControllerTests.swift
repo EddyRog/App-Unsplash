@@ -25,7 +25,7 @@ class SearchPhotosViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
 	// VC -> IN
-    func test_searchPhotos_withRequest__expect_invokedInteractor() {
+     func test_searchPhotos_withRequest__expect_invokedInteractor() {
         // --- given .
         let searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
         sut.interactor = searchPhotosInteractorSPY

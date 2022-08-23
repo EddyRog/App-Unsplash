@@ -5,20 +5,18 @@
 // Swift 5.0
 
 
-import Foundation
 import UIKit
 
-protocol ShowDataPassing {
-    var dataPhotoID: ShowPhotoDataStore? { get } // access to dataStore
-}
 protocol ShowPhotoRoutingLogic {
-    var navigationController: UINavigationController? { get } // used to push
+    var navigationController: UINavigationController { get set }
 }
 
-class ShowPhotoRouter: ShowPhotoRoutingLogic, ShowDataPassing {
-    var dataPhotoID: ShowPhotoDataStore?
-    var navigationController: UINavigationController?
-    init(navigationController: UINavigationController) {
+class ShowPhotoRouter: ShowPhotoRoutingLogic {
+    var navigationController: UINavigationController
+    var idPhoto: String
+
+    internal init(navigationController: UINavigationController, idPhoto: String) {
         self.navigationController = navigationController
+        self.idPhoto = idPhoto
     }
 }

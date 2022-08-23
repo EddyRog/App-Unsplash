@@ -1,4 +1,3 @@
-import UIKit
 ////
 //// SearchPhotosRouter.swift
 //// App-Unsplash
@@ -6,12 +5,8 @@ import UIKit
 //// Swift 5.0
 //
 //
-//import Foundation
-//import UIKit
-//
 
-
-
+import UIKit
 
 protocol SearchPhotosRoutingLogic {
     var navigationController: UINavigationController { get set }
@@ -27,15 +22,17 @@ class SearchPhotosRouter: SearchPhotosRoutingLogic {
         self.navigationController = navigationController
     }
 
-    func rootToShowPhoto(withID: String) {
-        let uiviewController: UIViewController = UIViewController()
-        uiviewController.viewDidLoad()
-        uiviewController.view.backgroundColor = .red
-
-        navigationController.pushViewController(uiviewController, animated: true)
+    func rootToShowPhoto(withID idPhoto: String) {
         // create module
+        guard let showPhotoViewController = try? ShowPhotoConfigurator(navController: navigationController, withIDPhoto: idPhoto).createModule() else { return }
+
+        // !!!: ❎ Must Be Delete ❎
+//        let uiviewController: UIViewController = UIViewController()
+//        uiviewController.viewDidLoad()
+//        uiviewController.view.backgroundColor = .red
+
         // navigation push
-		print("id")
+        navigationController.pushViewController(showPhotoViewController, animated: true)
     }
 }
 

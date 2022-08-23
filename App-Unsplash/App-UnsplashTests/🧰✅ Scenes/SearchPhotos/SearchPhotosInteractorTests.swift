@@ -103,6 +103,7 @@ class SearchPhotosInteractorTests: XCTestCase {
 
     class PhotosWorkerSpy: PhotosWorkerLogic {
 
+
         var invokedWorker: Bool!
         var makeData: [Photo]! = []
 
@@ -110,5 +111,7 @@ class SearchPhotosInteractorTests: XCTestCase {
             invokedWorker = true
             completionHandler(makeData)
         }
+
+        func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void) { }
     }
 }

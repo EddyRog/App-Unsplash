@@ -7,9 +7,12 @@
 import Foundation
 
 enum ShowPhoto {
-    enum FetchBook {
+    enum FetchPhoto {
+        struct Request {
+            var query: String
+        }
         struct Response: Equatable {
-            var photo: Photo
+            var photo: Photo?
         }
         struct ViewModel {
             struct DisplayedPhoto {
