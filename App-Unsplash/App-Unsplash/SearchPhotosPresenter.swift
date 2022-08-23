@@ -4,18 +4,14 @@
 // Created in 2022
 // Swift 5.0
 
-
 import Foundation
 
-//protocol SearchPhotosPresentationLogicBi {
-//    func presentSearchPhotos(with responses: [Response])
-//    func interactor(didFindIdPhoto: String)
-//}
 protocol SearchPhotosPresentationLogic {
     func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response)
 }
 
 class SearchPhotosPresenter: SearchPhotosPresentationLogic {
+
     weak var viewController: SearchPhotosDisplayLogic?
 
     func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response) {
@@ -23,14 +19,25 @@ class SearchPhotosPresenter: SearchPhotosPresentationLogic {
 
 		// map response to viewmodel
         response.photos.forEach { photo in
-            if let photoDescription = photo.description {
-                viewModel.displayedPhotos.append(.init(description: photoDescription))
-            }
+
+            let urlsmallImage = photo.urlsmallImage ?? ""
+            let description = photo.description ?? ""
+            let photoID = photo.photoID
+
+            let displayedPhoto: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto = .init(
+                urlsmallImage: urlsmallImage,
+                photoID: photoID,
+                description: description)
+
+            viewModel.displayedPhotos.append(displayedPhoto)
+
+//            if let photoDescription = photo.description {
+//                viewModel.displayedPhotos.append(.init(
+//                    photoID: photo.photoID,
+//                    description: photoDescription
+//                ))
+//            }
         }
         viewController?.displayedFetchedPhotos(viewModel: viewModel)
     }
-
-//    func interactor(didFindIdPhoto id: String) {
-////        view?.presenter(didObtainPhotoID: id)
-//    }
 }

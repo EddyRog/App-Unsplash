@@ -66,6 +66,7 @@ class PhotosWorkerTests: XCTestCase {
 
         // --- when.
         let firstResponse = try? sut.parseResponse(data: stubbedData).photos.first
+//        let actualResponsesID          = firstResponse?.
         let actualResponsesDescription = firstResponse?.description
 
         // --- then.
@@ -93,7 +94,6 @@ class PhotosWorkerTests: XCTestCase {
     }
 
     // --- URLRequest + Parse / retrieve with string
-
     func test_retrievePhotos_withStringRequest__expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtocol to customize the response of fake server
@@ -125,9 +125,7 @@ class PhotosWorkerTests: XCTestCase {
 
     }
 
-
     // --- URLRequest + Parse / retrieve with ID
-
     func test_retrievePhotos_withIDRequest__expect_response() {
         // --- given.
         // MARK: - Config the session with a mock URLProtocol to customize the response of fake server
@@ -157,7 +155,6 @@ class PhotosWorkerTests: XCTestCase {
         }
         wait(for: [exp], timeout: 0.5)
     }
-
 
     // ==================
     // MARK: - Test doubles

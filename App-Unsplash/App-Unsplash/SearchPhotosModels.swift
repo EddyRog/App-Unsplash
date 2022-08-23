@@ -7,15 +7,6 @@
 
 import Foundation
 
-struct Photo: Equatable {
-    var description: String?
-
-    static func == (lhs: Photo, rhs: Photo) -> Bool {
-        return lhs.description == rhs.description
-    }
-}
-
-
 enum SearchPhotos {
 //    enum Create { }
 //    enum UpdatePhotos { }
@@ -33,6 +24,8 @@ enum SearchPhotos {
         }
         struct ViewModel: Equatable {
             struct DisplayedPhoto: Equatable {
+                var urlsmallImage: String
+                var photoID: String
                 var description: String
 
                 static func == (lhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto, rhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto) -> Bool {

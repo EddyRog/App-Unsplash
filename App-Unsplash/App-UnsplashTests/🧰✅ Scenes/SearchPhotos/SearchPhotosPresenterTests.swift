@@ -57,22 +57,28 @@ class PresenterSearchPhotosTests: XCTestCase {
 
     func test_present_response__expect_oneViewModel() {
         // --- given.
-        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(description: "Picture0")])
+        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0")])
 
         // --- when.
         sut.presentFetchedPhotos(with: response)
 
         // --- then.
         assertNoDifference(
-            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [.init(description: "Picture0")]),
+            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
+                .init(
+                    urlsmallImage: "Image0",
+                    photoID: "ID0",
+                    description: "Picture0"
+                )
+            ]),
             searchPhotosViewControllerSPY.resultViewModel)
     }
     
     func test_present_response__expect_manViewModel() {
         // --- given.
         let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
-            .init(description: "Picture0"),
-            .init(description: "Picture1")
+            .init(photoID: "ID0", description: "Picture0"),
+            .init(photoID: "ID1", description: "Picture1")
         ])
 
         // --- when.
@@ -81,8 +87,8 @@ class PresenterSearchPhotosTests: XCTestCase {
         // --- then.
         assertNoDifference(
             SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
-                .init(description: "Picture0"),
-                .init(description: "Picture1"),
+                .init(urlsmallImage: "Image0", photoID: "ID0", description: "Picture0"),
+                .init(urlsmallImage: "Image1", photoID: "ID1", description: "Picture1"),
             ]),
             searchPhotosViewControllerSPY.resultViewModel)
     }

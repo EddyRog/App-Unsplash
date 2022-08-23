@@ -100,13 +100,41 @@ Powered by creators everywhere.</string>
                     <view key="view" contentMode="scaleToFill" id="wbm-SW-5sI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWO-Fu-mvF">
+                                <rect key="frame" x="20" y="44" width="374" height="84"/>
+                                <color key="backgroundColor" red="0.12966876099999999" green="0.74323832450000005" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="yd6-Il-RNY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7pN-iS-6GY">
+                                <rect key="frame" x="20" y="136" width="374" height="726"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="aaQ-s0-tmz"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <constraints>
+                            <constraint firstItem="KWO-Fu-mvF" firstAttribute="trailing" secondItem="wbm-SW-5sI" secondAttribute="trailingMargin" id="5vd-jb-iQf"/>
+                            <constraint firstItem="KWO-Fu-mvF" firstAttribute="trailing" secondItem="7pN-iS-6GY" secondAttribute="trailing" id="7xk-GS-Cpg"/>
+                            <constraint firstItem="KWO-Fu-mvF" firstAttribute="leading" secondItem="7pN-iS-6GY" secondAttribute="leading" id="DZz-Rl-vAo"/>
+                            <constraint firstItem="KWO-Fu-mvF" firstAttribute="top" secondItem="aaQ-s0-tmz" secondAttribute="top" id="EkO-qJ-j94"/>
+                            <constraint firstItem="7pN-iS-6GY" firstAttribute="bottom" secondItem="aaQ-s0-tmz" secondAttribute="bottom" id="NaB-BB-FWv"/>
+                            <constraint firstItem="7pN-iS-6GY" firstAttribute="top" secondItem="KWO-Fu-mvF" secondAttribute="bottom" constant="8" id="QmX-0U-hbg"/>
+                            <constraint firstItem="KWO-Fu-mvF" firstAttribute="leading" secondItem="wbm-SW-5sI" secondAttribute="leadingMargin" id="Uey-0p-6Py"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="KWO-Fu-mvF" id="xfz-Xj-Af5"/>
+                        <outlet property="imageImageView" destination="7pN-iS-6GY" id="g2I-2E-ypc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pdX-yE-0VG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-42" y="655"/>
+            <point key="canvasLocation" x="1779.7101449275365" y="-92.410714285714278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Whw-rH-POx">
@@ -131,6 +159,9 @@ Powered by creators everywhere.</string>
         <image name="Image" width="99.5" height="76"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

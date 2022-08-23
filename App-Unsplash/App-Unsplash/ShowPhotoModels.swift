@@ -16,6 +16,8 @@ enum ShowPhoto {
         }
         struct ViewModel {
             struct DisplayedPhoto {
+                var urlsmallImage: String?
+                var photoID: String?
                 var description: String
             }
             var displayedPhoto: DisplayedPhoto

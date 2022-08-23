@@ -58,9 +58,9 @@ class SearchPhotosInteractorTests: XCTestCase {
     func test_retrievePhotos__expect_onePhoto() {
         // --- given.
         let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
-            Photo(description: "Photo0")
+            Photo(photoID: "ID0", description: "Photo0")
         ])
-        workerPhotosSPY.makeData = [.init(description: "Photo0")]
+        workerPhotosSPY.makeData = [.init(photoID: "ID", description: "Photo0")]
 
         // --- then.
         sut.retrivePhotos(withRequest: SearchPhotosInteractorTests.dummyRequest)
@@ -72,12 +72,12 @@ class SearchPhotosInteractorTests: XCTestCase {
     func test_retrievePhotos__expect_manPhoto() {
         // --- given.
         let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
-            Photo(description: "Photo0"),
-            Photo(description: "Photo1")
+            Photo(photoID: "ID0", description: "Photo0"),
+            Photo(photoID: "ID1", description: "Photo1")
         ])
         workerPhotosSPY.makeData = [
-            .init(description: "Photo0"),
-            .init(description: "Photo1")
+            .init(photoID: "ID0", description: "Photo0"),
+            .init(photoID: "ID1", description: "Photo1")
         ]
 
         // --- then.

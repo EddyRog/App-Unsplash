@@ -27,7 +27,7 @@ class ShowPhotoPresenterTests: XCTestCase {
     func test_present_response__expect_ShowPhotoViewController_isInvoked() {
         let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
         sut.viewController = showPhotoViewControllerSPY
-        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(description: ""))
+        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", description: ""))
 
         sut.presentRetrievePhoto(with: response)
 
@@ -38,7 +38,7 @@ class ShowPhotoPresenterTests: XCTestCase {
         let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
         sut.viewController = showPhotoViewControllerSPY
 
-        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(description: "Description01"))
+        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "ID0", description: "Description01"))
 
         sut.presentRetrievePhoto(with: response)
 
@@ -58,85 +58,3 @@ class ShowPhotoPresenterTests: XCTestCase {
         }
     }
 }
-
-
-/*
-func test_init_SearchPhotosPresenter__expect_notNil() {
-    XCTAssertNotNil(sut)
-}
-
-func test_present_response__expect_SearchPhotosViewController_isInvoked() {
-    // --- given.
-    let response = SearchPhotos.FetchPhotos.Response(photos: [Photo]())
-
-    // --- when.
-    sut.presentFetchedPhotos(with: response)
-
-    // --- then.
-    XCTAssertTrue(searchPhotosViewControllerSPY.invokedViewController)
-}
-
-func test_present_response__expect_empViewModel() {
-    // --- given.
-    let response: SearchPhotos.FetchPhotos.Response = .init(photos: [])
-
-    // --- when.
-    sut.presentFetchedPhotos(with: response)
-
-    // --- then.
-    assertNoDifference(
-        SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: []),
-        searchPhotosViewControllerSPY.resultViewModel)
-}
-
-func test_present_response__expect_oneViewModel() {
-    // --- given.
-    let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(description: "Picture0")])
-
-    // --- when.
-    sut.presentFetchedPhotos(with: response)
-
-    // --- then.
-    assertNoDifference(
-        SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [.init(description: "Picture0")]),
-        searchPhotosViewControllerSPY.resultViewModel)
-}
-
-func test_present_response__expect_manViewModel() {
-    // --- given.
-    let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
-        .init(description: "Picture0"),
-        .init(description: "Picture1")
-    ])
-
-    // --- when.
-    sut.presentFetchedPhotos(with: response)
-
-    // --- then.
-    assertNoDifference(
-        SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
-            .init(description: "Picture0"),
-            .init(description: "Picture1"),
-        ]),
-        searchPhotosViewControllerSPY.resultViewModel)
-}
-// TODO: ❎ Get id to fecht ❎
-
-// ==================
-// MARK: - Test doubles
-// ==================
-class SearchPhotosViewControllerSPY: SearchPhotosDisplayLogic {
-
-    var invokedViewController: Bool!
-    var resultViewModel: SearchPhotos.FetchPhotos.ViewModel?
-
-    func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request) {
-        //
-    }
-    func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
-        invokedViewController = true
-        resultViewModel = viewModel
-    }
-}
-}
-*/

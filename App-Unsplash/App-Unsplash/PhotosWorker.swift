@@ -47,7 +47,14 @@ class PhotosWorker {
             let responseData = try decoder.decode(UnsplashObjc.self, from: data)
 
             responseData.photos.results.forEach { result in
-                let photo = Photo(description: result.resultDescription)
+                let photoID = result.id
+                let description = result.resultDescription
+                let urlsmallImage = result.urls.small
+
+                let photo = Photo(
+                    urlsmallImage: urlsmallImage,
+                    photoID: photoID,
+                    description: description)
                 response.photos.append(photo)
             }
 
@@ -59,14 +66,20 @@ class PhotosWorker {
 
     func parseResponse(dataPhotoID: Data) throws -> ShowPhoto.FetchPhoto.Response {
         let decoder: JSONDecoder = JSONDecoder()
-        var response: ShowPhoto.FetchPhoto.Response = ShowPhoto.FetchPhoto.Response.init(photo: nil)
+        var response: ShowPhoto.FetchPhoto.Response = .init(photo: nil)
 
         do {
             let responseData = try decoder.decode(Result.self, from: dataPhotoID)
-            // TODO: ❎ Add other fields ❎
-//            responseData.id
-//            responseData.urls
-            response.photo = Photo(description: responseData.resultDescription)
+
+            let smallImage = responseData.urls.small
+            let photoID = responseData.id
+            let description = responseData.resultDescription
+
+            response.photo = Photo(
+                urlsmallImage: smallImage,
+                photoID: photoID,
+                description: description
+            )
             return response
 
         } catch {
@@ -99,9 +112,12 @@ extension PhotosWorker: PhotosWorkerLogic {
         do {
             let urlrequest = try makeURLRequest(withRequest: .urlID(photoID))
             session.dataTask(with: urlrequest) { data, _, _ in
+
                 guard let unwData       = data else { completionRetrieve(nil); return }
                 guard let unwDataParsed = try? self.parseResponse(dataPhotoID: unwData) else { completionRetrieve(nil); return }
+                
                 completionRetrieve(unwDataParsed.photo)
+
             }.resume()
 
         } catch {

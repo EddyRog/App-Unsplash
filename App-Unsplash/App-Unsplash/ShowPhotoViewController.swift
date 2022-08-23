@@ -18,6 +18,20 @@ class ShowPhotoViewController: UIViewController {
     var interactor: ShowPhotosBusinessLogic?
     var router: ShowPhotoRouter?
 
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var imageImageView: UIImageView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let idPhoto = router?.idPhoto {
+            showPhoto(withID: ShowPhoto.FetchPhoto.Request.init(query: idPhoto))
+        }
+    }
+
     func showPhoto(withID request: ShowPhoto.FetchPhoto.Request) {
         interactor?.retrievePhoto(withID: request)
     }
@@ -25,6 +39,21 @@ class ShowPhotoViewController: UIViewController {
 
 extension ShowPhotoViewController: ShowPhotoDisplayLogic {
     func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel) {
-        // TODO: ❎ impl ❎
+        DispatchQueue.main.async {
+
+            // configure uiImage
+            var smallurlUIImage = UIImage(named: "Image")
+
+            if let dataImage = viewModel.displayedPhoto.urlsmallImage {
+                if dataImage != "" {
+                    let dataURL = Helper.makePicture(with: dataImage)
+                    smallurlUIImage = UIImage(data: dataURL)
+                }
+            }
+
+            // sets
+            self.imageImageView.image = smallurlUIImage
+            self.descriptionLabel.text = viewModel.displayedPhoto.description
+        }
     }
 }

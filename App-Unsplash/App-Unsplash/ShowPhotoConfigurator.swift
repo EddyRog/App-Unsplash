@@ -20,7 +20,6 @@ class ShowPhotoConfigurator: Coordinator {
         self.identifier = identifier
     }
 
-
     func createModule() throws -> ShowPhotoViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // --- check if the id exist.

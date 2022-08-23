@@ -31,8 +31,8 @@ final class AppCoordinator: Coordinator {
     // MARK: - Navigation
     private func showMain() {
         guard let searchPhotoViewController = try? SearchPhotosConfigurator(navController: navController).createModule() else { return }
-        navController.pushViewController(searchPhotoViewController, animated: true)
         searchPhotoViewController.router?.navigationController = navController
+        navController.pushViewController(searchPhotoViewController, animated: true)
     }
 }
 
@@ -51,23 +51,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appCoodinator = AppCoordinator(navController: navCon, window: window)
         app = appCoodinator
         appCoodinator.start()
-
-//        let searchPhotosConfigurator = SearchPhotosConfigurator()
-
-        // viewcontroller
-//        guard let searchPhotosViewController = try? searchPhotosConfigurator.createModule() else { return }
-//        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
-////        searchPhotosConfigurator.configureModule(searchPhotosViewController)
-//
-//        window.rootViewController = navCon
-//        window.makeKeyAndVisible()
-
-
-//        // viewcontroller
-//        guard let searchPhotosViewController = try? searchPhotosConfigurator.createModule() else { return }
-//        let navigationSearchPhotos = UINavigationController(rootViewController: searchPhotosViewController)
-////        searchPhotosConfigurator.configureModule(searchPhotosViewController)
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
