@@ -8,13 +8,23 @@
 import Foundation
 import UIKit
 
+
+protocol ShowPhotoDisplayLogic: AnyObject {
+    func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel)
+}
+
 class ShowPhotoViewController: UIViewController {
 
     var interactor: ShowPhotosBusinessLogic?
     var router: ShowPhotoRouter?
 
     func showPhoto(withID request: ShowPhoto.FetchPhoto.Request) {
-//        interactor?.retrivePhotos(withRequest: request)
         interactor?.retrievePhoto(withID: request)
+    }
+}
+
+extension ShowPhotoViewController: ShowPhotoDisplayLogic {
+    func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel) {
+        // TODO: ❎ impl ❎
     }
 }

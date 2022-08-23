@@ -18,7 +18,7 @@ enum ShowPhoto {
             struct DisplayedPhoto {
                 var description: String
             }
-            var displayedPhotos: DisplayedPhoto
+            var displayedPhoto: DisplayedPhoto
         }
     }
 }

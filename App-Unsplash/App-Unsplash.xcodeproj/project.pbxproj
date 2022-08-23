@@ -12,6 +12,7 @@
 		C800E2B228B4CA1700D2B8E6 /* ShowPhotoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C800E2B128B4CA1700D2B8E6 /* ShowPhotoRouter.swift */; };
 		C800E2B428B4CB2300D2B8E6 /* ShowPhotoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C800E2B328B4CB2300D2B8E6 /* ShowPhotoPresenter.swift */; };
 		C800E2B728B4D6C700D2B8E6 /* ShowPhotoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C800E2B628B4D6C700D2B8E6 /* ShowPhotoInteractorTests.swift */; };
+		C800E2B928B50D9600D2B8E6 /* ShowPhotoPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C800E2B828B50D9600D2B8E6 /* ShowPhotoPresenterTests.swift */; };
 		C80D5F87286DBC920022C021 /* SearchPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D5F86286DBC920022C021 /* SearchPhotosViewController.swift */; };
 		C80D5F8A286DBD6A0022C021 /* SearchPhotosModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D5F89286DBD6A0022C021 /* SearchPhotosModels.swift */; };
 		C80D5F8D286DD1070022C021 /* SearchPhotosInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D5F8C286DD1070022C021 /* SearchPhotosInteractorTests.swift */; };
@@ -75,6 +76,7 @@
 		C800E2B128B4CA1700D2B8E6 /* ShowPhotoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoRouter.swift; sourceTree = "<group>"; };
 		C800E2B328B4CB2300D2B8E6 /* ShowPhotoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoPresenter.swift; sourceTree = "<group>"; };
 		C800E2B628B4D6C700D2B8E6 /* ShowPhotoInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoInteractorTests.swift; sourceTree = "<group>"; };
+		C800E2B828B50D9600D2B8E6 /* ShowPhotoPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoPresenterTests.swift; sourceTree = "<group>"; };
 		C80D5F86286DBC920022C021 /* SearchPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosViewController.swift; sourceTree = "<group>"; };
 		C80D5F89286DBD6A0022C021 /* SearchPhotosModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosModels.swift; sourceTree = "<group>"; };
 		C80D5F8C286DD1070022C021 /* SearchPhotosInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosInteractorTests.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				C824422A28B424C800A994B3 /* ShowPhotoConfiguratorTests.swift */,
 				C824422C28B4379500A994B3 /* ShowPhotoViewControllerTests.swift */,
 				C800E2B628B4D6C700D2B8E6 /* ShowPhotoInteractorTests.swift */,
+				C800E2B828B50D9600D2B8E6 /* ShowPhotoPresenterTests.swift */,
 			);
 			path = ShowPhoto;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				C8E0B1762881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift in Sources */,
 				C892487E288E9F8C0039BA78 /* SearchPhotosPresenterTests.swift in Sources */,
 				C800E2B728B4D6C700D2B8E6 /* ShowPhotoInteractorTests.swift in Sources */,
+				C800E2B928B50D9600D2B8E6 /* ShowPhotoPresenterTests.swift in Sources */,
 				C89C9AFA2886F8BC0007E0B0 /* SearchPhotosConfiguratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
