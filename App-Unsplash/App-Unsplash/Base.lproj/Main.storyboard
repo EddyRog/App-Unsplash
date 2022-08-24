@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,33 +16,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="4SA-yk-m3q">
-                                <rect key="frame" x="0.0" y="-17" width="414" height="303"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="201"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsplash" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFe-2Y-yVe" userLabel="Unsplash_title">
-                                <rect key="frame" x="20" y="88" width="374" height="48"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-Zh-X3J" userLabel="Unsplash_subtitle">
-                                <rect key="frame" x="20" y="156" width="374" height="29"/>
-                                <string key="text">The internet’s source of freely-usable images.
-Powered by creators everywhere.</string>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search free high-resolution photos" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5kv-n4-Ryz">
-                                <rect key="frame" x="20" y="205" width="374" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="a6B-LY-hEc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uve-4s-qWB" userLabel="backgroundSearchBar">
+                                <rect key="frame" x="0.0" y="150" width="414" height="51"/>
+                                <color key="backgroundColor" red="0.11336179120000001" green="0.11336179120000001" blue="0.11336179120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Z65-CH-F1b">
-                                <rect key="frame" x="20" y="293" width="374" height="569"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="20" y="201" width="374" height="661"/>
+                                <color key="backgroundColor" red="0.11336179120000001" green="0.11336179120000001" blue="0.11336179120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="9cd-Oe-OIJ">
                                         <rect key="frame" x="0.0" y="44.5" width="374" height="43.5"/>
@@ -52,7 +33,7 @@ Powered by creators everywhere.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <color key="backgroundColor" red="0.11336179120000001" green="0.11336179120000001" blue="0.11336179120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -60,32 +41,57 @@ Powered by creators everywhere.</string>
                                     <outlet property="delegate" destination="eB3-Vo-Aqu" id="Z0d-CX-cQL"/>
                                 </connections>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="C48-7H-e9w">
+                                <rect key="frame" x="20" y="41" width="374" height="160"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsplash" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFe-2Y-yVe" userLabel="Unsplash_title">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-Zh-X3J" userLabel="Unsplash_subtitle">
+                                        <rect key="frame" x="0.0" y="64" width="374" height="29"/>
+                                        <string key="text">The internet’s source of freely-usable images.
+Powered by creators everywhere.</string>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar opaque="NO" contentMode="redraw" barStyle="black" searchBarStyle="prominent" placeholder="Search photos" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iya-vB-FpD">
+                                        <rect key="frame" x="0.0" y="109" width="374" height="51"/>
+                                        <color key="barTintColor" red="0.11336179123711343" green="0.11336179123711343" blue="0.11336179123711343" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="hga-lJ-Yme"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2at-FV-31x"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.11336179120000001" green="0.11336179120000001" blue="0.11336179120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="4SA-yk-m3q" firstAttribute="centerX" secondItem="eFe-2Y-yVe" secondAttribute="centerX" id="1sL-3r-5tm"/>
-                            <constraint firstItem="eFe-2Y-yVe" firstAttribute="leading" secondItem="rmf-HE-hQB" secondAttribute="leadingMargin" id="2d4-G0-lkZ"/>
-                            <constraint firstItem="yRl-Zh-X3J" firstAttribute="top" secondItem="eFe-2Y-yVe" secondAttribute="bottom" constant="20" id="Hpf-lX-Wrq"/>
-                            <constraint firstItem="Z65-CH-F1b" firstAttribute="top" secondItem="4SA-yk-m3q" secondAttribute="bottom" constant="7" id="Jkr-ti-L8b"/>
-                            <constraint firstItem="5kv-n4-Ryz" firstAttribute="trailing" secondItem="Z65-CH-F1b" secondAttribute="trailing" id="Pek-h8-57Z"/>
-                            <constraint firstItem="yRl-Zh-X3J" firstAttribute="trailing" secondItem="5kv-n4-Ryz" secondAttribute="trailing" id="Sy1-gU-nTb"/>
-                            <constraint firstItem="Z65-CH-F1b" firstAttribute="top" secondItem="5kv-n4-Ryz" secondAttribute="bottom" constant="38" id="W16-4j-Udh"/>
-                            <constraint firstItem="5kv-n4-Ryz" firstAttribute="leading" secondItem="Z65-CH-F1b" secondAttribute="leading" id="bYD-Ui-wLI"/>
-                            <constraint firstItem="eFe-2Y-yVe" firstAttribute="trailing" secondItem="yRl-Zh-X3J" secondAttribute="trailing" id="cPL-Cr-NrD"/>
-                            <constraint firstItem="Z65-CH-F1b" firstAttribute="bottom" secondItem="2at-FV-31x" secondAttribute="bottom" id="ccn-ld-fEV"/>
-                            <constraint firstItem="5kv-n4-Ryz" firstAttribute="top" secondItem="yRl-Zh-X3J" secondAttribute="bottom" constant="20" id="gxR-6w-Md7"/>
-                            <constraint firstItem="4SA-yk-m3q" firstAttribute="top" secondItem="rmf-HE-hQB" secondAttribute="topMargin" constant="-105" id="hdO-LD-qJg"/>
-                            <constraint firstItem="4SA-yk-m3q" firstAttribute="leading" secondItem="2at-FV-31x" secondAttribute="leading" id="hw9-LS-X4x"/>
-                            <constraint firstItem="eFe-2Y-yVe" firstAttribute="trailing" secondItem="rmf-HE-hQB" secondAttribute="trailingMargin" id="i1M-Ag-4Y3"/>
-                            <constraint firstItem="eFe-2Y-yVe" firstAttribute="leading" secondItem="yRl-Zh-X3J" secondAttribute="leading" id="oZK-hY-dIv"/>
-                            <constraint firstItem="yRl-Zh-X3J" firstAttribute="leading" secondItem="5kv-n4-Ryz" secondAttribute="leading" id="oqB-do-OUf"/>
-                            <constraint firstItem="eFe-2Y-yVe" firstAttribute="top" secondItem="2at-FV-31x" secondAttribute="top" id="sfW-Ie-6CG"/>
+                            <constraint firstItem="Z65-CH-F1b" firstAttribute="top" secondItem="4SA-yk-m3q" secondAttribute="bottom" id="3PB-Lj-RXM"/>
+                            <constraint firstItem="2at-FV-31x" firstAttribute="trailing" secondItem="Uve-4s-qWB" secondAttribute="trailing" id="DDp-i9-wJ1"/>
+                            <constraint firstItem="4SA-yk-m3q" firstAttribute="top" secondItem="rmf-HE-hQB" secondAttribute="top" id="GU4-Ub-fns"/>
+                            <constraint firstItem="Z65-CH-F1b" firstAttribute="leading" secondItem="2at-FV-31x" secondAttribute="leading" constant="20" id="Rhq-SZ-tWP"/>
+                            <constraint firstItem="Uve-4s-qWB" firstAttribute="bottom" secondItem="iya-vB-FpD" secondAttribute="bottom" id="S9Z-g5-JqD"/>
+                            <constraint firstItem="2at-FV-31x" firstAttribute="trailing" secondItem="Z65-CH-F1b" secondAttribute="trailing" constant="20" id="Ucr-iP-Xud"/>
+                            <constraint firstItem="4SA-yk-m3q" firstAttribute="leading" secondItem="2at-FV-31x" secondAttribute="leading" id="Yle-va-3Ho"/>
+                            <constraint firstItem="2at-FV-31x" firstAttribute="trailing" secondItem="C48-7H-e9w" secondAttribute="trailing" constant="20" id="cZs-bI-b0u"/>
+                            <constraint firstItem="2at-FV-31x" firstAttribute="bottom" secondItem="Z65-CH-F1b" secondAttribute="bottom" id="dfS-AZ-rOy"/>
+                            <constraint firstItem="C48-7H-e9w" firstAttribute="leading" secondItem="2at-FV-31x" secondAttribute="leading" constant="20" id="fp3-lF-b7r"/>
+                            <constraint firstItem="Uve-4s-qWB" firstAttribute="top" secondItem="iya-vB-FpD" secondAttribute="top" id="iLW-MT-aex"/>
+                            <constraint firstItem="Uve-4s-qWB" firstAttribute="leading" secondItem="2at-FV-31x" secondAttribute="leading" id="j3M-Es-fz8"/>
+                            <constraint firstItem="2at-FV-31x" firstAttribute="top" secondItem="C48-7H-e9w" secondAttribute="top" constant="47" id="sX8-Kp-Mm8"/>
+                            <constraint firstItem="4SA-yk-m3q" firstAttribute="trailing" secondItem="2at-FV-31x" secondAttribute="trailing" id="sc2-nG-dWY"/>
+                            <constraint firstItem="4SA-yk-m3q" firstAttribute="bottom" secondItem="C48-7H-e9w" secondAttribute="bottom" id="zwt-S6-Ymg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Whn-bt-rW3"/>
                     <connections>
-                        <outlet property="searchTextField" destination="5kv-n4-Ryz" id="drj-PI-hZM"/>
+                        <outlet property="searchBar" destination="iya-vB-FpD" id="bs8-K0-bWc"/>
                         <outlet property="tableview" destination="Z65-CH-F1b" id="7kd-q7-ZOC"/>
                     </connections>
                 </viewController>
@@ -103,12 +109,12 @@ Powered by creators everywhere.</string>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWO-Fu-mvF">
                                 <rect key="frame" x="20" y="44" width="374" height="84"/>
-                                <color key="backgroundColor" red="0.12966876099999999" green="0.74323832450000005" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="84" id="yd6-Il-RNY"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7pN-iS-6GY">
@@ -116,7 +122,7 @@ Powered by creators everywhere.</string>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aaQ-s0-tmz"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" red="0.11336179120000001" green="0.11336179120000001" blue="0.11336179120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="KWO-Fu-mvF" firstAttribute="trailing" secondItem="wbm-SW-5sI" secondAttribute="trailingMargin" id="5vd-jb-iQf"/>
                             <constraint firstItem="KWO-Fu-mvF" firstAttribute="trailing" secondItem="7pN-iS-6GY" secondAttribute="trailing" id="7xk-GS-Cpg"/>
@@ -157,14 +163,5 @@ Powered by creators everywhere.</string>
     </scenes>
     <resources>
         <image name="Image" width="99.5" height="76"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

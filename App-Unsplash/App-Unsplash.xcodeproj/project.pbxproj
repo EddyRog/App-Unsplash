@@ -188,7 +188,6 @@
 		C80D5F88286DBD550022C021 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C889088B2886A2BB00D091D9 /* CustomView */,
 				C80D5F89286DBD6A0022C021 /* SearchPhotosModels.swift */,
 			);
 			name = Models;
@@ -325,6 +324,7 @@
 				C80D5F8E286DD1AA0022C021 /* SearchPhotosInteractor.swift */,
 				C8EC0118286B73F7001A56E8 /* SearchPhotosPresenter.swift */,
 				C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift */,
+				C889088B2886A2BB00D091D9 /* CustomView */,
 				C80D5F88286DBD550022C021 /* Models */,
 			);
 			name = SearchPhotos;

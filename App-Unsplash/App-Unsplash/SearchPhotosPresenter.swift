@@ -31,12 +31,6 @@ class SearchPhotosPresenter: SearchPhotosPresentationLogic {
 
             viewModel.displayedPhotos.append(displayedPhoto)
 
-//            if let photoDescription = photo.description {
-//                viewModel.displayedPhotos.append(.init(
-//                    photoID: photo.photoID,
-//                    description: photoDescription
-//                ))
-//            }
         }
         viewController?.displayedFetchedPhotos(viewModel: viewModel)
     }

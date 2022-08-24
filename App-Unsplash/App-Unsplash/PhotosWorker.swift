@@ -115,7 +115,7 @@ extension PhotosWorker: PhotosWorkerLogic {
 
                 guard let unwData       = data else { completionRetrieve(nil); return }
                 guard let unwDataParsed = try? self.parseResponse(dataPhotoID: unwData) else { completionRetrieve(nil); return }
-                
+
                 completionRetrieve(unwDataParsed.photo)
 
             }.resume()

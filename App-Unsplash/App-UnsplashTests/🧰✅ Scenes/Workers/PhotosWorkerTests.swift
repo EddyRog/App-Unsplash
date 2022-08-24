@@ -239,22 +239,3 @@ class PhotosWorkerTests: XCTestCase {
 }
 
 
-/*
- continue = continue, c
- step over = thread step-over, next, n.
- step into = thread step-in, step, and s
- step out = c, n , s
- frame info = **currentline, source file,
-
- thread backtrace
-
-
-
- help thread
- help frame
- help process
-
-
-
- 
- */

@@ -16,30 +16,32 @@ class SearchPhotosViewController: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
     var interactor: SearchPhotosBusinessLogic?
     var router: SearchPhotosRoutingLogic?
-    static let identifier: String = "SearchPhotosViewImpl"
 
+    // --- TableView.
+    static let identifier: String = "SearchPhotosViewImpl"
     var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [])
+
+    // --- SearchBar.
+    var filteredData: [String]! = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableview.delegate = self
-        tableview.dataSource = self
-        registerTableViewCells()
+        self.searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request(query: "car"))
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-//        if let nav = self.navigationController {
-//            guard let showPhotoViewController = try? ShowPhotoConfigurator(navController: nav, withIDPhoto: "idPhoto").createModule() else { return }
-//            showPhotoViewController.loadViewIfNeeded()
-//            nav.pushViewController(showPhotoViewController, animated: true)
-//        }
-
-        searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request(query: "car"))
+        setupTableView()
+        setupSearchBar()
     }
+
+    // ==================
+    // MARK: - Search
+    // ==================
 }
 
 extension SearchPhotosViewController: SearchPhotosDisplayLogic {
@@ -56,11 +58,39 @@ extension SearchPhotosViewController: SearchPhotosDisplayLogic {
         }
     }
 }
+extension SearchPhotosViewController: UISearchBarDelegate {
+
+    fileprivate func setupSearchBar() {
+        searchBar.delegate = self
+
+        // configure UI
+        searchBar.layer.borderWidth = 1
+        searchBar.layer.borderColor = #colorLiteral(red: 0.1133617684, green: 0.1133617684, blue: 0.1133617684, alpha: 1).cgColor
+
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search Photos likes car or cat", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+    }
+
+    // filter
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let textSearching = searchBar.text {
+            if !textSearching.isEmpty {
+                self.searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request(query: textSearching))
+            }
+        }
+    }
+}
 
 // ==================
 // MARK: - Tableview
 // ==================
 extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate {
+
+    fileprivate func setupTableView() {
+        tableview.delegate = self
+        tableview.dataSource = self
+        registerTableViewCells()
+    }
+
     func registerTableViewCells() {
         let idCell = "SearchPhotosCell"
         let textFieldCell = UINib(nibName: idCell, bundle: nil)
