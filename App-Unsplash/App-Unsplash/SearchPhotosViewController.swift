@@ -24,7 +24,6 @@ class SearchPhotosViewController: UIViewController {
     var router: SearchPhotosRoutingLogic?
 
     // --- TableView.
-
     var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [])
 
     // --- SearchBar.

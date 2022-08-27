@@ -58,13 +58,12 @@ class SearchPhotosViewControllerTests: XCTestCase {
     }
 
 
-    // --- UI.
+    // --- UI tableview.
     func test_numberOfSection_inTableView__expect_oneSection() {
         // setup
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else { XCTFail("Should cast the UIVIewController"); return }
-
 
 		// --- given.
 		let tableViewSPY = TableViewSPY() // mock the real tableview
@@ -72,33 +71,50 @@ class SearchPhotosViewControllerTests: XCTestCase {
         XCTAssertNotNil(searchPhotosViewController.tableview)
 
         // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
-        // comment the next line to see the test fail
-        searchPhotosViewController.loadViewIfNeeded()
+        searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
 
         // --- when.
         let numberOfSection = searchPhotosViewController.tableview.numberOfSections
 
         // --- then.
         XCTAssertEqual(1, numberOfSection)
+    }
 
+    class Seed {
+        struct Photos {
+            static let car1: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "car1", photoID: "car1", description: "car1")
+            static let car2: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "car2", photoID: "car2", description: "car2")
+        }
+    }
 
+    func test_numberOfRowInAnySection__expect_EqualNumberOfPhotosFetched() {
+        // setup
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else { XCTFail("Should cast the UIVIewController"); return }
 
-
-
-
-
-        /*
         // --- given.
-        let photo1: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "", photoID: "", description: "")
-        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [photo1])
+        let tableViewSPY = TableViewSPY() // mock the real tableview
+        searchPhotosViewController.tableview = tableViewSPY
+        XCTAssertNotNil(searchPhotosViewController.tableview)
+
+        // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
+        searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
+
+
+		// --- create viewModel.
+        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
+            Seed.Photos.car1,
+            Seed.Photos.car2,
+        ])
+        // --- set data of tableview.
         searchPhotosViewController.resultSearchPhotos = viewModel
 
         // --- when.
-        let actualNumberOfRow = sut.tableview.numberOfRows(inSection: 0)
+        let actualNumberOfRows = searchPhotosViewController.tableview.numberOfRows(inSection: 0) // numbers of row in the section 0
 
         // --- then.
-        XCTAssertEqual(viewModel.displayedPhotos.count, actualNumberOfRow)
-		*/
+        assertNoDifference(viewModel.displayedPhotos.count, actualNumberOfRows)
     }
 
 
