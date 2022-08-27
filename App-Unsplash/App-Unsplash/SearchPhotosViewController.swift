@@ -14,6 +14,8 @@ protocol SearchPhotosDisplayLogic: AnyObject {
 
 class SearchPhotosViewController: UIViewController {
 
+    static let identifier: String = "SearchPhotosViewController"
+
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -22,7 +24,7 @@ class SearchPhotosViewController: UIViewController {
     var router: SearchPhotosRoutingLogic?
 
     // --- TableView.
-    static let identifier: String = "SearchPhotosViewImpl"
+
     var resultSearchPhotos: SearchPhotos.FetchPhotos.ViewModel = .init(displayedPhotos: [])
 
     // --- SearchBar.
@@ -79,10 +81,6 @@ extension SearchPhotosViewController: UISearchBarDelegate {
         }
     }
 }
-
-// ==================
-// MARK: - Tableview
-// ==================
 extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate {
 
     fileprivate func setupTableView() {
@@ -95,6 +93,10 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
         let idCell = "SearchPhotosCell"
         let textFieldCell = UINib(nibName: idCell, bundle: nil)
         self.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
