@@ -49,7 +49,7 @@ class ShowPhotoInteractorTests: XCTestCase {
     }
     func test_retrievePhoto_withID__expect_Photo() {
         let dummyRequest = ShowPhoto.FetchPhoto.Request.init(query: "")
-        photoWorkerSPY.makeDataPhoto = Photo(photoID: "ID", description: "Photo")
+        photoWorkerSPY.makeDataPhoto = Photo(photoID: "ID", description: "Photo", userName: "User")
 
         sut.retrievePhoto(withID: dummyRequest)
 
@@ -65,7 +65,7 @@ class ShowPhotoInteractorTests: XCTestCase {
     class PhotosWorkerSPY: PhotosWorkerLogic {
 
         var invokedPhotosWorker: Bool!
-        var makeDataPhoto: Photo? = Photo.init(photoID: "", description: "")
+        var makeDataPhoto: Photo? = Photo.init(photoID: "", description: "", userName: "")
 
         func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void) { }
         func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void ) {

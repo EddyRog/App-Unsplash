@@ -50,11 +50,13 @@ class PhotosWorker {
                 let photoID = result.id
                 let description = result.resultDescription
                 let urlsmallImage = result.urls.small
+                let userName = result.user.name
 
                 let photo = Photo(
                     urlsmallImage: urlsmallImage,
                     photoID: photoID,
-                    description: description)
+                    description: description,
+                    userName: userName)
                 response.photos.append(photo)
             }
 
@@ -74,11 +76,13 @@ class PhotosWorker {
             let smallImage = responseData.urls.small
             let photoID = responseData.id
             let description = responseData.resultDescription
+            let userName = responseData.user.name
 
             response.photo = Photo(
                 urlsmallImage: smallImage,
                 photoID: photoID,
-                description: description
+                description: description,
+                userName: userName
             )
             return response
 

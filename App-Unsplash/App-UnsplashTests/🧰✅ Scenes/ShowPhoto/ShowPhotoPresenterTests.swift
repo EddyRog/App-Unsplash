@@ -27,7 +27,8 @@ class ShowPhotoPresenterTests: XCTestCase {
     func test_present_response__expect_ShowPhotoViewController_isInvoked() {
         let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
         sut.viewController = showPhotoViewControllerSPY
-        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", description: ""))
+//        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", description: "", user: ""))
+        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", userName: ""))
 
         sut.presentRetrievePhoto(with: response)
 
@@ -38,11 +39,22 @@ class ShowPhotoPresenterTests: XCTestCase {
         let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
         sut.viewController = showPhotoViewControllerSPY
 
-        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "ID0", description: "Description01"))
+        let responseGiven: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(
+            urlsmallImage: "urlsmallImage",
+            photoID: "photoID",
+            description: "description",
+            userName: "userName"
+        ))
+        let expectedViewModel: ShowPhoto.FetchPhoto.ViewModel = .init(displayedPhoto: .init(
+            urlsmallImage: "urlsmallImage",
+            photoID: "photoID",
+            description: "DESCRIPTION",
+            username: "userName")
+        )
 
-        sut.presentRetrievePhoto(with: response)
+        sut.presentRetrievePhoto(with: responseGiven)
 
-        XCTAssertEqual(showPhotoViewControllerSPY.resultViewModel.displayedPhoto.description, "DESCRIPTION01")
+        assertNoDifference(expectedViewModel, showPhotoViewControllerSPY.resultViewModel)
     }
 
     // ==================

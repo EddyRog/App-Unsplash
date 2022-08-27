@@ -57,7 +57,7 @@ class PresenterSearchPhotosTests: XCTestCase {
 
     func test_present_response__expect_oneViewModel() {
         // --- given.
-        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0")])
+        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0", userName: "User0")])
 
         // --- when.
         sut.presentFetchedPhotos(with: response)
@@ -77,8 +77,8 @@ class PresenterSearchPhotosTests: XCTestCase {
     func test_present_response__expect_manViewModel() {
         // --- given.
         let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
-            .init(photoID: "ID0", description: "Picture0"),
-            .init(photoID: "ID1", description: "Picture1")
+            .init(photoID: "ID0", description: "Picture0", userName: "User0"),
+            .init(photoID: "ID1", description: "Picture1", userName: "User1")
         ])
 
         // --- when.

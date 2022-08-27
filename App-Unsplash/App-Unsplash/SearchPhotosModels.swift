@@ -78,12 +78,14 @@ struct Result: Codable {
     var resultDescription: String
     var urls: PictureUrls
     var id: String
+    var user: User
 
     // Re map the keys
     enum CodingKeys: String, CodingKey {
         case resultDescription = "description"
         case urls
         case id
+        case user
     }
 
     // DefaultValue
@@ -93,9 +95,13 @@ struct Result: Codable {
         resultDescription = try container.decodeIfPresent(String.self, forKey: .resultDescription) ?? "😖 NO DESCRIPTION"
         urls = try container.decodeIfPresent(PictureUrls.self, forKey: .urls) ?? PictureUrls(small: "")
         id = try container.decodeIfPresent(String.self, forKey: .id) ?? "😖 NO ID"
+        user = try container.decodeIfPresent(User.self, forKey: .user) ?? User(name: "No name")
     }
 }
 
 struct PictureUrls: Codable {
     var small: String
+}
+struct User: Codable {
+    var name: String
 }

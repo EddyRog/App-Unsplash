@@ -20,6 +20,7 @@ class ShowPhotoViewController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,7 @@ extension ShowPhotoViewController: ShowPhotoDisplayLogic {
             // sets
             self.imageImageView.image = smallurlUIImage
             self.descriptionLabel.text = viewModel.displayedPhoto.description
+            self.userNameLabel.text = viewModel.displayedPhoto.username
         }
     }
 }

@@ -14,13 +14,25 @@ enum ShowPhoto {
         struct Response: Equatable {
             var photo: Photo?
         }
-        struct ViewModel {
-            struct DisplayedPhoto {
+        struct ViewModel: Equatable {
+            struct DisplayedPhoto: Equatable {
                 var urlsmallImage: String?
                 var photoID: String?
                 var description: String
+                var username: String?
+
+                static func == (lhs: ShowPhoto.FetchPhoto.ViewModel.DisplayedPhoto, rhs: ShowPhoto.FetchPhoto.ViewModel.DisplayedPhoto) -> Bool {
+                    return lhs.urlsmallImage == rhs.urlsmallImage &&
+                    lhs.photoID == rhs.photoID &&
+                    lhs.description == rhs.description &&
+                    lhs.username == rhs.username
+                }
             }
             var displayedPhoto: DisplayedPhoto
+
+            static func == (lhs: ShowPhoto.FetchPhoto.ViewModel, rhs: ShowPhoto.FetchPhoto.ViewModel) -> Bool {
+                return lhs.displayedPhoto == rhs.displayedPhoto
+            }
         }
     }
 }

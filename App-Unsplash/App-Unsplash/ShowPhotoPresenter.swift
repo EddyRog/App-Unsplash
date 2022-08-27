@@ -16,16 +16,17 @@ class ShowPhotoPresenter: ShowPhotoPresentationLogic {
     weak var viewController: ShowPhotoDisplayLogic?
 
     func presentRetrievePhoto(with response: ShowPhoto.FetchPhoto.Response) {
+        let photoid  = response.photo?.photoID
+        let username = response.photo?.userName
+
         let description = response.photo?.description ?? "No description"
         let urlsmallImage = response.photo?.urlsmallImage ?? "Image"
 
-        // format response
-        let descriptionUppercased = description.uppercased()
-
         let viewModel: ShowPhoto.FetchPhoto.ViewModel = .init(displayedPhoto: .init(
             urlsmallImage: urlsmallImage,
-            description: descriptionUppercased)
-        )
+            photoID: photoid,
+            description: description.uppercased(),
+            username: username))
 
         viewController?.displayRetrievedPhoto(with: viewModel)
     }
