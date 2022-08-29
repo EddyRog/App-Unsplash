@@ -57,16 +57,16 @@ class SearchPhotosViewControllerTests: XCTestCase {
         // then trigger lazyLoading
     }
 
-
     // --- UI tableview.
     func test_numberOfSection_inTableView__expect_oneSection() {
         // setup
-        let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else { XCTFail("Should cast the UIVIewController"); return }
+        guard let searchPhotosViewController = setupSearchViewController() else {
+            XCTFail("Should return an instance of SearchViewController")
+            return
+        }
 
-		// --- given.
-		let tableViewSPY = TableViewSPY() // mock the real tableview
+        // --- setup TableViewSPY.
+        let tableViewSPY = TableViewSPY() // mock the real tableview
         searchPhotosViewController.tableview = tableViewSPY
         XCTAssertNotNil(searchPhotosViewController.tableview)
 
@@ -80,18 +80,12 @@ class SearchPhotosViewControllerTests: XCTestCase {
         XCTAssertEqual(1, numberOfSection)
     }
 
-    class Seed {
-        struct Photos {
-            static let car1: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "car1", photoID: "car1", description: "car1")
-            static let car2: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "car2", photoID: "car2", description: "car2")
-        }
-    }
-
     func test_numberOfRowInAnySection__expect_EqualNumberOfPhotosFetched() {
         // setup
-        let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else { XCTFail("Should cast the UIVIewController"); return }
+        guard let searchPhotosViewController = setupSearchViewController() else {
+            XCTFail("Should return an instance of SearchViewController")
+            return
+        }
 
         // --- given.
         let tableViewSPY = TableViewSPY() // mock the real tableview
@@ -100,7 +94,6 @@ class SearchPhotosViewControllerTests: XCTestCase {
 
         // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
         searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
-
 
 		// --- create viewModel.
         let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
@@ -115,6 +108,89 @@ class SearchPhotosViewControllerTests: XCTestCase {
 
         // --- then.
         assertNoDifference(viewModel.displayedPhotos.count, actualNumberOfRows)
+    }
+
+    func test_shouldConfigure_tableView__expect_tableViewCell_toDisplayPhoto() {
+        // setup
+        guard let searchPhotosViewController = setupSearchViewController() else {
+            XCTFail("Should return an instance of SearchViewController")
+            return
+        }
+
+        // --- given.
+        // MARK: - configure Tableview
+        let tableViewSPY = TableViewSPY() // mock the real tableview
+        searchPhotosViewController.tableview = tableViewSPY
+        XCTAssertNotNil(searchPhotosViewController.tableview)
+
+        // MARK: - configure CustomCell
+        let idCell = "SearchPhotosCell"
+        let textFieldCell = UINib(nibName: idCell, bundle: nil)
+        searchPhotosViewController.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
+
+        // MARK: - Load the view From its storyboard
+        // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
+        searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
+
+        // --- create viewModel.
+        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
+            Seed.Photos.car1,
+            Seed.Photos.car2,
+        ])
+        // --- set data of tableview.
+        searchPhotosViewController.resultSearchPhotos = viewModel
+
+        // --- when.
+        let indexPath: IndexPath = IndexPath(row: 0, section: 0)
+        let cell = searchPhotosViewController.tableView(tableViewSPY, cellForRowAt: indexPath)
+        guard let searchPhotoCell = cell as? SearchPhotosCell else {
+            XCTFail("Should cast the cell to SearchPhotoCell")
+            return
+        }
+
+        XCTAssertEqual("Car01", searchPhotoCell.searchPhotoDescription.text)
+    }
+
+    func test_lazyLoading__expect_ReloadDataIsTrigger() {
+        // setup
+        guard let searchPhotosViewController = setupSearchViewController() else {
+            XCTFail("Should return an instance of SearchViewController")
+            return
+        }
+
+        // --- given.
+        // MARK: - configure Tableview
+        let tableViewSPY = TableViewSPY() // mock the real tableview
+        searchPhotosViewController.tableview = tableViewSPY
+        XCTAssertNotNil(searchPhotosViewController.tableview)
+
+        let idCell = "SearchPhotosCell"
+        let textFieldCell = UINib(nibName: idCell, bundle: nil)
+        searchPhotosViewController.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
+
+        // MARK: - Load the view From its storyboard
+        // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
+        searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
+
+        // --- create viewModel.
+        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
+            Seed.Photos.car1,
+        ])
+        // --- set data of tableview.
+        searchPhotosViewController.resultSearchPhotos = viewModel
+
+        // --- when.
+        let indexPath: IndexPath = IndexPath(row: 0, section: 0)
+
+		let cell = UITableViewCell()
+        searchPhotosViewController.tableView(searchPhotosViewController.tableview, willDisplay: UITableViewCell(), forRowAt: indexPath)
+
+        guard let searchPhotoCell = cell as? SearchPhotosCell else {
+            XCTFail("Should cast the cell to SearchPhotoCell")
+            return
+        }
+
+//        XCTAssertEqual("Car01", searchPhotoCell.searchPhotoDescription.text)
     }
 
 
@@ -134,5 +210,26 @@ class SearchPhotosViewControllerTests: XCTestCase {
 
     class TableViewSPY: UITableView {
 
+    }
+
+    class Seed {
+
+        struct Photos {
+
+            static let car1: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car01", photoID: "Car01", description: "Car01")
+            static let car2: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car02", photoID: "Car02", description: "Car02")
+        }
+    }
+
+    private func setupSearchViewController() -> SearchPhotosViewController? {
+        // init
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else {
+            XCTFail("Should cast the UIVIewController")
+            return nil
+        }
+
+        return searchPhotosViewController
     }
 }

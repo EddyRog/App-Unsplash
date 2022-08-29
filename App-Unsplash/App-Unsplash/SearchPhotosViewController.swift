@@ -52,6 +52,7 @@ extension SearchPhotosViewController: SearchPhotosDisplayLogic {
 
     func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
         resultSearchPhotos = viewModel
+        print("⭐️ ---- \(resultSearchPhotos.displayedPhotos.count)")
 
         DispatchQueue.main.async { [weak self] in
             guard let this = self else {return}
@@ -59,6 +60,7 @@ extension SearchPhotosViewController: SearchPhotosDisplayLogic {
         }
     }
 }
+
 extension SearchPhotosViewController: UISearchBarDelegate {
 
     fileprivate func setupSearchBar() {
@@ -80,6 +82,7 @@ extension SearchPhotosViewController: UISearchBarDelegate {
         }
     }
 }
+
 extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate {
 
     fileprivate func setupTableView() {
@@ -131,6 +134,16 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
         let photoID = resultSearchPhotos.displayedPhotos[indexPath.row].photoID
         // get id
         router?.rootToShowPhoto(withID: photoID)
+    }
+
+//    shouldHighlightRowAt
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if resultSearchPhotos.displayedPhotos.count - 3 == indexPath.row {
+            print(indexPath.row)
+            print("max", resultSearchPhotos.displayedPhotos.count)
+            // --- com.
+            print("⭐️ coucou")
+        }
     }
 }
 
