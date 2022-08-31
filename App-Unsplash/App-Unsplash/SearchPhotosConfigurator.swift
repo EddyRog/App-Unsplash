@@ -33,8 +33,9 @@ class SearchPhotosConfigurator: Coordinator {
         // ==================
         // MARK: - Connection Layer VIP
         // ==================
-        // --- configure the connection of layers.
+
         let photosWorker = PhotosWorker()
+        // --- Presenter -> viewController.
         let searchPhotosPresenter = SearchPhotosPresenter(viewController: searchPhotosViewController)
 
         // --- Interactor -> presenter & worker.
@@ -46,9 +47,6 @@ class SearchPhotosConfigurator: Coordinator {
 		// --- ViewController -> interactor & router.
         searchPhotosViewController.setInteractor(searchPhotosInteractor)
         searchPhotosViewController.setRouter(searchPhotosRouter)
-
-        // --- Presenter -> viewcontroller.
-//        searchPhotosPresenter.viewController = searchPhotosViewController
 
         return searchPhotosViewController
     }

@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ShowPhotoRoutingLogic {
+protocol ShowPhotoRoutable {
     var navigationController: UINavigationController { get set }
 }
 
-class ShowPhotoRouter: ShowPhotoRoutingLogic {
+class ShowPhotoRouter: ShowPhotoRoutable {
     var navigationController: UINavigationController
     var idPhoto: String
 

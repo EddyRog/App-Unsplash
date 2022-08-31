@@ -97,7 +97,7 @@ class SearchPhotosInteractorTests: XCTestCase {
         }
     }
 
-    class PhotosWorkerSpy: PhotosWorkerLogic {
+    class PhotosWorkerSpy: PhotosWorkable {
 
 
         var invokedWorker: Bool!

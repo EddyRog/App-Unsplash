@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol ShowPhotoPresentationLogic {
+protocol ShowPhotoPresentatable {
     func presentRetrievePhoto(with response: ShowPhoto.RetrievePhoto.Response)
 }
 
-class ShowPhotoPresenter: ShowPhotoPresentationLogic {
+class ShowPhotoPresenter: ShowPhotoPresentatable {
 
-    weak private (set) var viewController: ShowPhotoDisplayLogic?
+    weak private (set) var viewController: ShowPhotoViewable?
 
-    init(viewController: ShowPhotoDisplayLogic) {
+    init(viewController: ShowPhotoViewable) {
         self.viewController = viewController
     }
 

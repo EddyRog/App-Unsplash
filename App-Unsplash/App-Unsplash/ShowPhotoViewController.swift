@@ -9,22 +9,18 @@ import Foundation
 import UIKit
 
 
-protocol ShowPhotoDisplayLogic: AnyObject {
+protocol ShowPhotoViewable: AnyObject {
     func displayRetrievedPhoto(with viewModel: ShowPhoto.RetrievePhoto.ViewModel)
 }
 
 class ShowPhotoViewController: UIViewController {
 
-    var interactor: ShowPhotosBusinessLogic?
-    var router: ShowPhotoRouter?
+    private (set) var interactor: ShowPhotosInteractable?
+    private (set) var router: ShowPhotoRouter?
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,13 +28,19 @@ class ShowPhotoViewController: UIViewController {
             showPhoto(withID: ShowPhoto.RetrievePhoto.Request.init(query: idPhoto))
         }
     }
-
     func showPhoto(withID request: ShowPhoto.RetrievePhoto.Request) {
         interactor?.retrievePhoto(withID: request)
     }
+
+    func setRouter(_ showPhotoRouter: ShowPhotoRouter) {
+        router = showPhotoRouter
+    }
+    func setInteractor(_ showPhotoInteractor: ShowPhotosInteractable) {
+		interactor = showPhotoInteractor
+    }
 }
 
-extension ShowPhotoViewController: ShowPhotoDisplayLogic {
+extension ShowPhotoViewController: ShowPhotoViewable {
     func displayRetrievedPhoto(with viewModel: ShowPhoto.RetrievePhoto.ViewModel) {
         DispatchQueue.main.async {
 

@@ -14,9 +14,9 @@ protocol SearchPhotosViewable: AnyObject {
 
 class SearchPhotosViewController: UIViewController {
 
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet private weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet private weak var searchBar: UISearchBar!
     private (set) var interactor: SearchPhotosInteractable?
     private (set) var router: SearchPhotosRoutable?
     var resultSearchPhotos: SearchPhotos.RetrievePhotos.ViewModel = .init(displayedPhotos: []) // --- TableView.
@@ -102,7 +102,7 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
             let description = resultSearchPhotos.displayedPhotos[indexPath.row].description
             let images = resultSearchPhotos.displayedPhotos[indexPath.row].urlsmallImage
 
-            unwCell.searchPhotoImage.image = UIImage(data: makePicture(with: images))
+            unwCell.searchPhotoImage.image = UIImage(data: Helper.makePicture(with: images))
             unwCell.searchPhotoDescription.text = description
 
             return unwCell
@@ -130,28 +130,5 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
             print(indexPath.row)
             print("max", resultSearchPhotos.displayedPhotos.count)
         }
-    }
-}
-
-extension SearchPhotosViewable {
-    func makePicture(with url: String) -> Data {
-        let defaultData = UIImage(named: Constant.SearchPhoto.defaultImageName)?.pngData() ?? Data()
-        guard let url = URL(string: url) else {
-            return defaultData
-        }
-        let result = try? Data(contentsOf: url)
-        return result ?? defaultData
-    }
-}
-
-// FIXME: ⚠️ to remove : duplicated ⚠️
-struct Helper {
-    static func makePicture(with url: String) -> Data {
-        let defaultData = UIImage(named: Constant.SearchPhoto.defaultImageName)?.pngData() ?? Data()
-        guard let url = URL(string: url) else {
-            return defaultData
-        }
-        let result = try? Data(contentsOf: url)
-        return result ?? defaultData
     }
 }

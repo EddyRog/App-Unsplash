@@ -13,10 +13,10 @@ protocol SearchPhotosInteractable {
 
 class SearchPhotosInteractor: SearchPhotosInteractable {
 
-    private (set) var worker: PhotosWorkerLogic?
+    private (set) var worker: PhotosWorkable?
     private (set) var presenter: SearchPhotosPresentable?
 
-    init(worker: PhotosWorkerLogic, presenter: SearchPhotosPresentable) {
+    init(worker: PhotosWorkable, presenter: SearchPhotosPresentable) {
         self.worker = worker
         self.presenter = presenter
     }

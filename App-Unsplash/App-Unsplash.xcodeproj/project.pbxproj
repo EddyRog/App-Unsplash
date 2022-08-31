@@ -34,6 +34,7 @@
 		C89C9AFC2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift */; };
 		C89C9B0628870FDB0007E0B0 /* ShowPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9B0528870FDB0007E0B0 /* ShowPhotoViewController.swift */; };
 		C8D4AC4C28BF5AAC00210764 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4AC4B28BF5AAC00210764 /* Constants.swift */; };
+		C8D4AC4E28BF766000210764 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4AC4D28BF766000210764 /* Helper.swift */; };
 		C8E0B1702881766C00F95CC5 /* PhotosWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B16F2881766C00F95CC5 /* PhotosWorkerTests.swift */; };
 		C8E0B1762881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B1752881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift */; };
 		C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9AF9E287F317C00A4C56E /* Extension+Storyboard.swift */; };
@@ -100,6 +101,7 @@
 		C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosConfigurator.swift; sourceTree = "<group>"; };
 		C89C9B0528870FDB0007E0B0 /* ShowPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewController.swift; sourceTree = "<group>"; };
 		C8D4AC4B28BF5AAC00210764 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C8D4AC4D28BF766000210764 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		C8E0B16F2881766C00F95CC5 /* PhotosWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerTests.swift; sourceTree = "<group>"; };
 		C8E0B1752881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosViewControllerTests.swift; sourceTree = "<group>"; };
 		C8E9AF9C287F11BA00A4C56E /* App-UnsplashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "App-UnsplashTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -309,9 +311,9 @@
 		C89C9B0428870FB20007E0B0 /* ShowPhoto */ = {
 			isa = PBXGroup;
 			children = (
-				C800E2B128B4CA1700D2B8E6 /* ShowPhotoRouter.swift */,
 				C873C08B289043670012E9EF /* ShowPhotoConfigurator.swift */,
 				C89C9B0528870FDB0007E0B0 /* ShowPhotoViewController.swift */,
+				C800E2B128B4CA1700D2B8E6 /* ShowPhotoRouter.swift */,
 				C824422E28B448C800A994B3 /* ShowPhotoInteractor.swift */,
 				C800E2B328B4CB2300D2B8E6 /* ShowPhotoPresenter.swift */,
 				C89B66E428911C6A00086529 /* Models */,
@@ -322,11 +324,11 @@
 		C8CB867C287DD44700FB996E /* SearchPhotos */ = {
 			isa = PBXGroup;
 			children = (
-				C8113CD12873594A00C9236B /* SearchPhotosRouter.swift */,
+				C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift */,
 				C80D5F86286DBC920022C021 /* SearchPhotosViewController.swift */,
+				C8113CD12873594A00C9236B /* SearchPhotosRouter.swift */,
 				C80D5F8E286DD1AA0022C021 /* SearchPhotosInteractor.swift */,
 				C8EC0118286B73F7001A56E8 /* SearchPhotosPresenter.swift */,
-				C89C9AFB2886FC4C0007E0B0 /* SearchPhotosConfigurator.swift */,
 				C889088B2886A2BB00D091D9 /* CustomView */,
 				C80D5F88286DBD550022C021 /* Models */,
 			);
@@ -337,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				C8D4AC4B28BF5AAC00210764 /* Constants.swift */,
+				C8D4AC4D28BF766000210764 /* Helper.swift */,
 			);
 			name = Commun;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				C8F722FA286606B60034A36C /* AppDelegate.swift in Sources */,
 				C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */,
 				C88908902886A36000D091D9 /* SearchPhotosCell.swift in Sources */,
+				C8D4AC4E28BF766000210764 /* Helper.swift in Sources */,
 				C873C08D289043730012E9EF /* ShowPhotoConfigurator.swift in Sources */,
 				C824422F28B448C800A994B3 /* ShowPhotoInteractor.swift in Sources */,
 				C80D5F8F286DD1AA0022C021 /* SearchPhotosInteractor.swift in Sources */,

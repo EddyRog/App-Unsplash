@@ -15,11 +15,9 @@ class ShowPhotoInteractorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = ShowPhotoInteractor()
         photoWorkerSPY = PhotosWorkerSPY()
         showPhotoPresenterSPY = ShowPhotoPresenterSPY()
-        sut.worker = photoWorkerSPY
-        sut.presenter = showPhotoPresenterSPY
+        sut = ShowPhotoInteractor(worker: photoWorkerSPY, presenter: showPhotoPresenterSPY)
     }
     override func tearDown() {
         sut = nil
@@ -28,9 +26,6 @@ class ShowPhotoInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_init_ShowPhotoInteractor__expect_notNil() {
-        XCTAssertNotNil(sut)
-    }
 
     func test_retrievePhoto_withID__expect_invokedWorkerAndPresenter() {
         sut.retrievePhoto(withID: ShowPhoto.RetrievePhoto.Request.init(query: "0"))
@@ -62,7 +57,7 @@ class ShowPhotoInteractorTests: XCTestCase {
     // ==================
     // MARK: - Test doubles
     // ==================
-    class PhotosWorkerSPY: PhotosWorkerLogic {
+    class PhotosWorkerSPY: PhotosWorkable {
 
         var invokedPhotosWorker: Bool!
         var makeDataPhoto: Photo? = Photo.init(photoID: "", description: "", userName: "")
@@ -74,7 +69,7 @@ class ShowPhotoInteractorTests: XCTestCase {
         }
     }
 
-    class ShowPhotoPresenterSPY: ShowPhotoPresentationLogic {
+    class ShowPhotoPresenterSPY: ShowPhotoPresentatable {
         var invokedPresenter: Bool!
         var resultResponse: ShowPhoto.RetrievePhoto.Response!
 

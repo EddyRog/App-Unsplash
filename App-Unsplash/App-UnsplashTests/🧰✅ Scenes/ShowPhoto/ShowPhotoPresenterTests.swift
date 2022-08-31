@@ -62,7 +62,7 @@ class ShowPhotoPresenterTests: XCTestCase {
     // ==================
     // MARK: - Test doubles
     // ==================
-    class ShowPhotoViewControllerSPY: ShowPhotoDisplayLogic {
+    class ShowPhotoViewControllerSPY: ShowPhotoViewable {
         var invokedViewController: Bool!
         var resultViewModel: ShowPhoto.RetrievePhoto.ViewModel!
 

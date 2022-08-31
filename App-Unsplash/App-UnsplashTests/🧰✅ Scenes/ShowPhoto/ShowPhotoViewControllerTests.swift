@@ -29,7 +29,7 @@ class ShowPhotosViewControllerTests: XCTestCase {
     func test_showPhoto_withID__expect_invokedInteractor() {
         // --- given.
         let showPhotoInteractorSPY = ShowPhotoInteractorSPY()
-        sut.interactor = showPhotoInteractorSPY
+        sut.setInteractor(showPhotoInteractorSPY)
 
         // --- when.
         sut.showPhoto(withID: ShowPhotosViewControllerTests.dummyRequest)
@@ -41,7 +41,7 @@ class ShowPhotosViewControllerTests: XCTestCase {
     func test_showPhoto_withID__expect_getRightIDPassed() {
         // --- given.
         let showPhotoInteractorSPY = ShowPhotoInteractorSPY()
-        sut.interactor = showPhotoInteractorSPY
+        sut.setInteractor(showPhotoInteractorSPY)
 
         // --- when.
         sut.showPhoto(withID: ShowPhotosViewControllerTests.dummyRequest)
@@ -53,7 +53,7 @@ class ShowPhotosViewControllerTests: XCTestCase {
     // ==================
     // MARK: - Test doubles
     // ==================
-    class ShowPhotoInteractorSPY: ShowPhotosBusinessLogic {
+    class ShowPhotoInteractorSPY: ShowPhotosInteractable {
 
         var invokedInteractor: Bool!
         var resultRequestPassed: ShowPhoto.RetrievePhoto.Request!

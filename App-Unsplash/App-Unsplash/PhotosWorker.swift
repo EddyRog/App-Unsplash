@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol PhotosWorkerLogic {
+protocol PhotosWorkable {
     func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void )
     func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void )
 }
@@ -92,7 +92,7 @@ class PhotosWorker {
     }
 }
 
-extension PhotosWorker: PhotosWorkerLogic {
+extension PhotosWorker: PhotosWorkable {
 
     func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void ) {
         let emptyPhotos: [Photo] = [Photo]()

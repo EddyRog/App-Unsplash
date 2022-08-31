@@ -4,7 +4,6 @@
 // Created in 2022
 // Swift 5.0
 
-
 import Foundation
 import UIKit
 
@@ -32,28 +31,20 @@ class ShowPhotoConfigurator: Coordinator {
         guard let showPhotoViewController = viewcontroller as? ShowPhotoViewController else {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
         }
-
-        let interactor = ShowPhotoInteractor()
-        let router = ShowPhotoRouter(navigationController: navController, idPhoto: idPhoto)
+        let worker = PhotosWorker()
         let presenter = ShowPhotoPresenter(viewController: showPhotoViewController)
+        let interactor = ShowPhotoInteractor(worker: worker, presenter: presenter)
+        let router = ShowPhotoRouter(navigationController: navController, idPhoto: idPhoto)
 
-        // --- ViewController -> Interactor.
-        showPhotoViewController.interactor = interactor
+        // --- ViewController -> Interactor & router.
+        showPhotoViewController.setInteractor(interactor)
+
         router.idPhoto = idPhoto
-        showPhotoViewController.router = router
-
-        // --- Interactor -> Presenter.
-        interactor.presenter = presenter
-        interactor.worker = PhotosWorker()
-
-        // --- Presenter -> ViewController.
-//        presenter.viewController
-        //presenter.viewController = showPhotoViewController
+        showPhotoViewController.setRouter(router)
 
         // ==================
         // MARK: - Connection Layer VIP
         // ==================
-
         return showPhotoViewController
     }
 }

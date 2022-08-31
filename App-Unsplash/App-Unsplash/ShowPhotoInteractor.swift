@@ -7,14 +7,19 @@
 
 import Foundation
 
-protocol ShowPhotosBusinessLogic {
+protocol ShowPhotosInteractable {
 //    func retrivePhotos(withRequest: ShowPhoto.FetchPhoto.Request)
     func retrievePhoto(withID: ShowPhoto.RetrievePhoto.Request)
 }
-class ShowPhotoInteractor: ShowPhotosBusinessLogic {
+class ShowPhotoInteractor: ShowPhotosInteractable {
 
-    var worker: PhotosWorkerLogic?
-    var presenter: ShowPhotoPresentationLogic?
+    private (set) var worker: PhotosWorkable?
+    private (set) var presenter: ShowPhotoPresentatable?
+
+    init(worker: PhotosWorkable, presenter: ShowPhotoPresentatable) {
+        self.worker = worker
+        self.presenter = presenter
+    }
 
     func retrievePhoto(withID photoID: ShowPhoto.RetrievePhoto.Request) {
 
