@@ -10,12 +10,15 @@ import XCTest
 class ShowPhotoPresenterTests: XCTestCase {
 
     var sut: ShowPhotoPresenter!
+    var showPhotoViewControllerSPY: ShowPhotoViewControllerSPY!
 
     override func setUp() {
         super.setUp()
-        sut = ShowPhotoPresenter()
+        showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
+        sut = ShowPhotoPresenter(viewController: showPhotoViewControllerSPY)
     }
     override func tearDown() {
+        showPhotoViewControllerSPY = nil
         sut = nil
         super.tearDown()
     }
@@ -25,10 +28,9 @@ class ShowPhotoPresenterTests: XCTestCase {
     }
 
     func test_present_response__expect_ShowPhotoViewController_isInvoked() {
-        let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
-        sut.viewController = showPhotoViewControllerSPY
+//        sut.viewController = showPhotoViewControllerSPY
 //        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", description: "", user: ""))
-        let response: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(photoID: "", userName: ""))
+        let response: ShowPhoto.RetrievePhoto.Response = .init(photo: Photo(photoID: "", userName: ""))
 
         sut.presentRetrievePhoto(with: response)
 
@@ -36,16 +38,16 @@ class ShowPhotoPresenterTests: XCTestCase {
     }
 
     func test_present_response__expect_viewModel() {
-        let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
-        sut.viewController = showPhotoViewControllerSPY
+//        let showPhotoViewControllerSPY = ShowPhotoViewControllerSPY()
+//        sut.viewController = showPhotoViewControllerSPY
 
-        let responseGiven: ShowPhoto.FetchPhoto.Response = .init(photo: Photo(
+        let responseGiven: ShowPhoto.RetrievePhoto.Response = .init(photo: Photo(
             urlsmallImage: "urlsmallImage",
             photoID: "photoID",
             description: "description",
             userName: "userName"
         ))
-        let expectedViewModel: ShowPhoto.FetchPhoto.ViewModel = .init(displayedPhoto: .init(
+        let expectedViewModel: ShowPhoto.RetrievePhoto.ViewModel = .init(displayedPhoto: .init(
             urlsmallImage: "urlsmallImage",
             photoID: "photoID",
             description: "DESCRIPTION",
@@ -62,9 +64,9 @@ class ShowPhotoPresenterTests: XCTestCase {
     // ==================
     class ShowPhotoViewControllerSPY: ShowPhotoDisplayLogic {
         var invokedViewController: Bool!
-        var resultViewModel: ShowPhoto.FetchPhoto.ViewModel!
+        var resultViewModel: ShowPhoto.RetrievePhoto.ViewModel!
 
-        func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel) {
+        func displayRetrievedPhoto(with viewModel: ShowPhoto.RetrievePhoto.ViewModel) {
             invokedViewController = true
             resultViewModel = viewModel
         }

@@ -11,14 +11,14 @@ enum SearchPhotos {
 //    enum Create { }
 //    enum UpdatePhotos { }
 //    enum DeletePhotos  { }
-    enum FetchPhotos {
+    enum RetrievePhotos {
         struct Request {
             var query: String
         }
         struct Response: Equatable {
             var photos: [Photo]
 
-            static func == (lhs: SearchPhotos.FetchPhotos.Response, rhs: SearchPhotos.FetchPhotos.Response) -> Bool {
+            static func == (lhs: SearchPhotos.RetrievePhotos.Response, rhs: SearchPhotos.RetrievePhotos.Response) -> Bool {
                 return lhs.photos == rhs.photos
             }
         }
@@ -28,13 +28,13 @@ enum SearchPhotos {
                 var photoID: String
                 var description: String
 
-                static func == (lhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto, rhs: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto) -> Bool {
+                static func == (lhs: SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto, rhs: SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto) -> Bool {
                     return lhs.description == rhs.description
                 }
             }
             var displayedPhotos: [DisplayedPhoto]
 
-            static func == (lhs: SearchPhotos.FetchPhotos.ViewModel, rhs: SearchPhotos.FetchPhotos.ViewModel) -> Bool {
+            static func == (lhs: SearchPhotos.RetrievePhotos.ViewModel, rhs: SearchPhotos.RetrievePhotos.ViewModel) -> Bool {
                 return lhs.displayedPhotos == rhs.displayedPhotos
             }
         }
@@ -92,10 +92,10 @@ struct Result: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        resultDescription = try container.decodeIfPresent(String.self, forKey: .resultDescription) ?? "😖 NO DESCRIPTION"
-        urls = try container.decodeIfPresent(PictureUrls.self, forKey: .urls) ?? PictureUrls(small: "")
-        id = try container.decodeIfPresent(String.self, forKey: .id) ?? "😖 NO ID"
-        user = try container.decodeIfPresent(User.self, forKey: .user) ?? User(name: "No name")
+        resultDescription = try container.decodeIfPresent(String.self, forKey: .resultDescription) ?? Constant.DecodingDefaultValue.description
+        urls = try container.decodeIfPresent(PictureUrls.self, forKey: .urls) ?? Constant.DecodingDefaultValue.pictureUrls
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? Constant.DecodingDefaultValue.photoID
+        user = try container.decodeIfPresent(User.self, forKey: .user) ?? Constant.DecodingDefaultValue.user
     }
 }
 

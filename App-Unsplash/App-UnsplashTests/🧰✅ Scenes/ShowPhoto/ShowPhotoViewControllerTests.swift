@@ -11,7 +11,7 @@ import CustomDump
 class ShowPhotosViewControllerTests: XCTestCase {
 
     var sut: ShowPhotoViewController!
-    static let dummyRequest: ShowPhoto.FetchPhoto.Request = .init(query: "0")
+    static let dummyRequest: ShowPhoto.RetrievePhoto.Request = .init(query: "0")
 
     override func setUp() {
         super.setUp()
@@ -56,9 +56,9 @@ class ShowPhotosViewControllerTests: XCTestCase {
     class ShowPhotoInteractorSPY: ShowPhotosBusinessLogic {
 
         var invokedInteractor: Bool!
-        var resultRequestPassed: ShowPhoto.FetchPhoto.Request!
+        var resultRequestPassed: ShowPhoto.RetrievePhoto.Request!
 
-        func retrievePhoto(withID request: ShowPhoto.FetchPhoto.Request) {
+        func retrievePhoto(withID request: ShowPhoto.RetrievePhoto.Request) {
             invokedInteractor = true
             resultRequestPassed = request
 

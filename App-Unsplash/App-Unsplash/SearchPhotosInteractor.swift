@@ -7,21 +7,26 @@
 
 import Foundation
 
-protocol SearchPhotosBusinessLogic {
-//    func fetchPhotos(withRequest: SearchPhotos.FetchPhotos.Request)
-    func retrivePhotos(withRequest: SearchPhotos.FetchPhotos.Request)
+protocol SearchPhotosInteractable {
+    func retrivePhotos(withRequest: SearchPhotos.RetrievePhotos.Request)
 }
 
-class SearchPhotosInteractor: SearchPhotosBusinessLogic {
+class SearchPhotosInteractor: SearchPhotosInteractable {
 
-    var worker: PhotosWorkerLogic?
-    var presenter: SearchPhotosPresentationLogic?
+    private (set) var worker: PhotosWorkerLogic?
+    private (set) var presenter: SearchPhotosPresentable?
 
-    func retrivePhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
+    init(worker: PhotosWorkerLogic, presenter: SearchPhotosPresentable) {
+        self.worker = worker
+        self.presenter = presenter
+    }
+
+
+    func retrivePhotos(withRequest request: SearchPhotos.RetrievePhotos.Request) {
 
         worker?.retrievePhotos(withRequest: request.query) { photos in
             // map...
-            let reponse: SearchPhotos.FetchPhotos.Response = .init(photos: photos)
+            let reponse: SearchPhotos.RetrievePhotos.Response = .init(photos: photos)
             // send back to presenter...
             self.presenter?.presentFetchedPhotos(with: reponse)
         }

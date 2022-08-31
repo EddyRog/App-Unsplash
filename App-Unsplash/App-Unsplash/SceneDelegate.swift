@@ -13,11 +13,11 @@ protocol Coordinator {
 
 final class AppCoordinator: Coordinator {
     // MARK: - Properties
-    internal var navController: UINavigationController
+    var navController: UINavigationController
     private let window: UIWindow
 
     // MARK: - Initializer
-    internal init(navController: UINavigationController, window: UIWindow) {
+    init(navController: UINavigationController, window: UIWindow) {
         self.navController = navController
         self.window = window
     }
@@ -30,8 +30,9 @@ final class AppCoordinator: Coordinator {
 
     // MARK: - Navigation
     private func showMain() {
+
         guard let searchPhotoViewController = try? SearchPhotosConfigurator(navController: navController).createModule() else { return }
-        searchPhotoViewController.router?.navigationController = navController
+//        searchPhotoViewController.router?.navigationController = navController
         navController.pushViewController(searchPhotoViewController, animated: true)
     }
 }

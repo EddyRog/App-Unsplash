@@ -21,15 +21,14 @@ class SearchPhotosViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_init_SearchPhotosViewController__expect_notNil() {
-        XCTAssertNotNil(sut)
-    }
-	// VC -> IN
+    
+    // VC -> IN
      func test_searchPhotos_withRequest__expect_invokedInteractor() {
         // --- given .
         let searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
-        sut.interactor = searchPhotosInteractorSPY
-        let request: SearchPhotos.FetchPhotos.Request = .init(query: "Car")
+         sut.setInteractor(searchPhotosInteractorSPY)
+//        sut.interactor = searchPhotosInteractorSPY
+        let request: SearchPhotos.RetrievePhotos.Request = .init(query: "Car")
 
         // --- when.
         sut.searchPhotos(withRequest: request)
@@ -41,8 +40,9 @@ class SearchPhotosViewControllerTests: XCTestCase {
     func test_searchPhotos_withRequest__expect_rightRequestPassed() {
         // --- given .
         let searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
-        sut.interactor = searchPhotosInteractorSPY
-        let request: SearchPhotos.FetchPhotos.Request = .init(query: "Car")
+        sut.setInteractor(searchPhotosInteractorSPY)
+//        sut.interactor = searchPhotosInteractorSPY
+        let request: SearchPhotos.RetrievePhotos.Request = .init(query: "Car")
 
         // --- when.
         sut.searchPhotos(withRequest: request)
@@ -96,7 +96,7 @@ class SearchPhotosViewControllerTests: XCTestCase {
         searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
 
 		// --- create viewModel.
-        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
+        let viewModel = SearchPhotos.RetrievePhotos.ViewModel(displayedPhotos: [
             Seed.Photos.car1,
             Seed.Photos.car2,
         ])
@@ -133,7 +133,7 @@ class SearchPhotosViewControllerTests: XCTestCase {
         searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
 
         // --- create viewModel.
-        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
+        let viewModel = SearchPhotos.RetrievePhotos.ViewModel(displayedPhotos: [
             Seed.Photos.car1,
             Seed.Photos.car2,
         ])
@@ -151,58 +151,16 @@ class SearchPhotosViewControllerTests: XCTestCase {
         XCTAssertEqual("Car01", searchPhotoCell.searchPhotoDescription.text)
     }
 
-    func test_lazyLoading__expect_ReloadDataIsTrigger() {
-        // setup
-        guard let searchPhotosViewController = setupSearchViewController() else {
-            XCTFail("Should return an instance of SearchViewController")
-            return
-        }
-
-        // --- given.
-        // MARK: - configure Tableview
-        let tableViewSPY = TableViewSPY() // mock the real tableview
-        searchPhotosViewController.tableview = tableViewSPY
-        XCTAssertNotNil(searchPhotosViewController.tableview)
-
-        let idCell = "SearchPhotosCell"
-        let textFieldCell = UINib(nibName: idCell, bundle: nil)
-        searchPhotosViewController.tableview.register(textFieldCell, forCellReuseIdentifier: idCell)
-
-        // MARK: - Load the view From its storyboard
-        // Load the view of the ViewController if it is not already done, also allows to load the TableView from the Storyboard
-        searchPhotosViewController.loadViewIfNeeded() // comment the next line to see the test fail
-
-        // --- create viewModel.
-        let viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [
-            Seed.Photos.car1,
-        ])
-        // --- set data of tableview.
-        searchPhotosViewController.resultSearchPhotos = viewModel
-
-        // --- when.
-        let indexPath: IndexPath = IndexPath(row: 0, section: 0)
-
-		let cell = UITableViewCell()
-        searchPhotosViewController.tableView(searchPhotosViewController.tableview, willDisplay: UITableViewCell(), forRowAt: indexPath)
-
-        guard let searchPhotoCell = cell as? SearchPhotosCell else {
-            XCTFail("Should cast the cell to SearchPhotoCell")
-            return
-        }
-
-//        XCTAssertEqual("Car01", searchPhotoCell.searchPhotoDescription.text)
-    }
-
 
     // ==================
     // MARK: - Test doubles
     // ==================
-    class SearchPhotosInteractorSPY: SearchPhotosBusinessLogic {
+    class SearchPhotosInteractorSPY: SearchPhotosInteractable {
 
         var invokedInteractor: Bool!
         var resultRequestPassed: String!
 
-        func retrivePhotos(withRequest request: SearchPhotos.FetchPhotos.Request) {
+        func retrivePhotos(withRequest request: SearchPhotos.RetrievePhotos.Request) {
 			invokedInteractor = true
             resultRequestPassed = request.query
         }
@@ -216,8 +174,8 @@ class SearchPhotosViewControllerTests: XCTestCase {
 
         struct Photos {
 
-            static let car1: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car01", photoID: "Car01", description: "Car01")
-            static let car2: Array<SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car02", photoID: "Car02", description: "Car02")
+            static let car1: Array<SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car01", photoID: "Car01", description: "Car01")
+            static let car2: Array<SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car02", photoID: "Car02", description: "Car02")
         }
     }
 
@@ -225,7 +183,7 @@ class SearchPhotosViewControllerTests: XCTestCase {
         // init
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: SearchPhotosViewController.identifier) as? SearchPhotosViewController else {
+        guard let searchPhotosViewController = storyboard.instantiateViewController(identifier: Constant.SearchPhoto.identifierViewController) as? SearchPhotosViewController else {
             XCTFail("Should cast the UIVIewController")
             return nil
         }

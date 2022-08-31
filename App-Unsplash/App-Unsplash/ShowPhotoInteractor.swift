@@ -9,14 +9,14 @@ import Foundation
 
 protocol ShowPhotosBusinessLogic {
 //    func retrivePhotos(withRequest: ShowPhoto.FetchPhoto.Request)
-    func retrievePhoto(withID: ShowPhoto.FetchPhoto.Request)
+    func retrievePhoto(withID: ShowPhoto.RetrievePhoto.Request)
 }
 class ShowPhotoInteractor: ShowPhotosBusinessLogic {
 
     var worker: PhotosWorkerLogic?
     var presenter: ShowPhotoPresentationLogic?
 
-    func retrievePhoto(withID photoID: ShowPhoto.FetchPhoto.Request) {
+    func retrievePhoto(withID photoID: ShowPhoto.RetrievePhoto.Request) {
 
         // worker
         worker?.retrievePhoto(withID: photoID.query, completionRetrieve: { [weak self] photo in
@@ -24,11 +24,11 @@ class ShowPhotoInteractor: ShowPhotosBusinessLogic {
 
             // get the response
             if let photo = photo {
-                let response = ShowPhoto.FetchPhoto.Response(photo: photo)
+                let response = ShowPhoto.RetrievePhoto.Response(photo: photo)
                 // send back to
                 this.presenter?.presentRetrievePhoto(with: response)
             } else {
-                this.presenter?.presentRetrievePhoto(with: ShowPhoto.FetchPhoto.Response.init(photo: nil))
+                this.presenter?.presentRetrievePhoto(with: ShowPhoto.RetrievePhoto.Response.init(photo: nil))
             }
         })
     }

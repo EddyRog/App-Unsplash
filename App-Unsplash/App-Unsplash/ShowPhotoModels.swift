@@ -7,7 +7,7 @@
 import Foundation
 
 enum ShowPhoto {
-    enum FetchPhoto {
+    enum RetrievePhoto {
         struct Request {
             var query: String
         }
@@ -21,7 +21,7 @@ enum ShowPhoto {
                 var description: String
                 var username: String?
 
-                static func == (lhs: ShowPhoto.FetchPhoto.ViewModel.DisplayedPhoto, rhs: ShowPhoto.FetchPhoto.ViewModel.DisplayedPhoto) -> Bool {
+                static func == (lhs: ShowPhoto.RetrievePhoto.ViewModel.DisplayedPhoto, rhs: ShowPhoto.RetrievePhoto.ViewModel.DisplayedPhoto) -> Bool {
                     return lhs.urlsmallImage == rhs.urlsmallImage &&
                     lhs.photoID == rhs.photoID &&
                     lhs.description == rhs.description &&
@@ -30,7 +30,7 @@ enum ShowPhoto {
             }
             var displayedPhoto: DisplayedPhoto
 
-            static func == (lhs: ShowPhoto.FetchPhoto.ViewModel, rhs: ShowPhoto.FetchPhoto.ViewModel) -> Bool {
+            static func == (lhs: ShowPhoto.RetrievePhoto.ViewModel, rhs: ShowPhoto.RetrievePhoto.ViewModel) -> Bool {
                 return lhs.displayedPhoto == rhs.displayedPhoto
             }
         }

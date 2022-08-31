@@ -14,15 +14,14 @@ class SearchPhotosInteractorTests: XCTestCase {
     var searchPhotosPresenterSPY: SearchPhotosPresenterSPY!
     var workerPhotosSPY: PhotosWorkerSpy!
 
-    static let dummyRequest = SearchPhotos.FetchPhotos.Request.init(query: "_")
+    static let dummyRequest = SearchPhotos.RetrievePhotos.Request.init(query: "_")
 
     override func setUp() {
         super.setUp()
-		sut = SearchPhotosInteractor()
         searchPhotosPresenterSPY = SearchPhotosPresenterSPY()
         workerPhotosSPY = PhotosWorkerSpy()
-        sut.presenter = searchPhotosPresenterSPY
-        sut.worker = workerPhotosSPY
+
+        sut = SearchPhotosInteractor(worker: workerPhotosSPY, presenter: searchPhotosPresenterSPY)
     }
     override func tearDown()  {
 		sut = nil
@@ -31,9 +30,6 @@ class SearchPhotosInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_init_SearchPhotosInteractor__expect_notNil() {
-        XCTAssertNotNil(sut)
-    }
 
     func test_retrievePhotos__expect_invokedPresenterAndInvokedWorker() {
         // --- then.
@@ -46,7 +42,7 @@ class SearchPhotosInteractorTests: XCTestCase {
 
     func test_retrievePhotos__expect_empPhotos() {
         // --- given.
-        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [Photo]())
+        let expectedResponse: SearchPhotos.RetrievePhotos.Response = .init(photos: [Photo]())
 
         // --- then.
         sut.retrivePhotos(withRequest: 	SearchPhotosInteractorTests.dummyRequest)
@@ -57,7 +53,7 @@ class SearchPhotosInteractorTests: XCTestCase {
 
     func test_retrievePhotos__expect_onePhoto() {
         // --- given.
-        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
+        let expectedResponse: SearchPhotos.RetrievePhotos.Response = .init(photos: [
             Photo(photoID: "ID0", description: "Photo0", userName: "UserName0")
         ])
         workerPhotosSPY.makeData = [.init(photoID: "ID0", description: "Photo0", userName: "UserName0")]
@@ -71,7 +67,7 @@ class SearchPhotosInteractorTests: XCTestCase {
 
     func test_retrievePhotos__expect_manPhoto() {
         // --- given.
-        let expectedResponse: SearchPhotos.FetchPhotos.Response = .init(photos: [
+        let expectedResponse: SearchPhotos.RetrievePhotos.Response = .init(photos: [
             Photo(photoID: "ID0", description: "Photo0", userName: "User0"),
             Photo(photoID: "ID1", description: "Photo1", userName: "User1")
         ])
@@ -90,12 +86,12 @@ class SearchPhotosInteractorTests: XCTestCase {
     // ==================
     // MARK: - Test doubles
     // ==================
-    class SearchPhotosPresenterSPY: SearchPhotosPresentationLogic {
+    class SearchPhotosPresenterSPY: SearchPhotosPresentable {
 
         var invokedPresenter: Bool!
-        var resultResponse: SearchPhotos.FetchPhotos.Response!
+        var resultResponse: SearchPhotos.RetrievePhotos.Response!
 
-        func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response) {
+        func presentFetchedPhotos(with response: SearchPhotos.RetrievePhotos.Response) {
             invokedPresenter = true
             resultResponse = response
         }

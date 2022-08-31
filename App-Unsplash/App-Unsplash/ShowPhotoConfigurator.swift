@@ -10,25 +10,24 @@ import UIKit
 
 class ShowPhotoConfigurator: Coordinator {
 
-    var navController: UINavigationController
-    var idPhoto: String
-    var identifier = "ShowPhotoViewController"
+    internal var navController: UINavigationController
+    private var idPhoto: String
 
-    internal init(navController: UINavigationController, withIDPhoto idPhoto: String, identifier: String = "ShowPhotoViewController") {
+    init(navController: UINavigationController, idPhoto: String) {
         self.navController = navController
         self.idPhoto = idPhoto
-        self.identifier = identifier
     }
 
     func createModule() throws -> ShowPhotoViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
         // --- check if the id exist.
-        if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
+        if !storyboard.isIDViewControllerExist(withIdentifier: Constant.ShowPhoto.identifierViewController) {
             throw ErrorStoryboard.identifierNil
         }
 
         // --- init viewController from storyboard.
-        let viewcontroller = storyboard.instantiateViewController(withIdentifier: identifier)
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: Constant.ShowPhoto.identifierViewController)
 
         guard let showPhotoViewController = viewcontroller as? ShowPhotoViewController else {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
@@ -36,7 +35,7 @@ class ShowPhotoConfigurator: Coordinator {
 
         let interactor = ShowPhotoInteractor()
         let router = ShowPhotoRouter(navigationController: navController, idPhoto: idPhoto)
-        let presenter = ShowPhotoPresenter()
+        let presenter = ShowPhotoPresenter(viewController: showPhotoViewController)
 
         // --- ViewController -> Interactor.
         showPhotoViewController.interactor = interactor
@@ -48,7 +47,8 @@ class ShowPhotoConfigurator: Coordinator {
         interactor.worker = PhotosWorker()
 
         // --- Presenter -> ViewController.
-        presenter.viewController = showPhotoViewController
+//        presenter.viewController
+        //presenter.viewController = showPhotoViewController
 
         // ==================
         // MARK: - Connection Layer VIP

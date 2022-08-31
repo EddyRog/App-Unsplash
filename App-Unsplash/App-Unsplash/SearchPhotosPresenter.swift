@@ -6,16 +6,21 @@
 
 import Foundation
 
-protocol SearchPhotosPresentationLogic {
-    func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response)
+protocol SearchPhotosPresentable {
+    func presentFetchedPhotos(with response: SearchPhotos.RetrievePhotos.Response)
 }
 
-class SearchPhotosPresenter: SearchPhotosPresentationLogic {
+class SearchPhotosPresenter: SearchPhotosPresentable {
 
-    weak var viewController: SearchPhotosDisplayLogic?
+    private (set) weak var viewController: SearchPhotosViewable?
 
-    func presentFetchedPhotos(with response: SearchPhotos.FetchPhotos.Response) {
-        var viewModel = SearchPhotos.FetchPhotos.ViewModel(displayedPhotos: [])
+    init(viewController: SearchPhotosViewable) {
+        self.viewController = viewController
+    }
+
+
+    func presentFetchedPhotos(with response: SearchPhotos.RetrievePhotos.Response) {
+        var viewModel = SearchPhotos.RetrievePhotos.ViewModel(displayedPhotos: [])
 
 		// map response to viewmodel
         response.photos.forEach { photo in
@@ -24,7 +29,7 @@ class SearchPhotosPresenter: SearchPhotosPresentationLogic {
             let description = photo.description ?? ""
             let photoID = photo.photoID
 
-            let displayedPhoto: SearchPhotos.FetchPhotos.ViewModel.DisplayedPhoto = .init(
+            let displayedPhoto: SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto = .init(
                 urlsmallImage: urlsmallImage,
                 photoID: photoID,
                 description: description)

@@ -13,7 +13,7 @@ class ShowPhotoConfiguratorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = ShowPhotoConfigurator(navController: UINavigationController(), withIDPhoto: "0")
+        sut = ShowPhotoConfigurator(navController: UINavigationController(), idPhoto: "0")
     }
     override func tearDown() {
         sut = nil
@@ -31,7 +31,8 @@ class ShowPhotoConfiguratorTests: XCTestCase {
     }
 
     func test_createModule_withWrongIdentifier__expect_throwError() {
-        sut.identifier = "_"
+        Constant.ShowPhoto.identifierViewController = ""
+        sut = ShowPhotoConfigurator(navController: UINavigationController(), idPhoto: "0")
         XCTAssertThrowsError(try sut.createModule(), "should throws an error") { error in
             if let errorStoryboard =  error as? ErrorStoryboard {
                 XCTAssertEqual(errorStoryboard, .identifierNil)

@@ -33,14 +33,14 @@ class ShowPhotoInteractorTests: XCTestCase {
     }
 
     func test_retrievePhoto_withID__expect_invokedWorkerAndPresenter() {
-        sut.retrievePhoto(withID: ShowPhoto.FetchPhoto.Request.init(query: "0"))
+        sut.retrievePhoto(withID: ShowPhoto.RetrievePhoto.Request.init(query: "0"))
 
         XCTAssertTrue(photoWorkerSPY.invokedPhotosWorker)
         XCTAssertTrue(showPhotoPresenterSPY.invokedPresenter)
     }
 
     func test_retrievePhoto_withID__expect_noPhoto() {
-        let dummyRequest = ShowPhoto.FetchPhoto.Request.init(query: "")
+        let dummyRequest = ShowPhoto.RetrievePhoto.Request.init(query: "")
         photoWorkerSPY.makeDataPhoto = nil
 
         sut.retrievePhoto(withID: dummyRequest)
@@ -48,7 +48,7 @@ class ShowPhotoInteractorTests: XCTestCase {
         XCTAssertNil(showPhotoPresenterSPY.resultResponse.photo)
     }
     func test_retrievePhoto_withID__expect_Photo() {
-        let dummyRequest = ShowPhoto.FetchPhoto.Request.init(query: "")
+        let dummyRequest = ShowPhoto.RetrievePhoto.Request.init(query: "")
         photoWorkerSPY.makeDataPhoto = Photo(photoID: "ID", description: "Photo", userName: "User")
 
         sut.retrievePhoto(withID: dummyRequest)
@@ -76,9 +76,9 @@ class ShowPhotoInteractorTests: XCTestCase {
 
     class ShowPhotoPresenterSPY: ShowPhotoPresentationLogic {
         var invokedPresenter: Bool!
-        var resultResponse: ShowPhoto.FetchPhoto.Response!
+        var resultResponse: ShowPhoto.RetrievePhoto.Response!
 
-        func presentRetrievePhoto(with response: ShowPhoto.FetchPhoto.Response) {
+        func presentRetrievePhoto(with response: ShowPhoto.RetrievePhoto.Response) {
             invokedPresenter = true
 			resultResponse = response
         }

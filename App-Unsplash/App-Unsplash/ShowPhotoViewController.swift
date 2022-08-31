@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol ShowPhotoDisplayLogic: AnyObject {
-    func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel)
+    func displayRetrievedPhoto(with viewModel: ShowPhoto.RetrievePhoto.ViewModel)
 }
 
 class ShowPhotoViewController: UIViewController {
@@ -29,17 +29,17 @@ class ShowPhotoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let idPhoto = router?.idPhoto {
-            showPhoto(withID: ShowPhoto.FetchPhoto.Request.init(query: idPhoto))
+            showPhoto(withID: ShowPhoto.RetrievePhoto.Request.init(query: idPhoto))
         }
     }
 
-    func showPhoto(withID request: ShowPhoto.FetchPhoto.Request) {
+    func showPhoto(withID request: ShowPhoto.RetrievePhoto.Request) {
         interactor?.retrievePhoto(withID: request)
     }
 }
 
 extension ShowPhotoViewController: ShowPhotoDisplayLogic {
-    func displayRetrievedPhoto(with viewModel: ShowPhoto.FetchPhoto.ViewModel) {
+    func displayRetrievedPhoto(with viewModel: ShowPhoto.RetrievePhoto.ViewModel) {
         DispatchQueue.main.async {
 
             // configure uiImage

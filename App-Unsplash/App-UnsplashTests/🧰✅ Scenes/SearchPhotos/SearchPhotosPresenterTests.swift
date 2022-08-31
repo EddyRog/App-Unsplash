@@ -15,25 +15,20 @@ class PresenterSearchPhotosTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = SearchPhotosPresenter()
         searchPhotosViewControllerSPY =  SearchPhotosViewControllerSPY()
-        sut.viewController = searchPhotosViewControllerSPY
-
+        sut = SearchPhotosPresenter(viewController: searchPhotosViewControllerSPY)
     }
     override func tearDown() {
         sut = nil
         searchPhotosViewControllerSPY = nil
+
         super.tearDown()
     }
 
-    // SearchPhotosPresenter
-    func test_init_SearchPhotosPresenter__expect_notNil() {
-        XCTAssertNotNil(sut)
-    }
 
     func test_present_response__expect_SearchPhotosViewController_isInvoked() {
         // --- given.
-        let response = SearchPhotos.FetchPhotos.Response(photos: [Photo]())
+        let response = SearchPhotos.RetrievePhotos.Response(photos: [Photo]())
 
         // --- when.
         sut.presentFetchedPhotos(with: response)
@@ -44,27 +39,27 @@ class PresenterSearchPhotosTests: XCTestCase {
 
     func test_present_response__expect_empViewModel() {
         // --- given.
-        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [])
+        let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [])
 
         // --- when.
         sut.presentFetchedPhotos(with: response)
 
         // --- then.
         assertNoDifference(
-            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: []),
+            SearchPhotos.RetrievePhotos.ViewModel.init(displayedPhotos: []),
             searchPhotosViewControllerSPY.resultViewModel)
     }
 
     func test_present_response__expect_oneViewModel() {
         // --- given.
-        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0", userName: "User0")])
+        let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0", userName: "User0")])
 
         // --- when.
         sut.presentFetchedPhotos(with: response)
 
         // --- then.
         assertNoDifference(
-            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
+            SearchPhotos.RetrievePhotos.ViewModel.init(displayedPhotos: [
                 .init(
                     urlsmallImage: "Image0",
                     photoID: "ID0",
@@ -76,7 +71,7 @@ class PresenterSearchPhotosTests: XCTestCase {
     
     func test_present_response__expect_manViewModel() {
         // --- given.
-        let response: SearchPhotos.FetchPhotos.Response = .init(photos: [
+        let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [
             .init(photoID: "ID0", description: "Picture0", userName: "User0"),
             .init(photoID: "ID1", description: "Picture1", userName: "User1")
         ])
@@ -86,26 +81,26 @@ class PresenterSearchPhotosTests: XCTestCase {
 
         // --- then.
         assertNoDifference(
-            SearchPhotos.FetchPhotos.ViewModel.init(displayedPhotos: [
+            SearchPhotos.RetrievePhotos.ViewModel.init(displayedPhotos: [
                 .init(urlsmallImage: "Image0", photoID: "ID0", description: "Picture0"),
                 .init(urlsmallImage: "Image1", photoID: "ID1", description: "Picture1"),
             ]),
             searchPhotosViewControllerSPY.resultViewModel)
     }
-    // TODO: ❎ Get id to fecht ❎
+    // TODO: ❎ Get id to fetch ❎
 
     // ==================
     // MARK: - Test doubles
     // ==================
-    class SearchPhotosViewControllerSPY: SearchPhotosDisplayLogic {
+    class SearchPhotosViewControllerSPY: SearchPhotosViewable {
 
         var invokedViewController: Bool!
-        var resultViewModel: SearchPhotos.FetchPhotos.ViewModel?
+        var resultViewModel: SearchPhotos.RetrievePhotos.ViewModel?
 
-        func searchPhotos(withRequest: SearchPhotos.FetchPhotos.Request) {
+        func searchPhotos(withRequest: SearchPhotos.RetrievePhotos.Request) {
             //
         }
-        func displayedFetchedPhotos(viewModel: SearchPhotos.FetchPhotos.ViewModel) {
+        func displayedFetchedPhotos(viewModel: SearchPhotos.RetrievePhotos.ViewModel) {
             invokedViewController = true
             resultViewModel = viewModel
         }

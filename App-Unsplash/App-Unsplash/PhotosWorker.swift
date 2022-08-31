@@ -40,9 +40,9 @@ class PhotosWorker {
         return URLRequest(url: url)
     }
 
-    func parseResponse(data: Data) throws -> SearchPhotos.FetchPhotos.Response {
+    func parseResponse(data: Data) throws -> SearchPhotos.RetrievePhotos.Response {
         let decoder = JSONDecoder()
-        var response = SearchPhotos.FetchPhotos.Response(photos: [Photo]())
+        var response = SearchPhotos.RetrievePhotos.Response(photos: [Photo]())
         do {
             let responseData = try decoder.decode(UnsplashObjc.self, from: data)
 
@@ -66,9 +66,9 @@ class PhotosWorker {
         }
     }
 
-    func parseResponse(dataPhotoID: Data) throws -> ShowPhoto.FetchPhoto.Response {
+    func parseResponse(dataPhotoID: Data) throws -> ShowPhoto.RetrievePhoto.Response {
         let decoder: JSONDecoder = JSONDecoder()
-        var response: ShowPhoto.FetchPhoto.Response = .init(photo: nil)
+        var response: ShowPhoto.RetrievePhoto.Response = .init(photo: nil)
 
         do {
             let responseData = try decoder.decode(Result.self, from: dataPhotoID)

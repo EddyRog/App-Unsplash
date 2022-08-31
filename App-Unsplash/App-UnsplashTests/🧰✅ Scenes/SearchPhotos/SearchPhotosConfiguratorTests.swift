@@ -3,11 +3,10 @@
 // App-UnsplashTests
 // Created in 2022
 // Swift 5.0
-// ✔︎ 
+// ✔︎
 @testable import App_Unsplash
 import XCTest
 import CustomDump
-import AudioToolbox
 
 class SearchPhotosConfiguratorTests: XCTestCase {
 
@@ -15,16 +14,15 @@ class SearchPhotosConfiguratorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
         let dummyUINavigationController: UINavigationController = UINavigationController()
         sut = SearchPhotosConfigurator(navController: dummyUINavigationController)
     }
     override func tearDown() {
         sut = nil
-        super.tearDown()
-    }
+        Constant.SearchPhoto.identifierViewController = "SearchPhotosViewController"
 
-    func test_init_SearchPhotosConfigurator__expect_notNil() {
-        XCTAssertNotNil(sut)
+        super.tearDown()
     }
 
     func test_createModule__expect_SearchPhotosViewController() {
@@ -34,9 +32,9 @@ class SearchPhotosConfiguratorTests: XCTestCase {
     }
 
     func test_createModule_withWrongIdentifier__expect_throwError() {
-        sut.identifier = "_"
+        Constant.SearchPhoto.identifierViewController = "_"
         XCTAssertThrowsError(try sut.createModule(), "should throws an error") { error in
-            if let errorStoryboard =  error as? ErrorStoryboard {
+            if let errorStoryboard = error as? ErrorStoryboard {
                 XCTAssertEqual(errorStoryboard, .identifierNil)
             } else {
                 XCTFail("must cast the error into ErrorStoryboard")
@@ -49,10 +47,11 @@ class SearchPhotosConfiguratorTests: XCTestCase {
         if let searchPhotosViewController = try? sut.createModule() {
             XCTAssertNotNil(searchPhotosViewController.interactor)
             XCTAssertNotNil(searchPhotosViewController.router)
+            // !!!: ❎ to activate ❎
 //            XCTAssertNotNil((searchPhotosViewController.router as? SearchPhotosRouter)?.)
-            XCTAssertNotNil( (searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter )
-            XCTAssertNotNil( (searchPhotosViewController.interactor as? SearchPhotosInteractor)?.worker )
-            XCTAssertNotNil( ((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter as? SearchPhotosPresenter)?.viewController )
+            XCTAssertNotNil((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter)
+            XCTAssertNotNil((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.worker)
+            XCTAssertNotNil(((searchPhotosViewController.interactor as? SearchPhotosInteractor)?.presenter as? SearchPhotosPresenter)?.viewController)
         }
     }
 }

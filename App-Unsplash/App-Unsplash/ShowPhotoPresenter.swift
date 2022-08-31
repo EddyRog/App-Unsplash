@@ -8,21 +8,25 @@
 import Foundation
 
 protocol ShowPhotoPresentationLogic {
-    func presentRetrievePhoto(with response: ShowPhoto.FetchPhoto.Response)
+    func presentRetrievePhoto(with response: ShowPhoto.RetrievePhoto.Response)
 }
 
 class ShowPhotoPresenter: ShowPhotoPresentationLogic {
 
-    weak var viewController: ShowPhotoDisplayLogic?
+    weak private (set) var viewController: ShowPhotoDisplayLogic?
 
-    func presentRetrievePhoto(with response: ShowPhoto.FetchPhoto.Response) {
+    init(viewController: ShowPhotoDisplayLogic) {
+        self.viewController = viewController
+    }
+
+    func presentRetrievePhoto(with response: ShowPhoto.RetrievePhoto.Response) {
         let photoid  = response.photo?.photoID
         let username = response.photo?.userName
 
         let description = response.photo?.description ?? "No description"
         let urlsmallImage = response.photo?.urlsmallImage ?? "Image"
 
-        let viewModel: ShowPhoto.FetchPhoto.ViewModel = .init(displayedPhoto: .init(
+        let viewModel: ShowPhoto.RetrievePhoto.ViewModel = .init(displayedPhoto: .init(
             urlsmallImage: urlsmallImage,
             photoID: photoid,
             description: description.uppercased(),

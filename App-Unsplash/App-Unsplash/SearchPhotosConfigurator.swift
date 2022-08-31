@@ -11,24 +11,20 @@ import UIKit
 class SearchPhotosConfigurator: Coordinator {
 
     var navController: UINavigationController
-    var identifier = "SearchPhotosViewController"
 
-    internal init(navController: UINavigationController, identifier: String = "SearchPhotosViewController") {
+    internal init(navController: UINavigationController) {
         self.navController = navController
-        self.identifier = identifier
     }
-
 
     func createModule() throws -> SearchPhotosViewController {
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // --- check if the id exist.
-        if !storyboard.isIDViewControllerExist(withIdentifier: identifier) {
+        if !storyboard.isIDViewControllerExist(withIdentifier: Constant.SearchPhoto.identifierViewController) {
             throw ErrorStoryboard.identifierNil
         }
 
-        // --- init viewController from storyboard.
-        let viewcontroller = storyboard.instantiateViewController(withIdentifier: identifier)
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: Constant.SearchPhoto.identifierViewController) // --- init viewController from storyboard.
 
         guard let searchPhotosViewController = viewcontroller as? SearchPhotosViewController else {
             throw ErrorStoryboard.castingToSearchPhotosViewImpl
@@ -38,22 +34,21 @@ class SearchPhotosConfigurator: Coordinator {
         // MARK: - Connection Layer VIP
         // ==================
         // --- configure the connection of layers.
-        let searchPhotosInteractor = SearchPhotosInteractor()
         let photosWorker = PhotosWorker()
+        let searchPhotosPresenter = SearchPhotosPresenter(viewController: searchPhotosViewController)
 
-        let searchPhotosPresenter = SearchPhotosPresenter()
+        // --- Interactor -> presenter & worker.
+        let searchPhotosInteractor = SearchPhotosInteractor(worker: photosWorker, presenter: searchPhotosPresenter)
+
+        // --- Router -> navigationContorller.
         let searchPhotosRouter = SearchPhotosRouter(navigationController: navController)
 
 		// --- ViewController -> interactor & router.
-        searchPhotosViewController.interactor = searchPhotosInteractor
-        searchPhotosViewController.router = searchPhotosRouter
-
-        // --- Interactor -> presenter & worker.
-        searchPhotosInteractor.presenter = searchPhotosPresenter
-        searchPhotosInteractor.worker = photosWorker
+        searchPhotosViewController.setInteractor(searchPhotosInteractor)
+        searchPhotosViewController.setRouter(searchPhotosRouter)
 
         // --- Presenter -> viewcontroller.
-        searchPhotosPresenter.viewController = searchPhotosViewController
+//        searchPhotosPresenter.viewController = searchPhotosViewController
 
         return searchPhotosViewController
     }
