@@ -55,20 +55,19 @@ class PhotosWorker {
         guard let url = URL(string: urlString) else { throw ServiceError.urlError }
         return URLRequest(url: url)
     }
+    func getNextPage(_ currentPage: String?, _ actualPage: String) -> String {
+    let defaultPageValue = "2"
+    guard let unwCurrentPage = currentPage else { return defaultPageValue }
+    guard let valueCurrentPage = Int(unwCurrentPage) else { return defaultPageValue }
 
+    // TODO: ❎ Test if not reach mac page ❎
 
-    fileprivate func getNextPage(_ currentPage: String?, _ actualPage: String) -> String {
-        let defaultPageValue = "2"
-        guard let unwCurrentPage = currentPage else { return defaultPageValue }
-        guard let valueCurrentPage = Int(unwCurrentPage) else { return defaultPageValue }
-
-		// TODO: ❎ Test if not reach mac page ❎
-
-        if valueCurrentPage < 2 {
-            return defaultPageValue
-        }
-        return String(valueCurrentPage + 1)
+    if valueCurrentPage < 2 {
+        return defaultPageValue
     }
+    return String(valueCurrentPage + 1)
+}
+
     func parseResponse(data: Data) throws -> SearchPhotos.RetrievePhotos.Response {
         let decoder = JSONDecoder()
         var response = SearchPhotos.RetrievePhotos.Response(photos: [Photo]())
@@ -94,7 +93,6 @@ class PhotosWorker {
             throw ServiceError.dataParse
         }
     }
-
     func parseResponse(dataPhotoID: Data) throws -> ShowPhoto.RetrievePhoto.Response {
         let decoder: JSONDecoder = JSONDecoder()
         var response: ShowPhoto.RetrievePhoto.Response = .init(photo: nil)
@@ -125,9 +123,6 @@ extension PhotosWorker: PhotosWorkable {
 
     func retrievePhotos(withRequest request: String, complectionRetrieve: @escaping ([Photo]) -> Void) {
         let emptyPhotos: [Photo] = [Photo]()
-
-
-
         do {
             let urlRequest = try makeURLRequest(withRequest: .urlRequest(request))
 
@@ -135,7 +130,7 @@ extension PhotosWorker: PhotosWorkable {
                 guard let unwData = data else { complectionRetrieve(emptyPhotos); return }
                 guard let unwDataParsed = try? self.parseResponse(data: unwData) else { complectionRetrieve(emptyPhotos); return }
 
-                complectionRetrieve(unwDataParsed.photos) // send back data Decoded
+                    complectionRetrieve(unwDataParsed.photos) // send back data Decoded
             }.resume()
 
         } catch {
@@ -164,31 +159,17 @@ extension PhotosWorker: PhotosWorkable {
             session.dataTask(with: urlRequest) { data, _, _ in
                 guard let unwData = data else { return }
                 guard let unwDataParsed = try? self.parseResponse(data: unwData) else { return }
-                completionRetrieve(unwDataParsed.photos) // send back data Decoded
+                // avoid lag to wait
+                DispatchQueue.main.async {
+                	debugPrint("dee L\(#line) 🏵 -------> DISP")
+                    completionRetrieve(unwDataParsed.photos) // send back data Decoded
+                }
+
             }.resume()
         } catch {
-            completionRetrieve([Photo]())
+            	completionRetrieve([Photo]())
         }
     }
-
-    //    func retrievePhotos(withRequest request: String, currentPage: String?, complectionRetrieve: @escaping ([Photo]) -> Void ) {
-    //        let emptyPhotos: [Photo] = [Photo]()
-    //        do {
-    //            let urlRequest = try makeURLRequest(withRequest: .nextPage(request: request, currentPage: currentPage))
-    //
-    //            session.dataTask(with: urlRequest) { data, _, _ in
-    //                guard let unwData       = data else { complectionRetrieve(emptyPhotos); return  }
-    //                guard let unwDataParsed = try? self.parseResponse(data: unwData) else { complectionRetrieve(emptyPhotos); return }
-    //
-    //                complectionRetrieve(unwDataParsed.photos) // send back data Decoded
-    //            }.resume()
-    //
-    //        } catch {
-    //            complectionRetrieve(emptyPhotos) // send it back
-    //        }
-    //    }
-
-
 }
 
 enum UnsplashURL {

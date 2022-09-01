@@ -32,6 +32,7 @@ class SearchPhotosInteractor: SearchPhotosInteractable {
     }
 
     func retrievePhotosOnNextPage(withRequest request: SearchPhotos.RetrievePhotos.Request) {
+
         worker?.retrievePhotosOnNextPage(withRequest: request, completionRetrieve: { photos in
             // map response
             let responseFromNextPage: SearchPhotos.RetrievePhotos.Response = SearchPhotos.RetrievePhotos.Response(photos: photos)
@@ -39,5 +40,10 @@ class SearchPhotosInteractor: SearchPhotosInteractable {
 
             self.presenter?.presentRetrievedPhotosOnNextPage(with: responseFromNextPage)
         })
+
+//        let photo = Photo(photoID: "", userName: "---")
+//        let arrr: [Photo] = Array.init(repeating: photo, count: 10)
+//        let responseFromNextPage: SearchPhotos.RetrievePhotos.Response = SearchPhotos.RetrievePhotos.Response(photos: arrr)
+//        presenter?.presentRetrievedPhotosOnNextPage(with: responseFromNextPage)
     }
 }

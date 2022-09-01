@@ -15,7 +15,6 @@ protocol SearchPhotosViewable: AnyObject {
 }
 
 class SearchPhotosViewController: UIViewController {
-
     @IBOutlet private weak var searchTextField: UITextField!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
@@ -25,6 +24,7 @@ class SearchPhotosViewController: UIViewController {
     private var lastTextSearched: String = "Car"
     private var currentPage: String?
     private var nextPageNoTrigger = true
+    var image: UIImage?
 
 
     override func viewDidLoad() {
@@ -83,10 +83,19 @@ extension SearchPhotosViewController: SearchPhotosViewable {
         }
 
         // --- update dataSource.
-        resultSearchPhotos.displayedPhotos.append(contentsOf: viewModel.displayedPhotos)
+        /*
+        let ppp = SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto(urlsmallImage: "", photoID: "", description: "")
+        let arr: [SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto] = Array.init(repeating: ppp, count: 10)
+        let vMM = SearchPhotos.RetrievePhotos.ViewModel.init(displayedPhotos: arr)
+        resultSearchPhotos.displayedPhotos.append(contentsOf: vMM.displayedPhotos)
+
+        resultSearchPhotos.displayedPhotos.append(contentsOf: arr)
+         */
+        /// ----
 
         DispatchQueue.main.async { [weak self] in
             // update ui
+            self?.resultSearchPhotos.displayedPhotos.append(contentsOf: viewModel.displayedPhotos)
             self?.tableview.reloadData()
         }
     }
@@ -127,20 +136,29 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return resultSearchPhotos.displayedPhotos.count
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let photoID = resultSearchPhotos.displayedPhotos[indexPath.row].photoID
+        router?.rootToShowPhoto(withID: photoID)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let idCell = Constant.SearchPhoto.idCell
         let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as? SearchPhotosCell
 
+
         if let unwCell = cell {
             let description = resultSearchPhotos.displayedPhotos[indexPath.row].description
             let images = resultSearchPhotos.displayedPhotos[indexPath.row].urlsmallImage
 
-            unwCell.searchPhotoImage.image = UIImage(data: Helper.makePicture(with: images))
-            unwCell.searchPhotoDescription.text = description
+            DispatchQueue.main.async { [weak self] in
+                self?.image = UIImage.init(data: Helper.makePicture(with: images))!
+                unwCell.searchPhotoImage.image = self?.image
+                unwCell.searchPhotoDescription.text = description
+            }
 
             return unwCell
 
@@ -153,19 +171,14 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
             return cellDefault
         }
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let photoID = resultSearchPhotos.displayedPhotos[indexPath.row].photoID
-        router?.rootToShowPhoto(withID: photoID)
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastSectionIndex = tableView.numberOfSections - 1
 
-        let numberOfCellBeforeReloading = 5
+        let numberOfCellBeforeReloading = 10
         let lastRowIndex = (tableView.numberOfRows(inSection: lastSectionIndex) - numberOfCellBeforeReloading)
 
         if ((indexPath.section == lastSectionIndex) && (indexPath.row == lastRowIndex)) && nextPageNoTrigger {
-            loadNextPageOfPhoto()
+            self.loadNextPageOfPhoto()
         }
     }
 }
