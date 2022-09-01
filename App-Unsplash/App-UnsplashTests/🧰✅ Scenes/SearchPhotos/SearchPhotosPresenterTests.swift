@@ -36,7 +36,6 @@ class PresenterSearchPhotosTests: XCTestCase {
         // --- then.
         XCTAssertTrue(searchPhotosViewControllerSPY.invokedViewController)
     }
-
     func test_present_response__expect_empViewModel() {
         // --- given.
         let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [])
@@ -49,7 +48,6 @@ class PresenterSearchPhotosTests: XCTestCase {
             SearchPhotos.RetrievePhotos.ViewModel.init(displayedPhotos: []),
             searchPhotosViewControllerSPY.resultViewModel)
     }
-
     func test_present_response__expect_oneViewModel() {
         // --- given.
         let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [.init(photoID: "ID0", description: "Picture0", userName: "User0")])
@@ -68,7 +66,6 @@ class PresenterSearchPhotosTests: XCTestCase {
             ]),
             searchPhotosViewControllerSPY.resultViewModel)
     }
-    
     func test_present_response__expect_manViewModel() {
         // --- given.
         let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [
@@ -87,22 +84,29 @@ class PresenterSearchPhotosTests: XCTestCase {
             ]),
             searchPhotosViewControllerSPY.resultViewModel)
     }
-    // TODO: ❎ Get id to fetch ❎
+    func test_present_responseFromNextPage__expect_SearchViewController_isInvoked() {
+        let response: SearchPhotos.RetrievePhotos.Response = .init(photos: [Photo]())
+
+        sut.presentRetrievedPhotosOnNextPage(with: response)
+
+        XCTAssertTrue(searchPhotosViewControllerSPY.invokedViewController)
+    }
 
     // ==================
     // MARK: - Test doubles
     // ==================
     class SearchPhotosViewControllerSPY: SearchPhotosViewable {
-
         var invokedViewController: Bool!
         var resultViewModel: SearchPhotos.RetrievePhotos.ViewModel?
 
-        func searchPhotos(withRequest: SearchPhotos.RetrievePhotos.Request) {
-            //
-        }
+        func searchPhotos(withRequest: SearchPhotos.RetrievePhotos.Request) {}
         func displayedFetchedPhotos(viewModel: SearchPhotos.RetrievePhotos.ViewModel) {
             invokedViewController = true
             resultViewModel = viewModel
+        }
+        func loadNextPageOfPhoto() { }
+        func displayedFetchedPhotosOnNextPage(viewModel: SearchPhotos.RetrievePhotos.ViewModel) {
+            invokedViewController = true
         }
     }
 }

@@ -8,6 +8,7 @@ import Foundation
 
 protocol SearchPhotosPresentable {
     func presentFetchedPhotos(with response: SearchPhotos.RetrievePhotos.Response)
+    func presentRetrievedPhotosOnNextPage(with response: SearchPhotos.RetrievePhotos.Response)
 }
 
 class SearchPhotosPresenter: SearchPhotosPresentable {
@@ -38,5 +39,20 @@ class SearchPhotosPresenter: SearchPhotosPresentable {
 
         }
         viewController?.displayedFetchedPhotos(viewModel: viewModel)
+    }
+    func presentRetrievedPhotosOnNextPage(with response: SearchPhotos.RetrievePhotos.Response) {
+        var viewmodels: SearchPhotos.RetrievePhotos.ViewModel = .init(displayedPhotos: [])
+
+        response.photos.forEach { photo in
+            let displauedViewModel = SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto(
+                urlsmallImage: photo.urlsmallImage ?? "",
+                photoID: photo.photoID,
+                description: photo.description ?? ""
+            )
+            viewmodels.displayedPhotos.append(displauedViewModel)
+
+        }
+
+        viewController?.displayedFetchedPhotosOnNextPage(viewModel: viewmodels)
     }
 }

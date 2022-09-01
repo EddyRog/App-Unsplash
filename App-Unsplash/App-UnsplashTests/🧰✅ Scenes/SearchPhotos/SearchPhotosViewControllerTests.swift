@@ -11,31 +11,36 @@ import CustomDump
 class SearchPhotosViewControllerTests: XCTestCase {
 
     var sut: SearchPhotosViewController!
+    var searchPhotosInteractorSPY: SearchPhotosInteractorSPY!
 
     override func setUp() {
         super.setUp()
         sut = SearchPhotosViewController()
+        searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
+        sut.setInteractor(searchPhotosInteractorSPY)
     }
     override func tearDown() {
         sut = nil
+        searchPhotosInteractorSPY = nil
+
         super.tearDown()
     }
 
     
     // VC -> IN
-     func test_searchPhotos_withRequest__expect_invokedInteractor() {
-        // --- given .
-        let searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
-         sut.setInteractor(searchPhotosInteractorSPY)
-//        sut.interactor = searchPhotosInteractorSPY
-        let request: SearchPhotos.RetrievePhotos.Request = .init(query: "Car")
+    func test_searchPhotos_withRequest__expect_invokedInteractor() {
+    // --- given .
+    let searchPhotosInteractorSPY = SearchPhotosInteractorSPY()
+    sut.setInteractor(searchPhotosInteractorSPY)
 
-        // --- when.
-        sut.searchPhotos(withRequest: request)
+    let request: SearchPhotos.RetrievePhotos.Request = .init(query: "Car")
 
-        // --- then.
-        XCTAssertTrue(searchPhotosInteractorSPY.invokedInteractor)
-    }
+    // --- when.
+    sut.searchPhotos(withRequest: request)
+
+    // --- then.
+    XCTAssertTrue(searchPhotosInteractorSPY.invokedInteractor)
+}
 
     func test_searchPhotos_withRequest__expect_rightRequestPassed() {
         // --- given .
@@ -51,11 +56,27 @@ class SearchPhotosViewControllerTests: XCTestCase {
         XCTAssertEqual("Car",searchPhotosInteractorSPY.resultRequestPassed)
     }
 
-    func test_lazyLoading__expect_invokedWorker() {
-        // scroll TableView
-        // if tableView 20 - 3 == 17
-        // then trigger lazyLoading
+//    func test_loadNextPage_withRequest__expect_invokedInteractor() {
+//        let request: SearchPhotos.RetrievePhotos.Request = .init(
+//            query: "car",
+//            currentPage: "2"
+//        )
+//
+//        sut.searchPhotosOnNextPage(withRequest: request)
+//
+//        XCTAssertTrue(searchPhotosInteractorSPY.invokedInteractor)
+//        assertNoDifference(1, searchPhotosInteractorSPY.invokedRetrivePhotosCount)
+//        assertNoDifference("2", searchPhotosInteractorSPY.resultRequestPage)
+//    }
+
+    // LoadNextPage
+    func test_loadNextPage__expect_invokedInteractor() {
+        sut.loadNextPageOfPhoto()
+
+        XCTAssertTrue(searchPhotosInteractorSPY.invokedLoadNextPageOfPhotos)
     }
+
+
 
     // --- UI tableview.
     func test_numberOfSection_inTableView__expect_oneSection() {
@@ -156,24 +177,27 @@ class SearchPhotosViewControllerTests: XCTestCase {
     // MARK: - Test doubles
     // ==================
     class SearchPhotosInteractorSPY: SearchPhotosInteractable {
-
         var invokedInteractor: Bool!
+        var invokedRetrivePhotosCount = 0
         var resultRequestPassed: String!
+        var resultRequestPage: String!
+        var invokedLoadNextPageOfPhotos: Bool!
 
         func retrivePhotos(withRequest request: SearchPhotos.RetrievePhotos.Request) {
 			invokedInteractor = true
+            invokedRetrivePhotosCount += 1
             resultRequestPassed = request.query
+            resultRequestPage = request.currentPage
+        }
+        func retrievePhotosOnNextPage(withRequest: SearchPhotos.RetrievePhotos.Request) {
+            invokedLoadNextPageOfPhotos = true
         }
     }
 
-    class TableViewSPY: UITableView {
-
-    }
+    class TableViewSPY: UITableView { }
 
     class Seed {
-
         struct Photos {
-
             static let car1: Array<SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car01", photoID: "Car01", description: "Car01")
             static let car2: Array<SearchPhotos.RetrievePhotos.ViewModel.DisplayedPhoto>.ArrayLiteralElement = .init(urlsmallImage: "Car02", photoID: "Car02", description: "Car02")
         }

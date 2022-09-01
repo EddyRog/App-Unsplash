@@ -83,6 +83,18 @@ class SearchPhotosInteractorTests: XCTestCase {
         assertNoDifference(expectedResponse, searchPhotosPresenterSPY.resultResponse)
     }
 
+    // --- LoadNextPage.
+    func test_retrievePhotosOnNextPage_request__expect_invokedPresenterAndWorker() {
+        let request = SearchPhotos.RetrievePhotos.Request(query: "car", currentPage: nil)
+
+        sut.retrievePhotosOnNextPage(withRequest: request)
+
+        XCTAssertTrue(searchPhotosPresenterSPY.invokedRetrievePhotosOnNextPage)
+        XCTAssertTrue(workerPhotosSPY.invokedRetrievePhotosOnNextPage)
+    }
+
+    
+
     // ==================
     // MARK: - Test doubles
     // ==================
@@ -90,18 +102,23 @@ class SearchPhotosInteractorTests: XCTestCase {
 
         var invokedPresenter: Bool!
         var resultResponse: SearchPhotos.RetrievePhotos.Response!
+        var invokedRetrievePhotosOnNextPage: Bool!
 
         func presentFetchedPhotos(with response: SearchPhotos.RetrievePhotos.Response) {
             invokedPresenter = true
             resultResponse = response
         }
+        func presentRetrievedPhotosOnNextPage(with response: SearchPhotos.RetrievePhotos.Response) {
+
+            invokedRetrievePhotosOnNextPage = true
+        }
+
     }
 
     class PhotosWorkerSpy: PhotosWorkable {
-
-
         var invokedWorker: Bool!
         var makeData: [Photo]! = []
+        var invokedRetrievePhotosOnNextPage: Bool!
 
         func retrievePhotos(withRequest request: String, complectionRetrieve completionHandler: @escaping ([Photo]) -> Void) {
             invokedWorker = true
@@ -109,5 +126,10 @@ class SearchPhotosInteractorTests: XCTestCase {
         }
 
         func retrievePhoto(withID request: String, completionRetrieve: @escaping (Photo?) -> Void) { }
+
+        func retrievePhotosOnNextPage(withRequest request: SearchPhotos.RetrievePhotos.Request, completionRetrieve: @escaping ([Photo]) -> Void) {
+            invokedRetrievePhotosOnNextPage = true
+            completionRetrieve([Photo]())
+        }
     }
 }

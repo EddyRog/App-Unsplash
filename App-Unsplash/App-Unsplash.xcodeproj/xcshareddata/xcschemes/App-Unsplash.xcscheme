@@ -47,6 +47,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "PhotosWorkerTests/test_makeURLRequest_nextPage__expect_URLRequest()">
+               </Test>
+               <Test
                   Identifier = "SearchPhotosTests">
                </Test>
                <Test

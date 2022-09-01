@@ -14,6 +14,7 @@ enum SearchPhotos {
     enum RetrievePhotos {
         struct Request {
             var query: String
+            var currentPage: String?
         }
         struct Response: Equatable {
             var photos: [Photo]
@@ -60,6 +61,7 @@ struct ViewModel: Equatable {
 enum ServiceError: Error {
     case urlError
     case dataParse
+    case queryItems
 }
 
 

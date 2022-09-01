@@ -10,6 +10,8 @@ import UIKit
 protocol SearchPhotosViewable: AnyObject {
     func searchPhotos(withRequest: SearchPhotos.RetrievePhotos.Request)
     func displayedFetchedPhotos(viewModel: SearchPhotos.RetrievePhotos.ViewModel)
+    func loadNextPageOfPhoto()
+    func displayedFetchedPhotosOnNextPage(viewModel: SearchPhotos.RetrievePhotos.ViewModel)
 }
 
 class SearchPhotosViewController: UIViewController {
@@ -20,7 +22,9 @@ class SearchPhotosViewController: UIViewController {
     private (set) var interactor: SearchPhotosInteractable?
     private (set) var router: SearchPhotosRoutable?
     var resultSearchPhotos: SearchPhotos.RetrievePhotos.ViewModel = .init(displayedPhotos: []) // --- TableView.
-    var filteredData: [String]! = nil // --- SearchBar.
+    private var lastTextSearched: String = "Car"
+    private var currentPage: String?
+    private var nextPageNoTrigger = true
 
 
     override func viewDidLoad() {
@@ -43,16 +47,47 @@ class SearchPhotosViewController: UIViewController {
 }
 
 extension SearchPhotosViewController: SearchPhotosViewable {
+    // SearchPhotosViewable IN
     func searchPhotos(withRequest request: SearchPhotos.RetrievePhotos.Request) {
         interactor?.retrivePhotos(withRequest: request)
     }
+    func loadNextPageOfPhoto() {
+        let request = SearchPhotos.RetrievePhotos.Request(query: lastTextSearched, currentPage: currentPage)
+        interactor?.retrievePhotosOnNextPage(withRequest: request)
+    }
+
+    // SearchPhotosViewable OUT
     func displayedFetchedPhotos(viewModel: SearchPhotos.RetrievePhotos.ViewModel) {
         resultSearchPhotos = viewModel
-        print("⭐️ ---- \(resultSearchPhotos.displayedPhotos.count)")
 
         DispatchQueue.main.async { [weak self] in
-            guard let this = self else {return}
+            guard let this = self else { return }
             this.tableview.reloadData()
+        }
+    }
+
+    func displayedFetchedPhotosOnNextPage(viewModel: SearchPhotos.RetrievePhotos.ViewModel) {
+        // update current page
+        let incrementPageBy = 1
+        let defaultPage = "2"
+
+        // switch to the next page
+        if let currentP = currentPage {
+            if let valueCurrenP = Int(currentP) {
+                currentPage = String(valueCurrenP + incrementPageBy)
+            } else {
+                currentPage = defaultPage
+            }
+        } else {
+            currentPage = defaultPage
+        }
+
+        // --- update dataSource.
+        resultSearchPhotos.displayedPhotos.append(contentsOf: viewModel.displayedPhotos)
+
+        DispatchQueue.main.async { [weak self] in
+            // update ui
+            self?.tableview.reloadData()
         }
     }
 }
@@ -71,6 +106,8 @@ extension SearchPhotosViewController: UISearchBarDelegate {
         if let textSearching = searchBar.text {
             if !textSearching.isEmpty {
                 self.searchPhotos(withRequest: SearchPhotos.RetrievePhotos.Request(query: textSearching))
+                self.lastTextSearched = textSearching
+                self.currentPage = nil
             }
         }
     }
@@ -117,18 +154,18 @@ extension SearchPhotosViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        debugPrint("dee L\(#line) 🏵 -------> index => ", indexPath)
         let photoID = resultSearchPhotos.displayedPhotos[indexPath.row].photoID
-        // get id
         router?.rootToShowPhoto(withID: photoID)
     }
 
-//    shouldHighlightRowAt
-    // TODO: ❎ LazyLoading ❎
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if resultSearchPhotos.displayedPhotos.count - 3 == indexPath.row {
-            print(indexPath.row)
-            print("max", resultSearchPhotos.displayedPhotos.count)
+        let lastSectionIndex = tableView.numberOfSections - 1
+
+        let numberOfCellBeforeReloading = 5
+        let lastRowIndex = (tableView.numberOfRows(inSection: lastSectionIndex) - numberOfCellBeforeReloading)
+
+        if ((indexPath.section == lastSectionIndex) && (indexPath.row == lastRowIndex)) && nextPageNoTrigger {
+            loadNextPageOfPhoto()
         }
     }
 }

@@ -35,6 +35,8 @@
 		C89C9B0628870FDB0007E0B0 /* ShowPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C9B0528870FDB0007E0B0 /* ShowPhotoViewController.swift */; };
 		C8D4AC4C28BF5AAC00210764 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4AC4B28BF5AAC00210764 /* Constants.swift */; };
 		C8D4AC4E28BF766000210764 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4AC4D28BF766000210764 /* Helper.swift */; };
+		C8D4AC5028BFCA3200210764 /* StubPage2.json in Resources */ = {isa = PBXBuildFile; fileRef = C8D4AC4F28BFCA3200210764 /* StubPage2.json */; };
+		C8D4AC5228BFD62900210764 /* StubPage3.json in Resources */ = {isa = PBXBuildFile; fileRef = C8D4AC5128BFD62900210764 /* StubPage3.json */; };
 		C8E0B1702881766C00F95CC5 /* PhotosWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B16F2881766C00F95CC5 /* PhotosWorkerTests.swift */; };
 		C8E0B1762881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E0B1752881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift */; };
 		C8E9AF9F287F317D00A4C56E /* Extension+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9AF9E287F317C00A4C56E /* Extension+Storyboard.swift */; };
@@ -102,6 +104,8 @@
 		C89C9B0528870FDB0007E0B0 /* ShowPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPhotoViewController.swift; sourceTree = "<group>"; };
 		C8D4AC4B28BF5AAC00210764 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C8D4AC4D28BF766000210764 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		C8D4AC4F28BFCA3200210764 /* StubPage2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StubPage2.json; sourceTree = "<group>"; };
+		C8D4AC5128BFD62900210764 /* StubPage3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StubPage3.json; sourceTree = "<group>"; };
 		C8E0B16F2881766C00F95CC5 /* PhotosWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerTests.swift; sourceTree = "<group>"; };
 		C8E0B1752881DDA700F95CC5 /* SearchPhotosViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosViewControllerTests.swift; sourceTree = "<group>"; };
 		C8E9AF9C287F11BA00A4C56E /* App-UnsplashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "App-UnsplashTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -292,6 +296,8 @@
 				C8EC0109286A06C7001A56E8 /* SimpleData.json */,
 				C8EC010F286B2500001A56E8 /* StubAPI.json */,
 				C89B66EC2892887200086529 /* StubPhotoID.json */,
+				C8D4AC4F28BFCA3200210764 /* StubPage2.json */,
+				C8D4AC5128BFD62900210764 /* StubPage3.json */,
 			);
 			name = "⚒️SupportingFiles";
 			path = "App-Unsplash";
@@ -538,6 +544,8 @@
 				C8EC0111286B25CE001A56E8 /* StubAPI.json in Resources */,
 				C8EC010D286A0945001A56E8 /* SimpleData.json in Resources */,
 				C88908912886A36000D091D9 /* SearchPhotosCell.xib in Resources */,
+				C8D4AC5028BFCA3200210764 /* StubPage2.json in Resources */,
+				C8D4AC5228BFD62900210764 /* StubPage3.json in Resources */,
 				C8F72306286606C40034A36C /* LaunchScreen.storyboard in Resources */,
 				C89B66ED2892887200086529 /* StubPhotoID.json in Resources */,
 				C8F72303286606C40034A36C /* Assets.xcassets in Resources */,

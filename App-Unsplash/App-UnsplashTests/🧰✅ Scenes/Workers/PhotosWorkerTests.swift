@@ -20,9 +20,12 @@ class PhotosWorkerTests: XCTestCase {
 
     var sut: PhotosWorker!
     static var photoID = "Xlo7N1ctmZc"
+    var keyAPI = Constant.URL.urlQuery.cliendID.rawValue.value
 
     override func setUp() {
         super.setUp()
+//        Constant.URL.queryItems[.client]
+//        Constant.URL.queryItems
         sut = PhotosWorker()
     }
     override func tearDown() {
@@ -37,7 +40,7 @@ class PhotosWorkerTests: XCTestCase {
     func test_makeURLRequest_withST__expect_URLRequest() {
         // define righ request
         // --- given.
-        let urlString = "https://api.unsplash.com/search?client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4&query=car"
+        let urlString = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car"
         let expectedURLRequest = URLRequest(url: URL(string: urlString)!)
         // --- when.
         let actualURLRequest = try? sut.makeURLRequest(withRequest: .urlRequest("car"))
@@ -48,7 +51,7 @@ class PhotosWorkerTests: XCTestCase {
     }
     func test_makeURLRequest_withID__expect_URLRequest() {
         // --- given.
-        let expectedUrlString = "https://api.unsplash.com/photos/Xlo7N1ctmZc?client_id=a76ebbad189e7f2ae725980590e4c520a525e1db029aa4cea87b44383c8a1ec4"
+        let expectedUrlString = "https://api.unsplash.com/photos/Xlo7N1ctmZc?client_id=\(keyAPI)"
         let expectedURLRequest = URLRequest(url: URL(string: expectedUrlString)!)
 
         // --- when.
@@ -56,6 +59,47 @@ class PhotosWorkerTests: XCTestCase {
 
         // --- then.
         assertNoDifference(expectedURLRequest, actualURLRequest)
+    }
+
+    func test_makeURLRequest_nextPageWithNilCurrentPAge__expect_URLRequestWithPageMinus2() {
+        let actualUrlRequest = try? sut.makeURLRequest(withRequest: .nextPage(request: "car", currentPage: "-2"))
+
+        let stringForExpectation = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car&page=2"
+        let expected = URLRequest(url: URL(string: stringForExpectation)!)
+
+        assertNoDifference(expected, actualUrlRequest)
+    }
+    func test_makeURLRequest_nextPageWithNilCurrentPAge__expect_URLRequestWithPage0() {
+        let actualUrlRequest = try? sut.makeURLRequest(withRequest: .nextPage(request: "car", currentPage: "0"))
+
+        let stringForExpectation = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car&page=2"
+        let expected = URLRequest(url: URL(string: stringForExpectation)!)
+
+        assertNoDifference(expected, actualUrlRequest)
+    }
+    func test_makeURLRequest_nextPageWithNilCurrentPAge__expect_URLRequestWithPage1() {
+        let actualUrlRequest = try? sut.makeURLRequest(withRequest: .nextPage(request: "car", currentPage: "1"))
+
+        let stringForExpectation = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car&page=2"
+        let expected = URLRequest(url: URL(string: stringForExpectation)!)
+
+        assertNoDifference(expected, actualUrlRequest)
+    }
+    func test_makeURLRequest_nextPageWithNilCurrentPAge__expect_URLRequestWithPage2() {
+        let actualUrlRequest = try? sut.makeURLRequest(withRequest: .nextPage(request: "car", currentPage: nil))
+
+        let stringForExpectation = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car&page=2"
+        let expected = URLRequest(url: URL(string: stringForExpectation)!)
+
+        assertNoDifference(expected, actualUrlRequest)
+    }
+    func test_makeURLRequest_nextPageWithNilCurrentPAge__expect_URLRequestWithPage3() {
+        let actualUrlRequest = try? sut.makeURLRequest(withRequest: .nextPage(request: "car", currentPage: "2"))
+
+        let stringForExpectation = "https://api.unsplash.com/search?client_id=\(keyAPI)&query=car&page=3"
+        let expected = URLRequest(url: URL(string: stringForExpectation)!)
+
+        assertNoDifference(expected, actualUrlRequest)
     }
 
     // --- Parse: retrievePhotos.
@@ -156,6 +200,64 @@ class PhotosWorkerTests: XCTestCase {
         wait(for: [exp], timeout: 0.5)
     }
 
+    // --- URLRequest + Parse / retrieve with CurrentPage
+    func test_retrievePhotos_withNextPage__expect_response() {
+        // --- given.
+        // MARK: - Config the session with a mock URLProtocol to customize the response of fake server
+        let urlSessionConfiguration = URLSessionConfiguration.ephemeral // no persitence for (credential, cache, cookie)
+        urlSessionConfiguration.protocolClasses = [MockURLProtocol.self]
+
+        // MARK: - Configure the session with `urlSessionConfiguration` for purpose of tests
+        sut.session = URLSession(configuration: urlSessionConfiguration)
+
+        // MARK: - Configure a stubbed response in the class `MockURLProtocol`
+        MockURLProtocol.requestHandlerStubbed = { urlRequestPassed in
+            // MARK: - Check the request when it s passed
+
+            let response = HTTPURLResponse()
+            var data = Data()
+
+            guard let urlpassed = urlRequestPassed.url?.query else {
+                data = Data()
+                return(response, data)
+            }
+
+            if urlpassed.contains("page=2") {
+				data = self.fetchJsonDataFromLocalFile(.stubPage2)
+            } else if urlpassed.contains("page=3") {
+                data = self.fetchJsonDataFromLocalFile(.stubPage3)
+            }
+
+            return (response, data)
+        }
+
+        /*
+        // --- when.
+        let exp0 = expectation(description: "wait for currentPage with nil")
+        sut.retrievePhotos(withRequest: "0000", currentPage: nil) { unsafePhoto in
+            self.assertNoDifference("📄📄if page nil or 1 => Page2📄📄", unsafePhoto.first?.description!)
+            exp0.fulfill()
+        }
+        wait(for: [exp0], timeout: 0.5)
+
+        let exp1 = expectation(description: "")
+        sut.retrievePhotos(withRequest: "0000", currentPage: "2") { unsafePhoto in
+            self.assertNoDifference("📊📊if page 2 => Page3📊📊", unsafePhoto.first?.description!)
+            exp1.fulfill()
+        }
+        wait(for: [exp1], timeout: 0.5)
+
+
+        let exp2 = expectation(description: "wait for currentPage with nil")
+        sut.retrievePhotos(withRequest: "0000", currentPage: "4") { unsafePhoto in
+            self.assertNoDifference(nil, unsafePhoto.first?.description!)
+            exp2.fulfill()
+        }
+        wait(for: [exp2], timeout: 0.5)
+         */
+    }
+
+
     // ==================
     // MARK: - Test doubles
     // ==================
@@ -212,6 +314,10 @@ class PhotosWorkerTests: XCTestCase {
                 nameOfFile = "StubAPI"
             case .photoID:
                 nameOfFile = "StubPhotoID"
+            case .stubPage2:
+                nameOfFile = "StubPage2"
+            case .stubPage3:
+                nameOfFile = "StubPage3"
         }
 
         // MARK: - Get file Path
@@ -235,6 +341,8 @@ class PhotosWorkerTests: XCTestCase {
     enum JsonFile {
         case request
         case photoID
+        case stubPage2
+        case stubPage3
     }
 }
 

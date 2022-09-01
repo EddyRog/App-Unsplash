@@ -58,7 +58,6 @@ class ShowPhotoInteractorTests: XCTestCase {
     // MARK: - Test doubles
     // ==================
     class PhotosWorkerSPY: PhotosWorkable {
-
         var invokedPhotosWorker: Bool!
         var makeDataPhoto: Photo? = Photo.init(photoID: "", description: "", userName: "")
 
@@ -67,6 +66,7 @@ class ShowPhotoInteractorTests: XCTestCase {
             invokedPhotosWorker = true
             completionRetrieve(makeDataPhoto)
         }
+        func retrievePhotosOnNextPage(withRequest request: SearchPhotos.RetrievePhotos.Request, completionRetrieve: @escaping ([Photo]) -> Void) { }
     }
 
     class ShowPhotoPresenterSPY: ShowPhotoPresentatable {
