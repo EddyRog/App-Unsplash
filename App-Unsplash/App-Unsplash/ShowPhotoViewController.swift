@@ -17,6 +17,7 @@ class ShowPhotoViewController: UIViewController {
 
     private (set) var interactor: ShowPhotosInteractable?
     private (set) var router: ShowPhotoRouter?
+    private var defaultImage = "Image"
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageImageView: UIImageView!
@@ -45,7 +46,7 @@ extension ShowPhotoViewController: ShowPhotoViewable {
         DispatchQueue.main.async {
 
             // configure uiImage
-            var smallurlUIImage = UIImage(named: "Image")
+            var smallurlUIImage = UIImage(named: self.defaultImage)
 
             if let dataImage = viewModel.displayedPhoto.urlsmallImage {
                 if dataImage != "" {
